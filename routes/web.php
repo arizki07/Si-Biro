@@ -25,3 +25,18 @@ Route::controller(App\Http\Controllers\Auth\AuthController::class)->group(functi
 Route::controller(DashboardController::class)->group(function () {
     Route::get('/dashboard', 'index');
 });
+Route::controller(App\Http\Controllers\Admin\DataUserController::class)->group(function () {
+    Route::get('/data-users', 'index');
+});
+Route::controller(App\Http\Controllers\Admin\BiodataController::class)->group(function () {
+    Route::get('/data-biodata', 'index');
+});
+Route::controller(App\Http\Controllers\Admin\TransaksiController::class)->group(function () {
+    Route::get('/data-transaksi', 'index');
+});
+Route::controller(App\Http\Controllers\Admin\RoleController::class)->group(function () {
+    Route::get('/data-role', 'index');
+});
+Route::controller(App\Http\Controllers\Admin\JadwalController::class)->group(function () {
+    Route::get('/data-jadwal', 'index');
+});
