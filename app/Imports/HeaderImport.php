@@ -2,16 +2,25 @@
 
 namespace App\Imports;
 
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
+// use Illuminate\Support\Collection;
+// use Maatwebsite\Excel\Concerns\Importable;
+// use Maatwebsite\Excel\Concerns\ToModel;
+// use Maatwebsite\Excel\Concerns\WithStartRow;
+// use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class HeaderImport implements ToCollection
+class HeaderImport implements WithMultipleSheets
 {
-    /**
-    * @param Collection $collection
-    */
-    public function collection(Collection $collection)
+    public function sheets(): array
     {
-        //
+        return [
+            'JADWAL' => new JadwalImport(),
+            'URAIAN JADWAL' => new UraianJadwalImport()
+        ];
+    }
+
+    public function onUnknownSheet($sheetName)
+    {
+        info("Sheet {$sheetName} di skip :p");
     }
 }

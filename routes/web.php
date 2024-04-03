@@ -47,3 +47,5 @@ Route::controller(App\Http\Controllers\Admin\JadwalController::class)->group(fun
 Route::controller(App\Http\Controllers\Admin\LayananController::class)->group(function () {
     Route::get('/data-layanan', 'index');
 });
+
+Route::post('/import', [App\Http\Controllers\Admin\ImportController::class, 'import'])->name('import');
