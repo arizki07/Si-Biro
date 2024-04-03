@@ -9,6 +9,9 @@ class TransaksiController extends Controller
 {
     public function index()
     {
-        return view('pages.admin.data-transaksi.index');
+        return view('pages.admin.data-transaksi.index', [
+            'title' => 'Data Transaksi', 
+            'act' => 'transaksi'
+        ]);
     }
 }
