@@ -13,7 +13,7 @@
             </li> <!-- end Dashboard Menu -->
 
 
-            <li class="menu-title"><i class="ri-more-fill"></i> <span>Data Users</span>
+            <li class="menu-title"><i class="ri-more-fill"></i> <span>Users Report</span>
             </li>
 
             <li class="nav-item">
@@ -27,7 +27,7 @@
                 </a>
             </li>
 
-            <li class="menu-title"><i class="ri-more-fill"></i> <span>Data Master</span></li>
+            <li class="menu-title"><i class="ri-more-fill"></i> <span>Master Report</span></li>
 
             <li class="nav-item">
                 <a class="nav-link menu-link <?= ($act == 'role') ? 'active' : '' ?>" href="/data-role">
@@ -39,6 +39,9 @@
                     <i class="ri-pencil-ruler-2-line"></i> <span>Data Biodata</span>
                 </a>
             </li>
+
+            <li class="menu-title"><i class="ri-more-fill"></i> <span>Financial Statements</span></li>
+
             <li class="nav-item">
                 <a class="nav-link menu-link <?= ($act == 'transaksi') ? 'active' : '' ?>" href="/data-transaksi">
                     <i class="ri-pencil-ruler-2-line"></i> <span>Data Transaksi</span>
@@ -49,6 +52,9 @@
                     <i class="ri-pencil-ruler-2-line"></i> <span>Data Jadwal</span>
                 </a>
             </li>
+
+            <li class="menu-title"><i class="ri-more-fill"></i> <span>Schedule Report </span></li>
+
             <li class="nav-item">
                 <a class="nav-link menu-link <?= ($act == 'arsip') ? 'active' : '' ?>" href="#">
                     <i class="ri-pencil-ruler-2-line"></i> <span>Data Arsip</span>
@@ -59,6 +65,9 @@
                     <i class="ri-pencil-ruler-2-line"></i> <span>Data Keuangan</span>
                 </a>
             </li>
+
+            <li class="menu-title"><i class="ri-more-fill"></i> <span>Service Report </span></li>
+
             <li class="nav-item">
                 <a class="nav-link menu-link <?= ($act == 'layanan') ? 'active' : '' ?>" href="#">
                     <i class="ri-pencil-ruler-2-line"></i> <span>Data Layanan</span>
@@ -66,12 +75,15 @@
             </li>
             {{-- <li class="nav-item">
                 <a class="nav-link menu-link" href="#">
-                    <i class="ri-pencil-ruler-2-line"></i> <span>Data Uraian Layanan</span>
+                    <i class=" ri-file-paper-fill"></i> <span>Data Uraian Layanan</span>
                 </a>
             </li>
+
+            <li class="menu-title"><i class="ri-more-fill"></i> <span>Report </span></li>
+
             <li class="nav-item">
-                <a class="nav-link menu-link" href="/data-jadwal">
-                    <i class="ri-pencil-ruler-2-line"></i> <span>Data Uraian Jadwal</span>
+                <a class="nav-link menu-link" href="#">
+                    <i class="ri-red-packet-fill"></i> <span>Data Arsip</span>
                 </a>
             </li> --}}
         </ul>
