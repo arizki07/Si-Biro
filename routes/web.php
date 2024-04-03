@@ -44,3 +44,6 @@ Route::controller(App\Http\Controllers\Admin\RoleController::class)->group(funct
 Route::controller(App\Http\Controllers\Admin\JadwalController::class)->group(function () {
     Route::get('/data-jadwal', 'index');
 });
+Route::controller(App\Http\Controllers\Admin\LayananController::class)->group(function () {
+    Route::get('/data-layanan', 'index');
+});

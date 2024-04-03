@@ -29,7 +29,7 @@
                             <div style="float: right;">
                                 <button type="button" class="btn btn-primary mr-2" data-bs-toggle="modal"
                                     data-bs-target="#exampleModalgrid">
-                                    <i class="ri-book-mark-fill"></i> Tambah Data Jadwal
+                                    <i class="ri-phone-fill"></i> Tambah Data Layanan
                                 </button>
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                     data-bs-target="#importExcel">
@@ -61,12 +61,14 @@
                                 <thead>
                                     <tr class="text-center">
                                         <th>Opsi</th>
-                                        <th>Nomor Jadwal</th>
-                                        <th>Judul Jadwal</th>
-                                        <th>Tipe Jadwal</th>
-                                        <th>Jangka Waktu</th>
-                                        <th>Tanggal Mulai</th>
-                                        <th>Tanggal Selesai</th>
+                                        <th>Judul Layanan</th>
+                                        <th>Kuota</th>
+                                        <th>Tahun Pemberangkatan</th>
+                                        <th>Bulan Pemberangkatan</th>
+                                        <th>Paket</th>
+                                        <th>Status Paket</th>
+                                        <th>Deskripsi</th>
+                                        <th>Foto Background</th>
 
 
                                     </tr>
@@ -92,6 +94,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
+                                        <td></td>
 
                                     </tr>
                                 </tbody>
@@ -108,7 +112,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalgridLabel"><i class=" ri-book-mark-fill"></i> Add Jadwal</h5>
+                    <h5 class="modal-title" id="exampleModalgridLabel"><i class="ri-phone-fill"></i>Add Layanan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -116,44 +120,52 @@
                         <div class="row g-3">
                             <div class="col-xxl-6">
                                 <div>
-                                    <label for="firstName" class="form-label">Nomor Jadwal</label>
+                                    <label for="firstName" class="form-label">Judul Layanan</label>
                                     <input type="text" class="form-control" id="firstName" placeholder="Enter firstname">
                                 </div>
                             </div>
                             <!--end col-->
                             <div class="col-xxl-6">
                                 <div>
-                                    <label for="lastName" class="form-label">Judul Jadwal</label>
+                                    <label for="lastName" class="form-label">Kuota</label>
                                     <input type="text" class="form-control" id="lastName" placeholder="Enter lastname">
                                 </div>
                             </div>
 
                             <div class="col-xxl-6">
-                                <label for="emailInput" class="form-label">Tipe Jadwal</label>
+                                <label for="emailInput" class="form-label">Tahun Pemberangkatan</label>
                                 <input type="email" class="form-control" id="emailInput" placeholder="Enter your email">
                             </div>
                             <!--end col-->
                             <div class="col-xxl-6">
-                                <label for="passwordInput" class="form-label">Jangka Waktu</label>
+                                <label for="passwordInput" class="form-label">Bulan Pemberangkatan</label>
                                 <input type="text" class="form-control" id="passwordInput" value=""
                                     placeholder="Enter password">
                             </div>
                             <!--end col-->
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Tanggal Mulai</label>
-                                        <input type="date" class="form-control border border-dark" name=""
-                                            id="" placeholder="YYYY-MM-DD">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Tanggal Selesai</label>
-                                        <input name="" type="date" class="form-control border border-dark"
-                                            placeholder="YYYY-MM-DD" />
-                                    </div>
-                                </div>
+                            <!--end col-->
+                            <div class="col-xxl-6">
+                                <label for="passwordInput" class="form-label">Paket</label>
+                                <input type="text" class="form-control" id="passwordInput" value=""
+                                    placeholder="Enter password">
+                            </div>
+                            <!--end col-->
+                            <!--end col-->
+                            <div class="col-xxl-6">
+                                <label for="passwordInput" class="form-label">Status Paket</label>
+                                <input type="text" class="form-control" id="passwordInput" value=""
+                                    placeholder="Enter password">
+                            </div>
+                            <!--end col-->
+                            <div class="mb-3">
+                                <label class="form-label">Deksripsi</label>
+                                <textarea name="" id="" cols="30" rows="3" class="form-control border border-dark"
+                                    placeholder="Masukkan Deskripsi"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Foto Background</label>
+                                <input type="file" class="form-control border border-dark" name=""
+                                    id="">
                             </div>
                             <div class="col-lg-12">
                                 <div class="hstack gap-2 justify-content-end">
