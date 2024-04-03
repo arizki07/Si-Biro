@@ -20,4 +20,18 @@ class LayananModel extends Model
         'deskripsi',
         'foto_bg'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->id_layanan = '112000' . random_int(10000, 99999);
+            while (LayananModel::where('id_layanan', $model->id_layanan)->exists()) {
+                $model->id_layanan = '100000' . random_int(10000, 99999);
+            }
+        });
+    }
+
+    protected $keyType = 'int';
+    protected $increment = 10;
 }

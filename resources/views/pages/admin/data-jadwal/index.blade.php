@@ -1,5 +1,6 @@
 @extends('layout.main')
 @section('content')
+@include('components.alerts')
     <div class="page-content">
         <div class="container-fluid">
 
@@ -25,7 +26,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title mb-0">Basic Datatables</h5>
+                            <h5 class="card-title mb-0">Table {{ $title; }}</h5>
                             <div style="float: right;">
                                 <button type="button" class="btn btn-primary mr-2" data-bs-toggle="modal"
                                     data-bs-target="#exampleModalgrid">
@@ -60,40 +61,42 @@
                                 style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
                                 <thead>
                                     <tr class="text-center">
-                                        <th>Opsi</th>
+                                        <th>No</th>
                                         <th>Nomor Jadwal</th>
                                         <th>Judul Jadwal</th>
                                         <th>Tipe Jadwal</th>
                                         <th>Jangka Waktu</th>
                                         <th>Tanggal Mulai</th>
                                         <th>Tanggal Selesai</th>
-
-
+                                        <th>Opsi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="text-center">
-                                        <td>
-                                            <button type="button"
-                                                class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
-                                                data-bs-toggle="modal" data-bs-target="#">
-                                                <i class="ri-eye-fill"></i>
-                                            </button>
-                                            <button type="button"
-                                                class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm"><i
-                                                    class=" ri-edit-2-fill"></i></button>
-                                            <button type="button"
-                                                class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"><i
-                                                    class="ri-delete-bin-2-fill"></i></button>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-
-                                    </tr>
+                                    @php ($i = 1)
+                                    @foreach ($jadwal as $jad)
+                                        <tr class="text-center">
+                                            <td>{{ $i++; }}</td>
+                                            <td>JD-{{ $jad->nomor_jadwal }}</td>
+                                            <td>{{ $jad->judul_jadwal }}</td>
+                                            <td>Jadwal {{ $jad->tipe_jadwal }}</td>
+                                            <td>{{ $jad->jangka_waktu }} Hari</td>
+                                            <td>{{ \Carbon\Carbon::parse($jad->tgl_mulai)->format('d M Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($jad->tgl_selesai)->format('d M Y') }}</td>
+                                            <td>
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
+                                                    data-bs-toggle="modal" data-bs-target="#">
+                                                    <i class="ri-eye-fill"></i>
+                                                </button>
+                                                <button type="button"
+                                                    class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm"><i
+                                                        class=" ri-edit-2-fill"></i></button>
+                                                <button type="button"
+                                                    class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"><i
+                                                        class="ri-delete-bin-2-fill"></i></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -175,40 +178,42 @@
     <div class="modal modal-blur fade" id="importExcel" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form method="post" action="/testkapas/import_excel" enctype="multipart/form-data">
+            <form method="post" action="{{ route('import') }}?type=upload_jadwal" enctype="multipart/form-data">
+                @csrf
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Upload Excel</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="col-lg-4 col-md-6">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1">
-                                        <label class="form-check-label" for="flexRadioDefault1">
-                                            Add
-                                        </label>
+                        <div class="mb-3">
+                            <label class="form-label">Pilih Type Proses</label>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="type"
+                                                id="type1" value="add">
+                                            <label class="form-check-label" for="type1">
+                                                Add
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault2" checked>
-                                        <label class="form-check-label" for="flexRadioDefault2">
-                                            Update
-                                        </label>
+                                    <div class="col-6">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="type"
+                                                id="type2" value="update">
+                                            <label class="form-check-label" for="type2">
+                                                Update
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Pilih file excel (xlsx)</label>
-                            <input type="file" name="file" required="required"
-                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                                class="form-control">
+                            <input type="file" name="file" required="required" accept=".xlsx" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
