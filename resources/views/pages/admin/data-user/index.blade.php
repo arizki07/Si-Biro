@@ -27,9 +27,12 @@
                                             <span>Themesbrand</span>
                                         </div>
                                         <div class="mt-3">
-                                            <button class="btn btn-info btn-sm me-2">View</button>
-                                            <button class="btn btn-primary btn-sm me-2">Edit</button>
-                                            <button class="btn btn-danger btn-sm">Delete</button>
+                                            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#viewUser"><i class="ri-eye-fill"></i></button>
+                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#editUser"><i class=" ri-edit-2-fill"></i></button>
+                                            <button class="btn btn-danger btn-sm"><i
+                                                    class=" ri-delete-bin-6-fill"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -38,6 +41,121 @@
                     </div>
                 </div>
             </div>
-        </div><!-- container-fluid -->
-    </div><!-- End Page-content -->
+        </div>
+    </div>
+
+    {{-- Modal View --}}
+    <div class="modal fade" id="viewUser" tabindex="-1" aria-labelledby="viewUserLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewUserLabel">Detail Data User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="javascript:void(0);">
+                        <div class="row g-3">
+                            <div class="col-xxl-3 col-md-6">
+                                <div>
+                                    <label for="nama" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="nama">
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-6">
+                                <div>
+                                    <label for="email" class="form-label">Email</label>
+                                    <div class="form-icon right">
+                                        <input type="email" class="form-control form-control-icon" id="email"
+                                            placeholder="example@gmail.com">
+                                        <i class="ri-mail-unread-line"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-6">
+                                <div>
+                                    <label for="role" class="form-label">Role</label>
+                                    <div class="form-icon right">
+                                        <input type="text" class="form-control form-control-icon" id="role"
+                                            placeholder="Role">
+                                        <i class="ri-folder-user-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-6">
+                                <div>
+                                    <label for="basiInput" class="form-label">Status</label>
+                                    <input type="password" class="form-control" id="basiInput">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                            <!--end col-->
+                        </div>
+                        <!--end row-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    {{-- end modal view --}}
+
+    {{-- Modal Edit --}}
+    <div id="editUser" class="modal fade fadeInLeft" tabindex="-1" aria-labelledby="editUserLabel" aria-hidden="true"
+        style="display: none;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserLabel">Edit Data Users</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="javascript:void(0);">
+                        <div class="row g-3">
+                            <div class="col-xxl-6">
+                                <div>
+                                    <label for="firstName" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="firstName"
+                                        placeholder="Enter firstname">
+                                </div>
+                            </div>
+                            <!--end col-->
+                            <div class="col-xxl-6">
+                                <div>
+                                    <label for="lastName" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName"
+                                        placeholder="Enter lastname">
+                                </div>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label for="emailInput" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="emailInput"
+                                    placeholder="Enter your email">
+                            </div>
+                            <!--end col-->
+                            <div class="col-xxl-6">
+                                <label for="passwordInput" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="passwordInput" value="451326546"
+                                    placeholder="Enter password">
+                            </div>
+                            <!--end col-->
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                            <!--end col-->
+                        </div>
+                        <!--end row-->
+                    </form>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    {{-- End Modal edit --}}
 @endsection
