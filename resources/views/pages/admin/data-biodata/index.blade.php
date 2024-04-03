@@ -276,12 +276,11 @@
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Bank</label>
-                                        <select name="bank" id="gender" class="form-select border-dark">
-                                            <option value="" hidden>-- Pilih Bank --</option>
-                                            <option value="BCA">BCA</option>
-                                            <option value="BSI">BSI</option>
-                                            <option value="BJB">BJB</option>
-                                            <option value="MANDIRI">MANDIRI</option>
+                                        <select class="form-control border-dark" data-choices name="bank" id="choices-single-default">
+                                            <option selected disabled>-- Pilih Bank --</option>
+                                            @foreach($json_bank as $bank)
+                                                <option value="{{ $bank['code'] }} - {{ $bank['name'] }}">{{ $bank['name'] }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -346,16 +345,23 @@
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Kecamatan</label>
-                                        <input type="text" class="form-control border border-dark" name="kecamatan"
-                                            id="kecamatan" placeholder="Masukkan Kecamatan">
+                                        <select class="form-control border-dark" data-choices name="kecamatan" id="choices-single-default">
+                                            <option selected disabled>-- Pilih Kecamatan --</option>
+                                            @foreach($json_kecamatan as $kecamatan)
+                                                <option value="{{ $kecamatan['kecamatan'] }}">{{ $kecamatan['kecamatan'] }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Kota/Kabupaten</label>
-                                        <input type="text" class="form-control border border-dark"
-                                            name="kota_kabupaten" id="kota_kabupaten"
-                                            placeholder="Masukkan Kota/Kabupaten">
+                                        <select class="form-control border-dark" data-choices name="kota_kabupaten" id="choices-single-default">
+                                            <option selected disabled>-- Pilih Kota/Kabupaten --</option>
+                                            @foreach($json_kota as $kota)
+                                                <option value="{{ $kota['kota'] }}">{{ $kota['kota'] }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -363,8 +369,12 @@
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Provinsi</label>
-                                        <input type="text" class="form-control border border-dark" name="provinsi"
-                                            id="provinsi" placeholder="Masukkan Provinsi">
+                                        <select class="form-control border-dark" data-choices name="provinsi" id="choices-single-default">
+                                            <option selected disabled>-- Pilih Provinsi --</option>
+                                            @foreach($json_provinsi as $prov)
+                                                <option value="{{ $prov['provinsi'] }}">{{ $prov['provinsi'] }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

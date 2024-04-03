@@ -9,6 +9,9 @@ class DataUserController extends Controller
 {
     public function index()
     {
-        return view('pages.admin.data-user.index');
+        return view('pages.admin.data-user.index', [
+            'title' => 'Data Users', 
+            'act' => 'users'
+        ]);
     }
 }

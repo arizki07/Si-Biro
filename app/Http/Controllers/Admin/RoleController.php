@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RoleModel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RoleController extends Controller
 {
@@ -14,14 +15,20 @@ class RoleController extends Controller
         $role = RoleModel::all();
         return view('pages.admin.data-role.index', [
             'role' => $role,
+            'title' => 'Data Role',
+            'act' => 'role'
         ]);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_role' => 'required|string',
+        $validator = Validator::make($request->all(), [
+            'nama_role' => 'required|string|max:15',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('error', $validator->errors()->first());
+        }
 
         $role = new RoleModel();
         $role->nama_role = $request->input('nama_role');

@@ -9,6 +9,7 @@ use App\Models\RoleModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class BiodataController extends Controller
 {
@@ -21,27 +22,34 @@ class BiodataController extends Controller
             'jamaah' => $jamaah,
             'roles' => $roles,
             'layanans' => $layanans,
+            'title' => 'Biodata',
+            'act' => 'biodata',
+            'json_bank' => json_decode(file_get_contents(public_path('json/bank.json')), true),
+            'json_provinsi' => json_decode(file_get_contents(public_path('json/provinsi.json')), true),
+            'json_kecamatan' => json_decode(file_get_contents(public_path('json/kecamatan.json')), true),
+            // 'json_kelurahan' => json_decode(file_get_contents(public_path('json/kelurahan.json')), true),
+            'json_kota' => json_decode(file_get_contents(public_path('json/kota.json')), true),
         ]);
     }
 
     public function store(Request $request)
     {
         try {
-            $request->validate([
+            $validator = Validator::make($request->all(), [
                 'nama_lengkap' => 'required|string|max:150',
                 'umur' => 'required|string|max:20',
                 'jk' => 'required|string|max:10',
                 'status' => 'required|string|max:20',
                 'tempat_lahir' => 'required|string|max:50',
                 'tgl_lahir' => 'required|date',
-                'no_hp' => 'required|string|max:20',
-                'no_hp_wali' => 'nullable|string|max:20',
-                'no_rekening' => 'required|string|max:30',
-                'no_ktp' => 'required|string|max:30',
-                'no_kk' => 'required|string|max:30',
+                'no_hp' => 'required|string|max:15|min:11',
+                'no_hp_wali' => 'nullable|string|max:15|min:11',
+                'no_rekening' => 'required|numeric|max:30',
+                'no_ktp' => 'required|numeric|max:16|min:16',
+                'no_kk' => 'required|numeric|max:17|16',
                 'bank' => 'required|string|max:15',
-                'berat_badan' => 'required|string|max:20',
-                'tinggi_badan' => 'required|string|max:20',
+                'berat_badan' => 'required|numeric|max:20',
+                'tinggi_badan' => 'required|numeric|max:20',
                 'warna_kulit' => 'required|string|max:30',
                 'pekerjaan' => 'required|string|max:100',
                 'pendidikan' => 'required|string|max:20',
@@ -59,6 +67,10 @@ class BiodataController extends Controller
                 'pas_foto' => 'required|mimes:png,jpg,jpeg|max:2048',
                 'foto_passport' => 'nullable|mimes:png,jpg,jpeg|max:2048',
             ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput()->with('error', $validator->errors()->first());
+            }
 
             if ($request->hasFile('foto_ktp')) {
                 $foto_ktp = $request->file('foto_ktp');
