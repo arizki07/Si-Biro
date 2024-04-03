@@ -1,5 +1,7 @@
 @extends('layout.main')
 @section('content')
+    @include('components.alerts')
+
     <div class="page-content">
         <div class="container-fluid">
 
@@ -28,75 +30,46 @@
                             <h5 class="card-title mb-0">Basic Datatables</h5>
                             <button type="button" class="btn btn-primary" style="float: right" data-bs-toggle="modal"
                                 data-bs-target="#exampleModalgrid">
-                                Tambah Data Role
+                                <i class=" ri-user-add-fill"></i> Tambah Data Role
                             </button>
                         </div>
                         <div class="card-body">
                             <table id="example"
-                                class="table table-bordered dt-responsive nowrap table-striped align-middle"
-                                style="width:100%">
+                                class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap"
+                                style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
                                 <thead>
-                                    <tr>
-                                        <th scope="col" style="width: 10px;">
-                                            <div class="form-check">
-                                                <input class="form-check-input fs-15" type="checkbox" id="checkAll"
-                                                    value="option">
-                                            </div>
-                                        </th>
-                                        <th data-ordering="false">SR No.</th>
-                                        <th data-ordering="false">ID</th>
-                                        <th data-ordering="false">Purchase ID</th>
-                                        <th data-ordering="false">Title</th>
-                                        <th data-ordering="false">User</th>
-                                        <th>Assigned To</th>
-                                        <th>Created By</th>
-                                        <th>Create Date</th>
-                                        <th>Status</th>
-                                        <th>Priority</th>
+                                    <tr class="text-center">
+                                        <th>No</th>
+                                        <th>Nama Role</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check">
-                                                <input class="form-check-input fs-15" type="checkbox" name="checkAll"
-                                                    value="option1">
-                                            </div>
-                                        </th>
-                                        <td>01</td>
-                                        <td>VLZ-452</td>
-                                        <td>VLZ1400087402</td>
-                                        <td><a href="#!">Post launch reminder/ post list</a></td>
-                                        <td>Joseph Parker</td>
-                                        <td>Alexis Clarke</td>
-                                        <td>Joseph Parker</td>
-                                        <td>03 Oct, 2021</td>
-                                        <td><span class="badge badge-soft-info">Re-open</span></td>
-                                        <td><span class="badge bg-danger">High</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
+                                    @foreach ($role as $key => $item)
+                                        <tr class="text-center">
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $item['nama_role'] }}</td>
+                                            <td>
+
+                                                <button type="button"
+                                                    class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm"
+                                                    data-bs-toggle="modal" data-bs-target="#editmodal{{ $item->id_role }}">
+                                                    <i class=" ri-edit-2-fill"></i>
                                                 </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a href="#!" class="dropdown-item"><i
-                                                                class="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                            View</a></li>
-                                                    <li><a class="dropdown-item edit-item-btn"><i
-                                                                class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit</a></li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                                <form method="POST" action="{{ route('destroy.role', $item->id_role) }}"
+                                                    id="delete-form" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button"
+                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
+                                                        onclick="deleteRole()">
+                                                        <i class="ri-delete-bin-2-fill"></i>
+                                                    </button>
+                                                </form>
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -111,72 +84,67 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalgridLabel">Grid Modals</h5>
+                    <h5 class="modal-title" id="exampleModalgridLabel">Add Role</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="javascript:void(0);">
+                    <form action="{{ route('store.role') }}" method="POST">
+                        @csrf
                         <div class="row g-3">
                             <div class="col-xxl-6">
                                 <div>
-                                    <label for="firstName" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" id="firstName" placeholder="Enter firstname">
+                                    <label for="nama_role" class="form-label">Nama Role</label>
+                                    <input type="text" class="form-control" id="nama_role" name="nama_role"
+                                        placeholder="Enter Nama Role">
                                 </div>
                             </div>
-                            <!--end col-->
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="lastName" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="lastName" placeholder="Enter lastname">
-                                </div>
-                            </div>
-                            <!--end col-->
-                            <div class="col-lg-12">
-                                <label class="form-label">Gender</label>
-                                <div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                            id="inlineRadio1" value="option1">
-                                        <label class="form-check-label" for="inlineRadio1">Male</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                            id="inlineRadio2" value="option2">
-                                        <label class="form-check-label" for="inlineRadio2">Female</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                            id="inlineRadio3" value="option3">
-                                        <label class="form-check-label" for="inlineRadio3">Others</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--end col-->
-                            <div class="col-xxl-6">
-                                <label for="emailInput" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="emailInput"
-                                    placeholder="Enter your email">
-                            </div>
-                            <!--end col-->
-                            <div class="col-xxl-6">
-                                <label for="passwordInput" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="passwordInput" value="451326546"
-                                    placeholder="Enter password">
-                            </div>
-                            <!--end col-->
                             <div class="col-lg-12">
                                 <div class="hstack gap-2 justify-content-end">
                                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
-                            <!--end col-->
                         </div>
-                        <!--end row-->
                     </form>
                 </div>
             </div>
         </div>
     </div>
     {{-- End Modal Tambah --}}
+
+    {{-- modal edit --}}
+    @foreach ($role as $item)
+        <div class="modal fade" id="editmodal{{ $item->id_role }}" tabindex="-1" aria-labelledby="editmodalLabel">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editmodalLabel">Add Role</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('update.role', $item->id_role) }}" method="POST">
+                            @csrf
+                            <div class="row g-3">
+                                <div class="col-xxl-12">
+                                    <div>
+                                        <label for="nama_role" class="form-label">Nama Role</label>
+                                        <input type="text" class="form-control" id="nama_role" name="nama_role"
+                                            value="{{ old('nama_role', $item->nama_role) }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="hstack gap-2 justify-content-end">
+                                        <button type="button" class="btn btn-light"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+    {{-- end modal edit --}}
 @endsection
