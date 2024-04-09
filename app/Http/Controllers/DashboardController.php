@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RoleModel;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index()
     {
+
+        $role = RoleModel::count();
         return view('dashboard', [
             'title' => 'Dashboard',
-            'act' => 'dashboard'
+            'act' => 'dashboard',
+            'role' => $role
         ]);
     }
 }

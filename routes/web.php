@@ -27,6 +27,7 @@ Route::controller(DashboardController::class)->group(function () {
 });
 Route::controller(App\Http\Controllers\Admin\DataUserController::class)->group(function () {
     Route::get('/data-users', 'index');
+    Route::post('/user/create', 'add')->name('user.create');
 });
 Route::controller(App\Http\Controllers\Admin\BiodataController::class)->group(function () {
     Route::get('/data-biodata', 'index')->name('index.biodata');

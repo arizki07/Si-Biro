@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('content')
-@include('components.alerts')
+    @include('components.alerts')
     <div class="page-content">
         <div class="container-fluid">
 
@@ -24,9 +24,9 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card">
+                    <div class="card bg-marketplace d-flex">
                         <div class="card-header">
-                            <h5 class="card-title mb-0">Table {{ $title; }}</h5>
+                            <h5 class="card-title mb-0">Table {{ $title }}</h5>
                             <div style="float: right;">
                                 <button type="button" class="btn btn-primary mr-2" data-bs-toggle="modal"
                                     data-bs-target="#exampleModalgrid">
@@ -72,10 +72,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php ($i = 1)
+                                    @php($i = 1)
                                     @foreach ($jadwal as $jad)
                                         <tr class="text-center">
-                                            <td>{{ $i++; }}</td>
+                                            <td>{{ $i++ }}</td>
                                             <td>JD-{{ $jad->nomor_jadwal }}</td>
                                             <td>{{ $jad->judul_jadwal }}</td>
                                             <td>Jadwal {{ $jad->tipe_jadwal }}</td>
@@ -114,7 +114,7 @@
                     <h5 class="modal-title" id="exampleModalgridLabel"><i class=" ri-book-mark-fill"></i> Add Jadwal</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body bg-marketplace d-flex">
                     <form action="javascript:void(0);">
                         <div class="row g-3">
                             <div class="col-xxl-6">
@@ -192,8 +192,8 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="type"
-                                                id="type1" value="add">
+                                            <input class="form-check-input" type="radio" name="type" id="type1"
+                                                value="add">
                                             <label class="form-check-label" for="type1">
                                                 Add
                                             </label>
@@ -201,8 +201,8 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="type"
-                                                id="type2" value="update">
+                                            <input class="form-check-input" type="radio" name="type" id="type2"
+                                                value="update">
                                             <label class="form-check-label" for="type2">
                                                 Update
                                             </label>
@@ -213,7 +213,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Pilih file excel (xlsx)</label>
-                            <input type="file" name="file" required="required" accept=".xlsx" class="form-control">
+                            <input type="file" name="file" required="required" accept=".xlsx"
+                                class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
