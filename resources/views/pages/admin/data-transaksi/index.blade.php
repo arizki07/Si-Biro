@@ -89,7 +89,7 @@
                     <h5 class="modal-title" id="exampleModalgridLabel">Grid Modals</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body bg-marketplace d-flex">
                     <form action="javascript:void(0);">
                         <div class="row g-3">
                             <div class="col-xxl-6">

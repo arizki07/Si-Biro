@@ -24,7 +24,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card">
+                    <div class="card bg-marketplace d-flex">
                         <div class="card-header">
                             <h5 class="card-title mb-0">Scroll - Horizontal</h5>
                             <button type="button" class="btn btn-primary" style="float: right" data-bs-toggle="modal"
@@ -65,10 +65,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php ($i = 1)
+                                    @php($i = 1)
                                     @foreach ($jamaah as $item)
                                         <tr>
-                                            <td>{{ $i++; }}</td>
+                                            <td>{{ $i++ }}</td>
                                             <td>{{ $item['nama_lengkap'] }}</td>
                                             <td>{{ $item['jk'] }}</td>
                                             <td>{{ $item['no_hp'] }}</td>
@@ -127,7 +127,9 @@
                                 <select name="id_role" id="id_role" class="form-select border border-dark">
                                     <option value="" hidden>-- Pilih Role --</option>
                                     @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}" {{ (old('id_role') == $role->id) ? 'selected' : '' }}>{{ $role->nama_role }}</option>
+                                        <option value="{{ $role->id }}"
+                                            {{ old('id_role') == $role->id ? 'selected' : '' }}>{{ $role->nama_role }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -136,7 +138,9 @@
                                 <select name="id_layanan" id="id_layanan" class="form-select border border-dark">
                                     <option value="" hidden>-- Pilih Layanan --</option>
                                     @foreach ($layanans as $layanan)
-                                        <option value="{{ $layanan->id }}" {{ (old('id_layanan') == $layanan->id) ? 'selected' : '' }}>{{ $layanan->nama_layanan }}</option>
+                                        <option value="{{ $layanan->id }}"
+                                            {{ old('id_layanan') == $layanan->id ? 'selected' : '' }}>
+                                            {{ $layanan->nama_layanan }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -156,8 +160,10 @@
                                         <label class="form-label">Jenis Kelamin</label>
                                         <select name="jk" id="gender" class="form-select border-dark">
                                             <option value="" hidden>-- Pilih Jenis Kelamin --</option>
-                                            <option value="Pria" {{ (old('jk') == 'Pria') ? 'selected' : '' }}>Pria</option>
-                                            <option value="Wanita" {{ (old('jk') == 'Wanita') ? 'selected' : '' }}>Wanita</option>
+                                            <option value="Pria" {{ old('jk') == 'Pria' ? 'selected' : '' }}>Pria
+                                            </option>
+                                            <option value="Wanita" {{ old('jk') == 'Wanita' ? 'selected' : '' }}>Wanita
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -174,14 +180,15 @@
                                     <div class="mb-3">
                                         <label class="form-label">Tempat Lahir</label>
                                         <input type="text" class="form-control border border-dark" name="tempat_lahir"
-                                            id="tempat_lahir" placeholder="Masukkan Tempat Lahir" value="{{ old('tempat_lahir') }}">
+                                            id="tempat_lahir" placeholder="Masukkan Tempat Lahir"
+                                            value="{{ old('tempat_lahir') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Tanggal Lahir</label>
                                         <input name="tgl_lahir" type="date" class="form-control border border-dark"
-                                            placeholder="YYYY-MM-DD" value="{{ old('tgl_lahir') }}"/>
+                                            placeholder="YYYY-MM-DD" value="{{ old('tgl_lahir') }}" />
                                     </div>
                                 </div>
                             </div>
@@ -197,7 +204,8 @@
                                     <div class="mb-3">
                                         <label class="form-label">Nomor HP Wali</label>
                                         <input type="text" class="form-control border border-dark" name="no_hp_wali"
-                                            id="no_hp_wali" placeholder="Masukkan Nomor HP Wali" value="{{ old('no_hp_wali') }}">
+                                            id="no_hp_wali" placeholder="Masukkan Nomor HP Wali"
+                                            value="{{ old('no_hp_wali') }}">
                                     </div>
                                 </div>
                             </div>
@@ -206,7 +214,8 @@
                                     <div class="mb-3">
                                         <label class="form-label">Nomor Rekening</label>
                                         <input type="text" class="form-control border border-dark" name="no_rekening"
-                                            id="no_rekening" placeholder="Masukkan Nomor Rekening" value="{{ old('no_rekening') }}">
+                                            id="no_rekening" placeholder="Masukkan Nomor Rekening"
+                                            value="{{ old('no_rekening') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -229,7 +238,8 @@
                                     <div class="mb-3">
                                         <label class="form-label">Nomor Passport</label>
                                         <input type="text" class="form-control border border-dark" name="no_passport"
-                                            id="no_passport" placeholder="Masukkan Nomor Passport" value="{{ old('no_passport') }}">
+                                            id="no_passport" placeholder="Masukkan Nomor Passport"
+                                            value="{{ old('no_passport') }}">
                                     </div>
                                 </div>
                             </div>
@@ -237,10 +247,13 @@
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Bank</label>
-                                        <select class="form-control border-dark" data-choices name="bank" id="choices-single-default">
+                                        <select class="form-control border-dark" data-choices name="bank"
+                                            id="choices-single-default">
                                             <option selected disabled>-- Pilih Bank --</option>
-                                            @foreach($json_bank as $bank)
-                                                <option value="{{ $bank['code'] }}-{{ $bank['name'] }}"  {{ (old('bank') == $bank['code'] .'-'. $bank['name']) ? 'selected' : '' }}>{{ $bank['name'] }}</option>
+                                            @foreach ($json_bank as $bank)
+                                                <option value="{{ $bank['code'] }}-{{ $bank['name'] }}"
+                                                    {{ old('bank') == $bank['code'] . '-' . $bank['name'] ? 'selected' : '' }}>
+                                                    {{ $bank['name'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -249,7 +262,8 @@
                                     <div class="mb-3">
                                         <label class="form-label">Berat Badan</label>
                                         <input type="text" class="form-control border border-dark" name="berat_badan"
-                                            id="berat_badan" placeholder="Masukkan Berat Badan" value="{{ old('berat_badan') }}">
+                                            id="berat_badan" placeholder="Masukkan Berat Badan"
+                                            value="{{ old('berat_badan') }}">
                                     </div>
                                 </div>
                             </div>
@@ -258,14 +272,16 @@
                                     <div class="mb-3">
                                         <label class="form-label">Tinggi Badan</label>
                                         <input type="text" class="form-control border border-dark" name="tinggi_badan"
-                                            id="tinggi_badan" placeholder="Masukkan Tinggi Badan" value="{{ old('tinggi_badan') }}">
+                                            id="tinggi_badan" placeholder="Masukkan Tinggi Badan"
+                                            value="{{ old('tinggi_badan') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Warna Kulit</label>
                                         <input type="text" class="form-control border border-dark" name="warna_kulit"
-                                            id="warna_kulit" placeholder="Masukkan Warna Kulit" value="{{ old('warna_kulit') }}">
+                                            id="warna_kulit" placeholder="Masukkan Warna Kulit"
+                                            value="{{ old('warna_kulit') }}">
                                     </div>
                                 </div>
                             </div>
@@ -274,14 +290,16 @@
                                     <div class="mb-3">
                                         <label class="form-label">Pekerjaan</label>
                                         <input type="text" class="form-control border border-dark" name="pekerjaan"
-                                            id="pekerjaan" placeholder="Masukkan Pekerjaan" value="{{ old('pekerjaan') }}">
+                                            id="pekerjaan" placeholder="Masukkan Pekerjaan"
+                                            value="{{ old('pekerjaan') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Pendidikan</label>
                                         <input type="text" class="form-control border border-dark" name="pendidikan"
-                                            id="pendidikan" placeholder="Masukkan Pendidikan" value="{{ old('pendidikan') }}">
+                                            id="pendidikan" placeholder="Masukkan Pendidikan"
+                                            value="{{ old('pendidikan') }}">
                                     </div>
                                 </div>
                             </div>
@@ -291,14 +309,16 @@
                                         <label class="form-label">Pernah Haji/Umroh</label>
                                         <input type="text" class="form-control border border-dark"
                                             name="pernah_haji_umroh" id="pernah_haji_umroh"
-                                            placeholder="Masukkan Pernah Haji/Umroh" value="{{ old('pernah_haji_umroh') }}">
+                                            placeholder="Masukkan Pernah Haji/Umroh"
+                                            value="{{ old('pernah_haji_umroh') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Kelurahan</label>
                                         <input type="text" class="form-control border border-dark" name="kelurahan"
-                                            id="kelurahan" placeholder="Masukkan Kelurahan" value="{{ old('kelurahan') }}">
+                                            id="kelurahan" placeholder="Masukkan Kelurahan"
+                                            value="{{ old('kelurahan') }}">
                                     </div>
                                 </div>
                             </div>
@@ -306,10 +326,13 @@
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Kecamatan</label>
-                                        <select class="form-control border-dark" data-choices name="kecamatan" id="choices-single-default">
+                                        <select class="form-control border-dark" data-choices name="kecamatan"
+                                            id="choices-single-default">
                                             <option selected disabled>-- Pilih Kecamatan --</option>
-                                            @foreach($json_kecamatan as $kecamatan)
-                                                <option value="{{ $kecamatan['kecamatan'] }}"  {{ (old('kecamatan') == $kecamatan['kecamatan']) ? 'selected' : '' }}>{{ $kecamatan['kecamatan'] }}</option>
+                                            @foreach ($json_kecamatan as $kecamatan)
+                                                <option value="{{ $kecamatan['kecamatan'] }}"
+                                                    {{ old('kecamatan') == $kecamatan['kecamatan'] ? 'selected' : '' }}>
+                                                    {{ $kecamatan['kecamatan'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -317,10 +340,13 @@
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Kota/Kabupaten</label>
-                                        <select class="form-control border-dark" data-choices name="kota_kabupaten" id="choices-single-default">
+                                        <select class="form-control border-dark" data-choices name="kota_kabupaten"
+                                            id="choices-single-default">
                                             <option selected disabled>-- Pilih Kota/Kabupaten --</option>
-                                            @foreach($json_kota as $kota)
-                                                <option value="{{ $kota['kota'] }}" {{ (old('kota_kabupaten') == $kota['kota']) ? 'selected' : '' }}>{{ $kota['kota'] }}</option>
+                                            @foreach ($json_kota as $kota)
+                                                <option value="{{ $kota['kota'] }}"
+                                                    {{ old('kota_kabupaten') == $kota['kota'] ? 'selected' : '' }}>
+                                                    {{ $kota['kota'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -330,10 +356,13 @@
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Provinsi</label>
-                                        <select class="form-control border-dark" data-choices name="provinsi" id="choices-single-default">
+                                        <select class="form-control border-dark" data-choices name="provinsi"
+                                            id="choices-single-default">
                                             <option selected disabled>-- Pilih Provinsi --</option>
-                                            @foreach($json_provinsi as $prov)
-                                                <option value="{{ $prov['provinsi'] }}"  {{ (old('provinsi') == $prov['provinsi']) ? 'selected' : '' }}>{{ $prov['provinsi'] }}</option>
+                                            @foreach ($json_provinsi as $prov)
+                                                <option value="{{ $prov['provinsi'] }}"
+                                                    {{ old('provinsi') == $prov['provinsi'] ? 'selected' : '' }}>
+                                                    {{ $prov['provinsi'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -342,7 +371,8 @@
                                     <div class="mb-3">
                                         <label class="form-label">Kode Pos</label>
                                         <input type="text" class="form-control border border-dark" name="kode_pos"
-                                            id="kode_pos" placeholder="Masukkan Kode Pos" value="{{ old('kode_pos') }}">
+                                            id="kode_pos" placeholder="Masukkan Kode Pos"
+                                            value="{{ old('kode_pos') }}">
                                     </div>
                                 </div>
                             </div>
@@ -356,14 +386,16 @@
                                     <div class="mb-3">
                                         <label class="form-label">Warga Negara</label>
                                         <input type="text" class="form-control border border-dark" name="warga_negara"
-                                            id="warga_negara" placeholder="Masukkan Warga Negara" value="{{ old('warga_negara') }}">
+                                            id="warga_negara" placeholder="Masukkan Warga Negara"
+                                            value="{{ old('warga_negara') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Golongan Darah</label>
                                         <input type="text" class="form-control border border-dark" name="gol_darah"
-                                            id="gol_darah" placeholder="Masukkan Golongan Darah" value="{{ old('gol_darah') }}">
+                                            id="gol_darah" placeholder="Masukkan Golongan Darah"
+                                            value="{{ old('gol_darah') }}">
                                     </div>
                                 </div>
                             </div>

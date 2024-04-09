@@ -1,11 +1,25 @@
 @extends('layout.main')
 @section('content')
+    @include('components.alerts')
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0">Datatables</h4>
+
+                        <div class="page-title-right">
+                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#adduser"><i class="ri-user-add-fill"></i> Add Users</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body bg-marketplace d-flex">
                             <div class="row align-items-center">
                                 <div class="col-auto">
                                     <div class="avatar-md">
@@ -158,4 +172,66 @@
         </div><!-- /.modal-dialog -->
     </div>
     {{-- End Modal edit --}}
+
+    {{-- Modal Add --}}
+    <div id="adduser" class="modal fade fadeInLeft" tabindex="-1" aria-labelledby="adduserLabel" aria-hidden="true"
+        style="display: none;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="adduserLabel">Add Data Users</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('user.create') }}" method="post">
+                        @csrf <!-- Laravel memerlukan token CSRF untuk form POST -->
+                        <div class="row g-3">
+                            <div class="col-xxl-6">
+                                <div>
+                                    <label for="nama" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="namaInput"
+                                        placeholder="Enter Username" name="nama" required>
+                                </div>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="emailInput1"
+                                    placeholder="Enter your email" name="email" required>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label for="role" class="form-label">Role</label>
+                                <select class="form-select mb-3" id="roleSelect" name="id_role" required>
+                                    <option selected disabled>-- Pilih Role --</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id_role }}">{{ $role->nama_role }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label for="status" class="form-label">Status</label>
+                                <select class="form-select mb-3" id="statusSelect" name="status" required>
+                                    <option selected disabled>-- Select Status --</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label for="passwordInput" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="passwordInput1"
+                                    placeholder="Enter password" name="password" required>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 @endsection
