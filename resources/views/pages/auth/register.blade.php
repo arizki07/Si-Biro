@@ -64,11 +64,11 @@
 
                             <div class="card-body p-4">
                                 <div class="text-center mt-2">
-                                    <h5 class="text-primary">Welcome Back !</h5>
-                                    <p class="text-muted">Sign in to continue to Velzon.</p>
+                                    {{-- <h5 class="text-primary">Welcome Back !</h5> --}}
+                                    <h5 class="text-primary">You Create Account !</h5>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    <form action="{{ route('login') }}" method="POST">
+                                    <form action="{{ route('register') }}" method="POST">
                                         @csrf
                                         @if ($errors->any())
                                             <div class="alert alert-danger">
@@ -80,9 +80,15 @@
                                             </div>
                                         @endif
                                         <div class="mb-3">
+                                            <label for="nama" class="form-label">Nama</label>
+                                            <input type="nama" class="form-control" id="nama" name="nama"
+                                                placeholder="nama" required>
+                                        </div>
+
+                                        <div class="mb-3">
                                             <label for="email" class="form-label">Email</label>
                                             <input type="email" class="form-control" id="email" name="email"
-                                                placeholder="example@gmail.com">
+                                                value="{{ old('email') }}" placeholder="example@gmail.com" required>
                                         </div>
 
                                         <div class="mb-3">
@@ -139,8 +145,8 @@
                         <!-- end card -->
 
                         <div class="mt-4 text-center">
-                            <p class="mb-0">Don't have an account ? <a href="{{ route('register') }}"
-                                    class="fw-semibold text-primary text-decoration-underline"> Signup </a> </p>
+                            <p class="mb-0">Already have an Account? <a href="{{ route('login') }}"
+                                    class="fw-semibold text-primary text-decoration-underline"> SIgn In </a> </p>
                         </div>
 
                     </div>

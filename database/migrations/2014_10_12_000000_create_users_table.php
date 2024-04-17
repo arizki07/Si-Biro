@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('email')->unique();
             $table->unsignedBigInteger('id_role');
+            $table->string('otp_register')->nullable();
             $table->string('password');
             $table->string('status');
             $table->timestamps();
