@@ -25,7 +25,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card">
+                    <div class="card bg-marketplace d-flex">
                         <div class="card-header">
                             <h5 class="card-title mb-0">Basic Datatables</h5>
                             <button type="button" class="btn btn-primary" style="float: right" data-bs-toggle="modal"
@@ -33,7 +33,7 @@
                                 <i class=" ri-user-add-fill"></i> Tambah Data Role
                             </button>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body ">
                             <table id="example"
                                 class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap"
                                 style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
@@ -87,7 +87,7 @@
                     <h5 class="modal-title" id="exampleModalgridLabel">Add Role</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body bg-marketplace d-flex">
                     <form action="{{ route('store.role') }}" method="POST">
                         @csrf
                         <div class="row g-3">
@@ -121,7 +121,7 @@
                         <h5 class="modal-title" id="editmodalLabel">Add Role</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body bg-marketplace d-flex">
                         <form action="{{ route('update.role', $item->id_role) }}" method="POST">
                             @csrf
                             <div class="row g-3">

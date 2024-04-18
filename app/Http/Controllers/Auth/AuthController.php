@@ -7,7 +7,10 @@ use App\Models\RoleModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+// <<<<<<< login
 use Illuminate\Support\Facades\Session;
+// =======
+// >>>>>>> main
 
 class AuthController extends Controller
 {
@@ -16,13 +19,18 @@ class AuthController extends Controller
         return view('pages.auth.login');
     }
 
+// <<<<<<< login
     public function login(Request $request)
+// =======
+//     public function authenticate(Request $request)
+// >>>>>>> main
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+//         $credentials = $request->validate([
+//             'email' => ['required', 'email'],
+//             'password' => ['required'],
+//         ]);
 
+// <<<<<<< login
         $email = $credentials['email'];
         $password = $credentials['password'];
 
@@ -119,5 +127,16 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect()->route('login');
+// // =======
+//         if (Auth::attempt($credentials)) {
+//             $request->session()->regenerate();
+
+//             return redirect()->intended('dashboard');
+//         }
+
+//         return back()->withErrors([
+//             'email' => 'The provided credentials do not match our records.',
+//         ])->onlyInput('email');
+// >>>>>>> main
     }
 }
