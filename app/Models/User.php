@@ -17,14 +17,25 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+// <<<<<<< login
+//     protected $primaryKey = 'id_user';
+
+// =======
     protected $table = 'users';
     protected $primaryKey = 'id_user';
+// >>>>>>> main
     protected $fillable = [
         'nama',
         'email',
         'password',
+// <<<<<<< login
+        'otp_register',
+        'status',
         'id_role',
-        'status'
+// =======
+//         'id_role',
+//         'status'
+// >>>>>>> main
     ];
 
     /**
@@ -46,4 +57,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo(RoleModel::class, 'id_role');
+    }
 }
