@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Imports;
+namespace App\Imports\Jadwal\Add;
 
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -52,6 +52,7 @@ class UraianJadwalImport implements ToModel, WithStartRow
             'jam_mulai_passport' => $jam_mulai_passport,
             'jam_selesai_passport' => $jam_selesai_passport,
             'tempat_pembuatan_passport' => $row[15],
+            'flag_update' => $row[16],
         ]);
         // dd ($model); die;
     }

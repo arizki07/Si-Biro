@@ -28,5 +28,6 @@ class UraianJadwalModel extends Model
         'jam_mulai_bimbingan',
         'jam_selesai_bimbingan',
         'tempat_pembuatan_passport',
+        'flag_update'
     ];
 }

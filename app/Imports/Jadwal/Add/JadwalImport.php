@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Imports;
+namespace App\Imports\Jadwal\Add;
 
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -28,6 +28,16 @@ class JadwalImport implements ToModel, WithStartRow
         //     throw new \Exception("Nomor Layanan Tidak Ditemukan.");
         // }
 
+        if (JadwalModel::where('id_layanan', $row[0])->exists()) {
+            throw new \Exception("Nomor layanan Sudah Ada Dalam Database.");
+            return null;
+        }
+
+        if (JadwalModel::where('nomor_jadwal', $row[1])->exists()) {
+            throw new \Exception("Nomor Jadwal Sudah Ada Dalam Database.");
+            return null;
+        }
+
         $model = new JadwalModel([
             'id_layanan' => $row[0],
             'nomor_jadwal' => $row[1],
@@ -36,6 +46,7 @@ class JadwalImport implements ToModel, WithStartRow
             'jangka_waktu' => $row[4],
             'tgl_mulai' => $tgl_mulai->toDateString(),
             'tgl_selesai' => $tgl_selesai->toDateString(),
+            'flag_update' => $row[7],
         ]);
         // dd ($model); die;
         $model->save();

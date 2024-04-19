@@ -178,7 +178,7 @@
     <div class="modal modal-blur fade" id="importExcel" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form method="post" action="{{ route('import') }}?type=upload_jadwal" enctype="multipart/form-data">
+            <form method="post" action="{{ route('import') }}?proses=upload_jadwal" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">

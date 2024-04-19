@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Imports;
+namespace App\Imports\Jadwal\Add;
 
 // use Illuminate\Support\Collection;
 // use Maatwebsite\Excel\Concerns\Importable;
