@@ -331,11 +331,11 @@
         </div>
     </div>
 
-    <script>
+    {{-- <script>
         // Periksa apakah ada pesan sukses dalam session
         @if (session('success'))
             // Tampilkan pesan alert
             alert("{{ session('success') }}");
         @endif
-    </script>
+    </script> --}}
 @endsection

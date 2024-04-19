@@ -25,10 +25,10 @@ class AuthController extends Controller
 //     public function authenticate(Request $request)
 // >>>>>>> main
     {
-//         $credentials = $request->validate([
-//             'email' => ['required', 'email'],
-//             'password' => ['required'],
-//         ]);
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
 // <<<<<<< login
         $email = $credentials['email'];
@@ -45,11 +45,12 @@ class AuthController extends Controller
                     $user = Auth::user();
 
                     if ($user->role) {
-                        return redirect()->route('dashboard')
-                            ->withSuccess('You have successfully logged in!');
+                        // return view('dashboard');
+                        return redirect()->route('dashboard');
+                            // ->withSuccess('You have successfully logged in!');
                     }
 
-                    return redirect()->intended('/');
+                    // return redirect()->intended('/');
                 } else {
                     $failedAttempts = $request->session()->get('failed_attempts', 0);
                     $failedAttempts++;
