@@ -12,10 +12,12 @@ class DataUserController extends Controller
     public function index()
     {
         $roles = RoleModel::all();
+        $users = User::all();
         return view('pages.admin.data-user.index', [
             'title' => 'Data Users',
             'act' => 'users',
             'roles' => $roles,
+            'users' => $users,
         ]);
     }
 

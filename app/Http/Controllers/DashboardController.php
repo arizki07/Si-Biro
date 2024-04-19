@@ -17,6 +17,10 @@ class DashboardController extends Controller
 // =======
 
         $role = RoleModel::count();
+        return view('dashboard', [
+            'role' => $role,
+            'act' => 'dashboard',
+        ]);
 // >>>>>>> main
 //         return view('dashboard', [
 //             'title' => 'Dashboard',

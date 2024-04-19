@@ -17,43 +17,93 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body bg-marketplace d-flex">
-                            <div class="row align-items-center">
-                                <div class="col-auto">
-                                    <div class="avatar-md">
-                                        <img src="assets/images/users/avatar-1.jpg" alt="user-img"
-                                            class="img-thumbnail rounded-circle" />
+                @if (!$users)
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body bg-marketplace d-flex">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <div class="avatar-md">
+                                            <img src="assets/images/users/avatar-1.jpg" alt="user-img"
+                                                class="img-thumbnail rounded-circle" />
+                                        </div>
                                     </div>
-                                </div>
-                                <!--end col-->
-                                <div class="col">
-                                    <div class="p-2">
-                                        <h3 class="mb-1">Anna Adame</h3>
-                                        <p class="text-muted">Owner & Founder</p>
-                                        <div class="d-flex align-items-center text-muted">
-                                            <i class="ri-map-pin-user-line me-1 fs-16"></i>
-                                            <span>California, United States</span>
-                                        </div>
-                                        <div class="d-flex align-items-center text-muted">
-                                            <i class="ri-building-line me-1 fs-16"></i>
-                                            <span>Themesbrand</span>
-                                        </div>
-                                        <div class="mt-3">
-                                            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#viewUser"><i class="ri-eye-fill"></i></button>
-                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#editUser"><i class=" ri-edit-2-fill"></i></button>
-                                            <button class="btn btn-danger btn-sm"><i
-                                                    class=" ri-delete-bin-6-fill"></i></button>
+                                    <!--end col-->
+                                    <div class="col">
+                                        <div class="p-2">
+                                            <h3 class="mb-1">Data Tidak Ada</h3>
+                                            <p class="text-muted"></p>
+                                            <div class="d-flex align-items-center text-muted">
+                                                <i class="ri-map-pin-user-line me-1 fs-16"></i>
+                                                <span></span>
+                                            </div>
+                                            <div class="d-flex align-items-center text-muted">
+                                                <i class="ri-building-line me-1 fs-16"></i>
+                                                <span></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @else
+                    @foreach ($users as $item)
+                        @foreach ($roles as $role)
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body bg-marketplace d-flex">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="avatar-md">
+                                                <img src="assets/images/users/avatar-1.jpg" alt="user-img"
+                                                    class="img-thumbnail rounded-circle" />
+                                            </div>
+                                        </div>
+                                        <!--end col-->
+                                        <div class="col">
+                                            <div class="p-2">
+                                                <h3 class="mb-1">{{ $item->nama }}</h3>
+                                                <p class="text-muted">{{ $item->email }}</p>
+                                                <div class="d-flex align-items-center text-muted">
+                                                    <i class="ri-map-pin-user-line me-1 fs-16"></i>
+                                                    <span>
+                                                        @if ($item->id_role == $role->id_role)
+                                                            Role {{ $role->nama_role }}
+                                                        @else
+                                                            Role Tidak Ada
+                                                        @endif
+                                                    </span>
+                                                </div>
+                                                <div class="d-flex align-items-center text-muted">
+                                                    <i class="ri-building-line me-1 fs-16"></i>
+                                                    <span>
+                                                        @if ($item->status == 1)
+                                                            Akun Aktif
+                                                        @elseif ($item->status == 2)
+                                                        Akun Nonaktif
+                                                        @else
+                                                        Akun Ter-Blokir
+                                                        @endif
+                                                    </span>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+                                                        data-bs-target="#viewUser"><i class="ri-eye-fill"></i></button>
+                                                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                                                        data-bs-target="#editUser"><i class=" ri-edit-2-fill"></i></button>
+                                                    <button class="btn btn-danger btn-sm"><i
+                                                            class=" ri-delete-bin-6-fill"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>
@@ -183,7 +233,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('user.create') }}" method="post">
+                    <form action="" method="post">
                         @csrf <!-- Laravel memerlukan token CSRF untuk form POST -->
                         <div class="row g-3">
                             <div class="col-xxl-6">
