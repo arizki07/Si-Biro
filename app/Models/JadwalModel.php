@@ -18,6 +18,7 @@ class JadwalModel extends Model
         'tipe_jadwal',
         'jangka_waktu',
         'tgl_mulai',
-        'tgl_selesai'
+        'tgl_selesai',
+        'flag_update'
     ];
 }

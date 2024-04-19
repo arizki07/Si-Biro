@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('jangka_waktu', 20); // dalam bentuk hari INT cth : 3 berarti 3 hari
             $table->date('tgl_mulai');
             $table->date('tgl_selesai');
+            $table->string('flag_update', 15);
             $table->timestamps();
 
             $table->foreign('id_layanan')->references('id_layanan')->on('t_layanan');
