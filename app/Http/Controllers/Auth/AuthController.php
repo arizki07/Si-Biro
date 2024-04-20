@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OtpVerificationMail;
 use App\Models\RoleModel;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// <<<<<<< login
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-// =======
-// >>>>>>> main
 
 class AuthController extends Controller
 {
@@ -19,18 +19,14 @@ class AuthController extends Controller
         return view('pages.auth.login');
     }
 
-// <<<<<<< login
     public function login(Request $request)
-// =======
-//     public function authenticate(Request $request)
-// >>>>>>> main
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
-// <<<<<<< login
+        // <<<<<<< login
         $email = $credentials['email'];
         $password = $credentials['password'];
 
@@ -47,7 +43,7 @@ class AuthController extends Controller
                     if ($user->role) {
                         // return view('dashboard');
                         return redirect()->route('dashboard');
-                            // ->withSuccess('You have successfully logged in!');
+                        // ->withSuccess('You have successfully logged in!');
                     }
 
                     // return redirect()->intended('/');
@@ -80,26 +76,48 @@ class AuthController extends Controller
     public function registerPost(Request $request)
     {
         $validatedData = $this->validate($request, [
-            'nama'                   => 'required|unique:users,nama',
-            'email'                  => 'required|email|unique:users,email',
-            'password'               => 'required'
+            'nama'     => 'required|unique:users,nama',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|min:8'
         ]);
 
-        $defaultRole = RoleModel::where('nama_role', 'user')->first();
+        $defaultRole = RoleModel::where('id_role', 2)->first();
 
-        $validatedData['otp_register'] = random_int(1000, 9999);
+        if (!$defaultRole) {
+            $defaultRole = new RoleModel();
+            $defaultRole->id_role = 2;
+            $defaultRole->nama_role = 'Jamaah';
+            $defaultRole->save();
+        }
+
+        $otpExpiry = now()->addMinutes(3);
+
+        $otp = random_int(1000, 9999);
+
+        $validatedData['otp_register'] = $otp;
         $validatedData['password'] = bcrypt($request->password);
-        $validatedData['id_role'] = $defaultRole->id_role;
+        $validatedData['status'] = 1;
+        $validatedData['id_role'] = 2;
+        $validatedData['otp_expiry'] = $otpExpiry; // Atur waktu kedaluwarsa OTP
 
-        User::create($validatedData);
-        Auth::attempt($request->only('email', 'password'));
+        $user = User::create($validatedData);
 
-        return redirect()->route('otpVerification');
+        if ($user) {
+            Mail::to($user->email)->send(new OtpVerificationMail($user->otp_register));
+            Auth::attempt($request->only('email', 'password'));
+            return redirect()->route('otpVerification');
+        } else {
+            return back()->withErrors(['error' => 'Registrasi gagal.']);
+        }
     }
 
     public function otpVerification()
     {
-        return view('pages.auth.otp');
+        if (Auth::check()) {
+            return view('pages.auth.otp');
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     public function otpVerificationPost(Request $request)
@@ -110,34 +128,54 @@ class AuthController extends Controller
 
         $user = Auth::user();
 
-        if ($user->otp_register === $request->otp_register) {
-            // Verifikasi sukses
+        $otpExpiry = Carbon::parse($user->otp_expiry); // Ubah string menjadi objek Carbon
+
+        if ($otpExpiry->isPast()) {
+            // Jika OTP telah kedaluwarsa, buat OTP baru dan kirim ulang email
+            $user->otp_register = random_int(1000, 9999);
+            $user->otp_expiry = Carbon::now()->addMinutes(3);
+            $user->save();
+
+            Mail::to($user->email)->send(new OtpVerificationMail($user->otp_register));
+
+            Session::flash('Error', 'Kode OTP telah kedaluwarsa. Kode OTP baru telah dikirim ulang.');
+            return view('pages.auth.otp_expired');
+        }
+
+        if ($user->otp_register == $request->otp_register) {
             $user->otp_register = null;
             $user->save();
 
             Session::flash('Success', 'Verifikasi OTP berhasil.');
             return redirect()->route('dashboard');
+        } else {
+            // Session::flash('Error', 'Kode OTP tidak valid.');
+            // return back();
+            return redirect()->back()->withErrors(['Error' => 'Kode OTP tidak valid']);
         }
+    }
 
-        return back()->withErrors([
-            'otp' => 'Kode OTP tidak valid.',
-        ]);
+    public function generateNewOTP(Request $request)
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $user->otp_register = random_int(1000, 9999);
+            $user->otp_expiry = Carbon::now()->addMinutes(3); // Atur waktu kedaluwarsa 3 menit dari sekarang
+            $user->save();
+
+            Mail::to($user->email)->send(new OtpVerificationMail($user->otp_register));
+
+            Session::flash('Success', 'Kode OTP baru telah dikirim.');
+            return redirect()->route('otpVerification');
+        } else {
+            // Pengguna belum diotentikasi, arahkan ke halaman login
+            return redirect()->route('login');
+        }
     }
 
     public function logout()
     {
         Auth::logout();
         return redirect()->route('login');
-// // =======
-//         if (Auth::attempt($credentials)) {
-//             $request->session()->regenerate();
-
-//             return redirect()->intended('dashboard');
-//         }
-
-//         return back()->withErrors([
-//             'email' => 'The provided credentials do not match our records.',
-//         ])->onlyInput('email');
-// >>>>>>> main
     }
 }
