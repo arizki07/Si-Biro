@@ -11,11 +11,10 @@
                             <div class="col-12">
                                 <div class="d-flex align-items-lg-center flex-lg-row flex-column">
                                     <div class="flex-grow-1">
-                                        <h4 class="fs-16 mb-1">Good Morning, Anna!</h4>
-                                        <p class="text-muted mb-0">Here's what's happening with your store
-                                            today.</p>
+                                        <h4 class="fs-16 mb-1" id="greeting"></h4>
+                                        <p class="text-muted mb-0">Here's what's happening with your store today.</p>
                                     </div>
-                                    <div class="mt-3 mt-lg-0">
+                                    <div class="mt-3 mt-lg-0" id="dateTimeSection">
                                         <form action="javascript:void(0);">
                                             <div class="row g-3 mb-0 align-items-center">
                                                 <div class="col-sm-auto">
@@ -36,6 +35,40 @@
                                 </div>
                             </div>
                         </div>
+                        <script>
+                            function getGreeting() {
+                                const currentDate = new Date();
+                                const currentHour = currentDate.getHours();
+
+                                if (currentHour >= 5 && currentHour < 12) {
+                                    return "Good morning, {{ Auth::user()->nama }}!";
+                                } else if (currentHour >= 12 && currentHour < 18) {
+                                    return "Good afternoon, {{ Auth::user()->nama }}!";
+                                } else {
+                                    return "Good evening, {{ Auth::user()->nama }}!";
+                                }
+                            }
+
+                            function updateGreeting() {
+                                document.getElementById('greeting').innerText = getGreeting();
+                            }
+
+                            function updateTime() {
+                                const currentDate = new Date();
+                                const formattedDate = currentDate.toLocaleString('en-US', {
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                    hour12: true
+                                });
+                                document.getElementById('currentTime').innerText = formattedDate;
+                            }
+
+                            updateGreeting(); // Update greeting immediately
+                            updateTime(); // Update time immediately
+
+                            setInterval(updateGreeting, 3600000); // Update greeting every hour (3600000 milliseconds)
+                            setInterval(updateTime, 60000); // Update time every minute (60000 milliseconds)
+                        </script>
 
                         {{-- Card Atas --}}
                         <div class="row">
@@ -43,10 +76,12 @@
                                 <div class="card overflow-hidden">
                                     <div class="card-body bg-marketplace d-flex">
                                         <div class="flex-grow-1">
-                                            <h4 class="fs-18 lh-base mb-0">Discover, Collect, Sell and Create <br> your own
+                                            <h4 class="fs-18 lh-base mb-0">Discover, Collect, Sell and Create
+                                                <br> your own
                                                 <span class="text-success">NFTs.</span>
                                             </h4>
-                                            <p class="mb-0 mt-2 pt-1 text-muted">The world's first and largest digital
+                                            <p class="mb-0 mt-2 pt-1 text-muted">The world's first and largest
+                                                digital
                                                 marketplace.</p>
                                             <div class="d-flex gap-3 mt-4">
                                                 <a href="" class="btn btn-primary">Discover Now </a>
@@ -92,7 +127,8 @@
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span class="counter-value"
                                                         data-target="559.25">0</span>k
                                                 </h4>
-                                                <a href="" class="text-decoration-underline">Data Users</a>
+                                                <a href="" class="text-decoration-underline">Data
+                                                    Users</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-primary rounded fs-3">
@@ -123,7 +159,8 @@
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
                                                         data-target="{{ $role }}"></span>
                                                 </h4>
-                                                <a href="" class="text-decoration-underline">Data Role</a>
+                                                <a href="" class="text-decoration-underline">Data
+                                                    Role</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-info rounded fs-3">
@@ -155,7 +192,8 @@
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
                                                         data-target="183.35">0</span>M
                                                 </h4>
-                                                <a href="" class="text-decoration-underline">Data Biodata</a>
+                                                <a href="" class="text-decoration-underline">Data
+                                                    Biodata</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-primary rounded fs-3">
@@ -186,7 +224,8 @@
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span
                                                         class="counter-value" data-target="165.89">0</span>k
                                                 </h4>
-                                                <a href="" class="text-decoration-underline">Data Transaksi</a>
+                                                <a href="" class="text-decoration-underline">Data
+                                                    Transaksi</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-info rounded fs-3">
@@ -219,7 +258,8 @@
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span
                                                         class="counter-value" data-target="559.25">0</span>k
                                                 </h4>
-                                                <a href="" class="text-decoration-underline">Data Jadwal</a>
+                                                <a href="" class="text-decoration-underline">Data
+                                                    Jadwal</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-primary rounded fs-3">
@@ -250,7 +290,8 @@
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
                                                         class="counter-value" data-target="36894">0</span>
                                                 </h4>
-                                                <a href="" class="text-decoration-underline">Data Arsip</a>
+                                                <a href="" class="text-decoration-underline">Data
+                                                    Arsip</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-info rounded fs-3">
@@ -282,7 +323,8 @@
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
                                                         class="counter-value" data-target="183.35">0</span>M
                                                 </h4>
-                                                <a href="" class="text-decoration-underline">Data Keuangan</a>
+                                                <a href="" class="text-decoration-underline">Data
+                                                    Keuangan</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-primary rounded fs-3">
@@ -313,7 +355,8 @@
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span
                                                         class="counter-value" data-target="165.89">0</span>k
                                                 </h4>
-                                                <a href="" class="text-decoration-underline">Data Layanan</a>
+                                                <a href="" class="text-decoration-underline">Data
+                                                    Layanan</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-info rounded fs-3">
