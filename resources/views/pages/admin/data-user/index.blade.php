@@ -24,7 +24,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-auto">
                                         <div class="avatar-md">
-                                            <img src="assets/images/users/avatar-1.jpg" alt="user-img"
+                                            <img src="{{asset('assets/images/users/avatar-1.jpg')}}" alt="user-img"
                                                 class="img-thumbnail rounded-circle" />
                                         </div>
                                     </div>
@@ -56,7 +56,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <div class="avatar-md">
-                                                <img src="assets/images/users/avatar-1.jpg" alt="user-img"
+                                                <img src="{{asset('assets/images/users/avatar-1.jpg')}}" alt="user-img"
                                                     class="img-thumbnail rounded-circle" />
                                             </div>
                                         </div>
