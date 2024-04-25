@@ -15,6 +15,39 @@
                 </div>
             </div>
             <div class="row">
+                @if (!$users)
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body bg-marketplace d-flex">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <div class="avatar-md">
+                                            <img src="{{asset('assets/images/users/avatar-1.jpg')}}" alt="user-img"
+                                                class="img-thumbnail rounded-circle" />
+                                        </div>
+                                    </div>
+                                    <!--end col-->
+                                    <div class="col">
+                                        <div class="p-2">
+                                            <h3 class="mb-1">Data Tidak Ada</h3>
+                                            <p class="text-muted"></p>
+                                            <div class="d-flex align-items-center text-muted">
+                                                <i class="ri-map-pin-user-line me-1 fs-16"></i>
+                                                <span></span>
+                                            </div>
+                                            <div class="d-flex align-items-center text-muted">
+                                                <i class="ri-building-line me-1 fs-16"></i>
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    @foreach ($users as $item)
+                        @foreach ($roles as $role)
                 @if (!$users->isEmpty())
                     @foreach ($users as $user)
                         <div class="col-md-4">
@@ -23,7 +56,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <div class="avatar-md">
-                                                <img src="assets/images/users/avatar-1.jpg" alt="user-img"
+                                                <img src="{{asset('assets/images/users/avatar-1.jpg')}}" alt="user-img"
                                                     class="img-thumbnail rounded-circle" />
                                             </div>
                                         </div>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\JadwalModel;
-use App\Models\uraianJadwalModel;
+use App\Models\UraianJadwalModel;
 
 class JadwalController extends Controller
 {
@@ -16,6 +16,15 @@ class JadwalController extends Controller
             'act' => 'jadwal',
             'jadwal' => JadwalModel::all(),
             'URJadwal' => UraianJadwalModel::all()
+        ]);
+    }
+
+    public function view($id)
+    {
+        return view('pages.admin.data-jadwal.view', [
+            'jadwals' => JadwalModel::findOrFail($id),
+            'URjadwals' => UraianJadwalModel::all(),
+            'act' => 'layanan',
         ]);
     }
 }
