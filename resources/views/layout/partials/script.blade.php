@@ -41,3 +41,79 @@
 <script src="{{asset('assets/js/pages/sweetalerts.init.js')}}"></script>
 <!-- App js -->
 <script src="{{asset('assets/js/app.js')}}"></script>
+
+{{-- Sweetalert2 --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // if has message msg-error
+    @if (session('msg-error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('msg-error') }}',
+        });
+    @endif
+
+    // if has message msg-success
+    @if (session('msg-success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '{{ session('msg-success') }}',
+        });
+    @endif
+
+    @if ($errors->any())
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Ada kesalahan dalam pengisian form',
+            html: '<ul class="text-left">' +
+                @foreach ($errors->all() as $error)
+                    '<li>{{ $error }}</li>' +
+                @endforeach
+            '</ul>',
+        });
+    @endif
+
+    function areYouSureDelete(url) {
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Data yang dihapus tidak dapat dikembalikan!",
+            icon: 'warning',
+            html: `<form action="${url}" method="POST" id="delete-form">
+                 @csrf
+                 @method('DELETE')
+             </form>`,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form').submit();
+            }
+        });
+    }
+</script>
+
+{{-- select2 --}}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<!-- Styles -->
+<link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+<!-- Or for RTL support -->
+<link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
+
+<script>
+    $(".freesolo").select2({
+        tags: true,
+        theme: "bootstrap-5",
+    });
+    $(".select2").select2({
+        theme: "bootstrap-5",
+    });
+</script>
