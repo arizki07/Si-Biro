@@ -48,6 +48,7 @@
                 @else
                     @foreach ($users as $item)
                         @foreach ($roles as $role)
+
                 @if (!$users->isEmpty())
                     @foreach ($users as $user)
                         <div class="col-md-4">
@@ -107,13 +108,18 @@
                                                             <i class="ri-delete-bin-2-fill"></i>
                                                         </button>
                                                     </form>
+
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                        @endforeach
+
                         </div>
+
                     @endforeach
                 @else
                     <div class="col-md-4">

@@ -11,5 +11,23 @@ class Keuangan extends Model
 
     protected $table = 't_keuangan';
     protected $primaryKey = 'id_keuangan';
-    protected $guarded = [];
+    protected $fillable = [
+        'id_jamaah',
+        'id_transaksi',
+        'pembayaran',
+        'tipe_keuangan',
+    ];
+
+    public function jamaah()
+    {
+        return $this->belongsTo(JamaahModel::class, 'id_jamaah');
+    }
+
+    /**
+     * Get the transaksi that owns the keuangan.
+     */
+    public function transaksi()
+    {
+        return $this->belongsTo(Transaksi::class, 'id_transaksi');
+    }
 }

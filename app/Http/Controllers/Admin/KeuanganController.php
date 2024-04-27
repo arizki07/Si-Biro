@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\JamaahModel;
+use App\Models\Keuangan;
+use App\Models\Transaksi;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class KeuanganController extends Controller
@@ -12,7 +16,14 @@ class KeuanganController extends Controller
      */
     public function index()
     {
+        $keuangan = Keuangan::all();
+        $jamaahs = JamaahModel::all();
+        $transaksi = Transaksi::all();
+
         return view('pages.admin.data-keuangan.index', [
+            'keuangan' => $keuangan,
+            'jamaahs' => $jamaahs,
+            'transaksi' => $transaksi,
             'title' => 'Data Keuangan',
             'act' => 'keuangan',
         ]);
@@ -31,13 +42,26 @@ class KeuanganController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $validatedData = $request->validate([
+                'id_jamaah' => 'required|exists:t_jamaah,id_jamaah',
+                'id_transaksi' => 'required|exists:t_transaksi,id_transaksi',
+                'pembayaran' => 'required|string',
+                'tipe_keuangan' => 'required|string|in:DP,CICILAN,PELUNASAN',
+            ]);
+
+            Keuangan::create($validatedData);
+
+            return redirect()->back()->with('success', 'Data Keuangan telah berhasil ditambahkan.');
+        } catch (QueryException $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data Keuangan. Silakan coba lagi.');
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, Keuangan $keuangan)
     {
         //
     }
@@ -45,7 +69,7 @@ class KeuanganController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Keuangan $keuangan)
     {
         //
     }
@@ -53,16 +77,36 @@ class KeuanganController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $validatedData = $request->validate([
+                'id_jamaah' => 'required|exists:t_jamaah,id_jamaah',
+                'id_transaksi' => 'required|exists:t_transaksi,id_transaksi',
+                'pembayaran' => 'required|string',
+                'tipe_keuangan' => 'required|string|in:CICILAN,PELUNASAN',
+            ]);
+
+            $keuangan = Keuangan::findOrFail($id);
+            $keuangan->update($validatedData);
+
+            return redirect()->back()->with('success', 'Data keuangan berhasil diperbarui.');
+        } catch (QueryException $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui data keuangan. Silakan coba lagi.');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        try {
+            $keuangan = Keuangan::findOrFail($id);
+            $keuangan->delete();
+            return redirect()->back()->with('success', 'Data keuangan berhasil dihapus.');
+        } catch (QueryException $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus data keuangan. Silakan coba lagi.');
+        }
     }
 }
