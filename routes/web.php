@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\KeuanganController;
 use App\Http\Controllers\Admin\LayananController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TransaksiController;
+use App\Http\Controllers\Admin\VerifikasiController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +26,6 @@ Route::get('/otp-verification', [AuthController::class, 'otpVerification'])->nam
 Route::get('/generate-new-otp', [AuthController::class, 'generateNewOTP'])->name('generateNewOTP');
 Route::post('/otp-verification', [AuthController::class, 'otpVerificationPost']);
 
-// <<<<<<< login
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -41,5 +41,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/data-jadwal', [JadwalController::class, 'index'])->name('data.jadwal');
     Route::get('/data-layanan', [LayananController::class, 'index'])->name('data.layanan');
     Route::post('/import', [ImportController::class, 'import'])->name('import');
-    Route::get('/data-keuangan', [KeuanganController::class, 'index'])->name('data.keuangan');
+    Route::get('/data-keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
+    Route::post('/data-keuangan', [KeuanganController::class, 'store'])->name('keuangan.store');
+    Route::put('/keuangan/{id}', [KeuanganController::class, 'update'])->name('keuangan.update');
+    Route::delete('/keuangan/{id}', [KeuanganController::class, 'destroy'])->name('keuangan.destroy');
+    Route::get('/data-verifikasi', [VerifikasiController::class, 'index'])->name('data.verifikasi');
 });
