@@ -1,5 +1,6 @@
 @include('layout.partials.head')
 
+@yield('css')
 <!-- Begin page -->
 <div id="layout-wrapper">
 

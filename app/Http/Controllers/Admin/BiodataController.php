@@ -44,12 +44,12 @@ class BiodataController extends Controller
                 'tgl_lahir' => 'required|date',
                 'no_hp' => 'required|string|max:15|min:11',
                 'no_hp_wali' => 'nullable|string|max:15|min:11',
-                'no_rekening' => 'required|numeric|max:30',
-                'no_ktp' => 'required|numeric|max:16|min:16',
-                'no_kk' => 'required|numeric|max:17|16',
-                'bank' => 'required|string|max:15',
-                'berat_badan' => 'required|numeric|max:20',
-                'tinggi_badan' => 'required|numeric|max:20',
+                'no_rekening' => 'required|string|max:30',
+                'no_ktp' => 'required|string|max:16|min:16',
+                'no_kk' => 'required|string|max:17|min:16',
+                'bank' => 'required|string',
+                'berat_badan' => 'required|string|max:20',
+                'tinggi_badan' => 'required|string|max:20',
                 'warna_kulit' => 'required|string|max:30',
                 'pekerjaan' => 'required|string|max:100',
                 'pendidikan' => 'required|string|max:20',
@@ -75,28 +75,28 @@ class BiodataController extends Controller
             if ($request->hasFile('foto_ktp')) {
                 $foto_ktp = $request->file('foto_ktp');
                 $filenameKtp = uniqid() . '_' . date('y-m-d') . '.' . $foto_ktp->getClientOriginalExtension();
-                $pathKtp = 'foto-ktp/' . $filenameKtp;
+                $pathKtp = 'biodata/foto-ktp/' . $filenameKtp;
                 Storage::disk('public')->put($pathKtp, file_get_contents($foto_ktp));
             }
 
             if ($request->hasFile('foto_kk')) {
                 $foto_kk = $request->file('foto_kk');
                 $filenameKk = uniqid() . '_' . date('y-m-d') . '.' . $foto_kk->getClientOriginalExtension();
-                $pathKk = 'foto-kk/' . $filenameKk;
+                $pathKk = 'biodata/foto-kk/' . $filenameKk;
                 Storage::disk('public')->put($pathKk, file_get_contents($foto_kk));
             }
 
             if ($request->hasFile('foto_passport')) {
                 $foto_passport = $request->file('foto_passport');
                 $filenamePassport = uniqid() . '_' . date('y-m-d') . '.' . $foto_passport->getClientOriginalExtension();
-                $pathPassport = 'foto-passport/' . $filenamePassport;
+                $pathPassport = 'biodata/foto-passport/' . $filenamePassport;
                 Storage::disk('public')->put($pathPassport, file_get_contents($foto_passport));
             }
 
             if ($request->hasFile('pas_foto')) {
                 $pas_foto = $request->file('pas_foto');
                 $filenamePasFoto = uniqid() . '_' . date('y-m-d') . '.' . $pas_foto->getClientOriginalExtension();
-                $pathPasFoto = 'pas-foto/' . $filenamePasFoto;
+                $pathPasFoto = 'biodata/pas-foto/' . $filenamePasFoto;
                 Storage::disk('public')->put($pathPasFoto, file_get_contents($pas_foto));
             }
 
@@ -143,5 +143,154 @@ class BiodataController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data jamaah. Silakan coba lagi.');
         }
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validasi data yang diterima dari form
+        $request->validate([
+            'id_role' => 'required',
+            'id_layanan' => 'required',
+            'nama_lengkap' => 'required|string',
+            'umur' => 'required|numeric',
+            'jk' => 'required|string',
+            'status' => 'required|string',
+            'tempat_lahir' => 'required|string',
+            'tgl_lahir' => 'required|date',
+            'no_hp' => 'required|string',
+            'no_hp_wali' => 'required|string',
+            'no_rekening' => 'required|string',
+            'no_ktp' => 'required|string',
+            'no_kk' => 'required|string',
+            'no_passport' => 'required|string',
+            'bank' => 'required|string',
+            'berat_badan' => 'required|string',
+            'tinggi_badan' => 'required|string',
+            'warna_kulit' => 'required|string',
+            'pekerjaan' => 'required|string',
+            'pendidikan' => 'required|string',
+            'pernah_haji_umroh' => 'required|string',
+            'kelurahan' => 'required|string',
+            'kecamatan' => 'required|string',
+            'kota_kabupaten' => 'required|string',
+            'provinsi' => 'required|string',
+            'kode_pos' => 'required|string',
+            'alamat_lengkap' => 'required|string',
+            'warga_negara' => 'required|string',
+            'gol_darah' => 'required|string',
+            'foto_ktp' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_kk' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_passport' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pas_foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Ambil data biodata berdasarkan ID
+        $biodata = JamaahModel::findOrFail($id);
+
+        // Update data dengan nilai yang diterima dari form
+        $biodata->id_role = $request->id_role;
+        $biodata->id_layanan = $request->id_layanan;
+        $biodata->nama_lengkap = $request->nama_lengkap;
+        $biodata->umur = $request->umur;
+        $biodata->jk = $request->jk;
+        $biodata->status = $request->status;
+        $biodata->tempat_lahir = $request->tempat_lahir;
+        $biodata->tgl_lahir = $request->tgl_lahir;
+        $biodata->no_hp = $request->no_hp;
+        $biodata->no_hp_wali = $request->no_hp_wali;
+        $biodata->no_rekening = $request->no_rekening;
+        $biodata->no_ktp = $request->no_ktp;
+        $biodata->no_kk = $request->no_kk;
+        $biodata->no_passport = $request->no_passport;
+        $biodata->bank = $request->bank;
+        $biodata->berat_badan = $request->berat_badan;
+        $biodata->tinggi_badan = $request->tinggi_badan;
+        $biodata->warna_kulit = $request->warna_kulit;
+        $biodata->pekerjaan = $request->pekerjaan;
+        $biodata->pendidikan = $request->pendidikan;
+        $biodata->pernah_haji_umroh = $request->pernah_haji_umroh;
+        $biodata->kelurahan = $request->kelurahan;
+        $biodata->kecamatan = $request->kecamatan;
+        $biodata->kota_kabupaten = $request->kota_kabupaten;
+        $biodata->provinsi = $request->provinsi;
+        $biodata->kode_pos = $request->kode_pos;
+        $biodata->alamat_lengkap = $request->alamat_lengkap;
+        $biodata->warga_negara = $request->warga_negara;
+        $biodata->gol_darah = $request->gol_darah;
+
+        // Cek apakah ada file foto yang diunggah dan update foto jika ada
+        if ($request->hasFile('foto_ktp')) {
+            $fotoKTP = $request->file('foto_ktp');
+            $namaFotoKTP = time() . '.' . $fotoKTP->getClientOriginalExtension();
+            $fotoKTP->move(public_path('biodata/foto-ktp/'), $namaFotoKTP);
+            $biodata->foto_ktp = $namaFotoKTP;
+        }
+
+        if ($request->hasFile('foto_kk')) {
+            $fotoKK = $request->file('foto_kk');
+            $namaFotoKK = time() . '.' . $fotoKK->getClientOriginalExtension();
+            $fotoKK->move(public_path('biodata/foto-kk/'), $namaFotoKK);
+            $biodata->foto_kk = $namaFotoKK;
+        }
+
+        if ($request->hasFile('foto_passport')) {
+            $fotoPassport = $request->file('foto_passport');
+            $namaFotoPassport = time() . '.' . $fotoPassport->getClientOriginalExtension();
+            $fotoPassport->move(public_path('biodata/foto-passport/'), $namaFotoPassport);
+            $biodata->foto_passport = $namaFotoPassport;
+        }
+
+        if ($request->hasFile('pas_foto')) {
+            $pasFoto = $request->file('pas_foto');
+            $namaPasFoto = time() . '.' . $pasFoto->getClientOriginalExtension();
+            $pasFoto->move(public_path('biodata/pas-foto/'), $namaPasFoto);
+            $biodata->pas_foto = $namaPasFoto;
+        }
+
+        $biodata->save();
+
+        return redirect()->route('data.biodata')->with('success', 'Biodata berhasil diperbarui.');
+    }
+
+    public function delete($id)
+    {
+
+        // Temukan data biodata berdasarkan ID
+        $jamaah = JamaahModel::findOrFail($id);
+
+        // Hapus foto-foto terkait jika ada
+        if ($jamaah->foto_ktp) {
+            // Hapus foto KTP dari direktori
+            if (file_exists(public_path('path_ke_folder_foto_ktp') . '/' . $jamaah->foto_ktp)) {
+                unlink(public_path('path_ke_folder_foto_ktp') . '/' . $jamaah->foto_ktp);
+            }
+        }
+
+        if ($jamaah->foto_kk) {
+            // Hapus foto KK dari direktori
+            if (file_exists(public_path('path_ke_folder_foto_kk') . '/' . $jamaah->foto_kk)) {
+                unlink(public_path('path_ke_folder_foto_kk') . '/' . $jamaah->foto_kk);
+            }
+        }
+
+        if ($jamaah->foto_passport) {
+            // Hapus foto Passport dari direktori
+            if (file_exists(public_path('path_ke_folder_foto_passport') . '/' . $jamaah->foto_passport)) {
+                unlink(public_path('path_ke_folder_foto_passport') . '/' . $jamaah->foto_passport);
+            }
+        }
+
+        if ($jamaah->pas_foto) {
+            // Hapus pas foto dari direktori
+            if (file_exists(public_path('path_ke_folder_pas_foto') . '/' . $jamaah->pas_foto)) {
+                unlink(public_path('path_ke_folder_pas_foto') . '/' . $jamaah->pas_foto);
+            }
+        }
+
+        // Hapus data jamaah
+        $jamaah->delete();
+
+        // Redirect atau response sesuai kebutuhan
+        return redirect()->route('data.biodata')->with('success', 'Biodata berhasil dihapus.');
     }
 }
