@@ -48,6 +48,11 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link menu-link <?= $act == 'keuangan' ? 'active' : '' ?>" href="/data-keuangan">
+                    <i class="ri-pencil-ruler-2-line"></i> <span>Data Keuangan</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link menu-link <?= $act == 'jadwal' ? 'active' : '' ?>" href="/data-jadwal">
                     <i class="ri-pencil-ruler-2-line"></i> <span>Data Jadwal</span>
                 </a>
@@ -60,7 +65,6 @@
                     <i class="ri-pencil-ruler-2-line"></i> <span>Data Arsip</span>
                 </a>
             </li>
-            
             {{-- <li class="nav-item">
                 <a class="nav-link menu-link" href="#">
                     <i class=" ri-file-paper-fill"></i> <span>Data Uraian Layanan</span>
