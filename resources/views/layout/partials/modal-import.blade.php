@@ -42,7 +42,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="" class="btn btn-link link-secondary">Download Contoh Excel</a>
+                <a href="{{ asset('doc/jadwal/TEMPLATE-JADWAL.xlsx') }}" class="btn btn-link link-secondary" download>Download Contoh Excel</a>
                 <button type="submit" class="btn btn-primary ms-auto"><i class="ri-upload-cloud-line"
                         style="margin-right:5px"></i> Import</button>
             </div>

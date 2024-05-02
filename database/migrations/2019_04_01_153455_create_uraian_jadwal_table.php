@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('t_uraian_jadwal', function (Blueprint $table) {
             $table->id('id_uraian_jadwal');
-            $table->unsignedBigInteger('id_jadwal');
+            // $table->unsignedBigInteger('id_jadwal');
             $table->string('nomor_jadwal');
 
             // tipe MCU

@@ -82,14 +82,13 @@
                                             <tr class="text-center">
                                                 <td>{{ $i++ }}</td>
                                                 <td>
-                                                    <button type="button"
+                                                    <a type="button"
                                                         class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
-                                                        data-bs-toggle="modal" data-bs-target="#">
-                                                        <i class="ri-eye-fill"></i>
-                                                    </button>
-                                                    <button type="button"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"><i
-                                                            class="ri-delete-bin-2-fill"></i></button>
+                                                        data-bs-toggle="modal" data-bs-target="#detail{{ $jad->id_jadwal }}">
+                                                        <i class="ri-eye-fill"></i></a>
+                                                    <a type="button"
+                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $jad->id_jadwal }}"><i
+                                                            class="ri-delete-bin-2-fill"></i></a>
                                                 </td>
                                                 <td>MCU-{{ $jad->nomor_jadwal }}</td>
                                                 <td>{{ $jad->judul_jadwal }}</td>
@@ -102,14 +101,14 @@
                                             <tr class="text-center">
                                                 <td>{{ $i++ }}</td>
                                                 <td>
-                                                    <button type="button"
+                                                    <a type="button"
                                                         class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
-                                                        data-bs-toggle="modal" data-bs-target="#">
-                                                        <i class="ri-eye-fill"></i>
+                                                        data-bs-toggle="modal" data-bs-target="#detail{{ $jad->id_jadwal }}">
+                                                        <i class="ri-eye-fill"></i></a>
                                                     </button>
-                                                    <button type="button"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"><i
-                                                            class="ri-delete-bin-2-fill"></i></button>
+                                                    <a type="button"
+                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $jad->id_jadwal }}"><i
+                                                            class="ri-delete-bin-2-fill"></i></a>
                                                 </td>
                                                 <td>PA-{{ $jad->nomor_jadwal }}</td>
                                                 <td>{{ $jad->judul_jadwal }}</td>
@@ -122,14 +121,14 @@
                                             <tr class="text-center">
                                                 <td>{{ $i++ }}</td>
                                                 <td>
-                                                    <button type="button"
+                                                    <a type="button"
                                                         class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
-                                                        data-bs-toggle="modal" data-bs-target="#">
-                                                        <i class="ri-eye-fill"></i>
+                                                        data-bs-toggle="modal" data-bs-target="#detail{{ $jad->id_jadwal }}">
+                                                        <i class="ri-eye-fill"></i></a>
                                                     </button>
-                                                    <button type="button"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"><i
-                                                            class="ri-delete-bin-2-fill"></i></button>
+                                                    <a type="button"
+                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $jad->id_jadwal }}"><i
+                                                            class="ri-delete-bin-2-fill"></i></a>
                                                 </td>
                                                 <td>BM-{{ $jad->nomor_jadwal }}</td>
                                                 <td>{{ $jad->judul_jadwal }}</td>
@@ -139,6 +138,11 @@
                                                 <td>{{ \Carbon\Carbon::parse($jad->tgl_selesai)->format('d M Y') }}</td>
                                             </tr>
                                         @endif
+
+
+                                        
+
+
                                     @endforeach
                                 </tbody>
                             </table>
@@ -148,6 +152,153 @@
             </div>
         </div>
     </div>
+
+    @section('scripting')
+        @foreach ($jadwal as $jad)
+            {{-- MODAL DELETE JADWAL --}}
+            <div class="modal fade" id="delete{{ $jad->id_jadwal }}" tabindex="-1"
+                aria-labelledby="detailModalLabel">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailModalLabel"><i class="ri-phone-fill"></i>Konfirmasi Penghapusan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body bg-marketplace d-flex">
+                            <div class="row g-3">
+                                <p class="mt-3">Yakin ingin menghapus data ini?</p>
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light"
+                                    data-bs-dismiss="modal">Close</button>
+                                    <a type="button" href="/data-jadwal/delete/{{ $jad['id_jadwal'] }}" class="btn btn-danger">Hapus</a>
+                                </div>
+                                <!--end col-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- END MODAL DELETE JADWAL --}}
+
+            {{-- MODAL DETAIL JADWAL --}}
+            <div class="modal fade" id="detail{{ $jad->id_jadwal }}" tabindex="-1"
+                aria-labelledby="detialUrj">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detialUrj"><i class="ri-phone-fill"></i>
+                                @if ($jad->tipe_jadwal == 'MCU')
+                                    Detail Jadwal No MCU-{{ $jad->nomor_jadwal }}
+                                @elseif ($jad->tipe_jadwal == 'PASSPORT')
+                                Detail Jadwal No PA-{{ $jad->nomor_jadwal }}
+                                @elseif ($jad->tipe_jadwal == 'BIMBINGAN')
+                                    Detail Jadwal No BM-{{ $jad->nomor_jadwal }}
+                                @else
+                                Tipe Jadwal Tidak Ditemukan
+                                @endif
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body bg-marketplace d-flex">
+                            <div class="col-12">
+                                <table id="scroll-horizontal"
+                                class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap"
+                                style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>No Jadwal</th>
+                                        <th>Tgl Mulai</th>
+                                        <th>Tgl Selesai</th>
+                                        <th>Jam Mulai</th>
+                                        <th>Jam Selesai</th>
+                                        <th>Keterangan</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                            @foreach ($urJadwal as $urj)
+                                <tbody>
+                                    <tr class="text-center">
+                                    @if ($jad->tipe_jadwal == 'MCU' && $urj->nomor_jadwal == $jad->nomor_jadwal)
+                                            <td>MCU-{{ $urj->nomor_jadwal }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_mcu)->format('d M Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_mcu)->format('d M Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_mcu)->format('H:i:s') }} WIB</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_mcu)->format('H:i:s') }} WIB</td>
+                                            <td>{{ $urj->tempat_mcu }}</td>
+                                            <td>
+                                                <a type="button" class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i class="ri-delete-bin-2-fill"></i></a>
+                                            </td>
+                                    @elseif ($jad->tipe_jadwal == 'PASSPORT' && $urj->nomor_jadwal == $jad->nomor_jadwal)
+                                            <td>PA-{{ $urj->nomor_jadwal }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_passport)->format('d M Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_passport)->format('d M Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_passport)->format('H:i:s') }} WIB</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_passport)->format('H:i:s') }} WIB</td>
+                                            <td>{{ $urj->tempat_pembuatan_passport }}</td>
+                                            <td>
+                                                <a type="button"
+                                                class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i
+                                                class="ri-delete-bin-2-fill"></i></a>
+                                            </td>
+                                    @elseif ($jad->tipe_jadwal == 'BIMBINGAN' && $urj->nomor_jadwal == $jad->nomor_jadwal)
+                                            <td>BM-{{ $urj->nomor_jadwal }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_bimbingan)->format('d M Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_bimbingan)->format('d M Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_bimbingan)->format('H:i:s') }} WIB</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_bimbingan)->format('H:i:s') }} WIB</td>
+                                            <td>{{ $urj->nama_bimbingan }}</td>
+                                            <td>
+                                                <a type="button"
+                                                class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i
+                                                class="ri-delete-bin-2-fill"></i></a>
+                                            </td>
+                                    @endif
+                                    </tr>
+                                </tbody>
+                            @endforeach
+                                </table>
+                                <div class="row g-3">
+                                    <div class="hstack gap-2 justify-content-end">
+                                        <button type="button" class="btn btn-primary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                    <!--end col-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- END MODAL DETAIL JADWAL --}}
+
+            @foreach ($urJadwal as $urj)
+            {{-- MODAL DELETE URAIAN JADWAL --}}
+            <div class="modal fade" id="delete{{ $urj->id_uraian_jadwal }}" tabindex="-1"
+                aria-labelledby="detailModalLabel">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailModalLabel"><i class="ri-phone-fill"></i>Konfirmasi Penghapusan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body bg-marketplace d-flex">
+                            <div class="row g-3">
+                                <p class="mt-3">Yakin ingin menghapus data uraian jadwal ini?</p>
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light"
+                                    data-bs-dismiss="modal">Close</button>
+                                    <a type="button" href="/data-uraian-jadwal/delete/{{ $urj['id_uraian_jadwal'] }}" class="btn btn-danger">Hapus</a>
+                                </div>
+                                <!--end col-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- END MODAL DELETE URAIAN JADWAL --}}
+            @endforeach
+        @endforeach
+    @endsection
 
     {{-- Modal Tambah --}}
     {{-- <div class="modal fade" id="exampleModalgrid" tabindex="-1" aria-labelledby="exampleModalgridLabel">
