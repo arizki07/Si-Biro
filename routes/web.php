@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/layanan/store', [LayananController::class, 'store'])->name('layanan.store');
     Route::put('/layanan/update/{id}', [LayananController::class, 'update'])->name('update.layanan');
     Route::delete('/layanan/destroy/{id}', [LayananController::class, 'destroy'])->name('destroy.layanan');
+
     //import
     Route::post('/import', [ImportController::class, 'import'])->name('import');
     Route::get('/data-keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');

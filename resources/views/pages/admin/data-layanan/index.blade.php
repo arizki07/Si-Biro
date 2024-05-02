@@ -61,7 +61,9 @@
                                 style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
                                 <thead>
                                     <tr class="text-center">
+                                        <th>No</th>
                                         <th>Opsi</th>
+                                        <th>ID Layanan</th>
                                         <th>Judul Layanan</th>
                                         <th>Kuota</th>
                                         <th>Tahun Pemberangkatan</th>
@@ -69,13 +71,13 @@
                                         <th>Paket</th>
                                         <th>Status Paket</th>
                                         <th>Deskripsi</th>
-
-
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php ($no = 1)
                                     @foreach ($layanan as $item)
                                         <tr class="text-center">
+                                            <td>{{ $no++ }}</td>
                                             <td>
                                                 <button type="button"
                                                     class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
@@ -100,6 +102,7 @@
                                                     </button>
                                                 </form>
                                             </td>
+                                            <td>LA-{{ $item->id_layanan }}</td>
                                             <td>{{ $item->judul_layanan }}</td>
                                             <td>{{ $item->kuota }}</td>
                                             <td>{{ $item->tahun_pemberangkatan }}</td>
