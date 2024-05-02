@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\LayananModel;
+use App\Models\JadwalModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -13,9 +14,11 @@ class LayananController extends Controller
     public function index()
     {
         $layanan = LayananModel::all();
+        $jadwal = JadwalModel::all();
         return view('pages.admin.data-layanan.index', [
             'act' => 'layanan',
-            'layanan' => $layanan
+            'layanan' => $layanan,
+            'jadwal' => $jadwal
         ]);
     }
 

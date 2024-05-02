@@ -32,10 +32,10 @@ class UraianJadwalImport implements ToModel, WithStartRow
         $jam_mulai_passport = $row[13] ? Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[13]))->toTimeString() : null;
         $jam_selesai_passport = $row[14] ? Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[14]))->toTimeString() : null;
 
-        $SESS_ID_JADWAL = Session::get('SESS_ID_JADWAL');
+        // $SESS_ID_JADWAL = Session::get('SESS_ID_JADWAL');
 
         return new UraianJadwalModel([
-            'id_jadwal' => $SESS_ID_JADWAL,
+            // 'id_jadwal' => $SESS_ID_JADWAL,
             'nomor_jadwal' => $row[0],
             'tgl_mulai_mcu' => $tgl_mulai_mcu,
             'tgl_selesai_mcu' => $tgl_selesai_mcu,

@@ -71,6 +71,7 @@
                                         <th>Paket</th>
                                         <th>Status Paket</th>
                                         <th>Deskripsi</th>
+                                        <th>Jadwal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -110,7 +111,6 @@
                                             <td>{{ $item->paket }}</td>
                                             <td>{{ $item->status_paket }}</td>
                                             <td>{{ $item->deskripsi }}</td>
-
                                         </tr>
                                     @endforeach
                                 </tbody>

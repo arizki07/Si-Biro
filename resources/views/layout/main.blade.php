@@ -25,14 +25,15 @@
 
         @yield('content')
         <!-- End Page-content -->
-
+        
         @include('layout.partials.footer')
     </div>
     <!-- end main content-->
-
+    
 </div>
 <!-- END layout-wrapper -->
 
+@yield('scripting')
 
 @include('layout.partials.modal-import')
 

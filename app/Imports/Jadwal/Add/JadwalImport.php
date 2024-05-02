@@ -29,7 +29,7 @@ class JadwalImport implements ToModel, WithStartRow
         // }
 
         if (JadwalModel::where('id_layanan', $row[0])->exists()) {
-            throw new \Exception("Nomor layanan Sudah Ada Dalam Database.");
+            throw new \Exception("Nomor layanan Sudah Dipakai.");
             return null;
         }
 

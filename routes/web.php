@@ -53,6 +53,8 @@ Route::middleware('auth')->group(function () {
 
     //jadwal
     Route::get('/data-jadwal', [JadwalController::class, 'index'])->name('data.jadwal');
+    Route::get('/data-jadwal/delete/{id}', [JadwalController::class, 'destroy'])->name('delete.data.jadwal');
+    Route::get('/data-uraian-jadwal/delete/{id}', [JadwalController::class, 'destroyUraian'])->name('delete.data.uraian.jadwal');
 
     //layanan
     Route::get('/data-layanan', [LayananController::class, 'index'])->name('data.layanan');
