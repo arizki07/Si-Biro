@@ -34,6 +34,7 @@
 <!-- END layout-wrapper -->
 
 
+@include('layout.partials.modal-import')
 
 @include('layout.partials.themes_setting')
 
