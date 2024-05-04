@@ -109,78 +109,75 @@
     </div>
 
     {{-- Modal Tambah --}}
-    @foreach ($keuangan as $keu)
-        <div class="modal fade" id="exampleModalgrid" tabindex="-1" aria-labelledby="exampleModalgridLabel">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalgridLabel"><i class=" ri-book-mark-fill"></i> Add Keuangan
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body bg-marketplace d-flex">
-                        <form method="post" action="{{ route('keuangan.store') }}" enctype="multipart/form-data">
-                            @csrf
-                            <div class="row g-3">
-                                <div class="col-xxl-6">
-                                    <div>
-                                        <label for="firstName" class="form-label">Nama Jamaah</label>
-                                        <select name="id_jamaah" id="id_jamaah" class="form-control select2">
-                                            <option> Pilih Nama Jamaah </option>
-                                            @foreach ($jamaahs as $jam)
-                                                <option value="{{ $jam->id_jamaah }}"
-                                                    {{ old('id_jamaah') == $jam->id_jamaah ? 'selected' : '' }}>
-                                                    {{ $jam->nama_lengkap }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <!--end col-->
-                                <div class="col-xxl-6">
-                                    <div>
-                                        <label for="lastName" class="form-label">Nomor Transaksi</label>
-                                        <select name="id_transaksi" id="id_transaksi" class="form-control select2">
-                                            <option> Pilih Nomor Jamaah </option>
-                                            @foreach ($transaksi as $tran)
-                                                <option value="{{ $tran->id_transaksi }}"
-                                                    {{ old('id_transaksi') == $tran->id_transaksi ? 'selected' : '' }}>
-                                                    {{ $tran->id_transaksi }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-xxl-6">
-                                    <label for="pembayaran" class="form-label">Pembayaran</label>
-                                    <input type="pembayaran" name="pembayaran" class="form-control" id="pembayaran" required
-                                        placeholder="Enter your Pembayaran">
-                                </div>
-                                <!--end col-->
-                                <div class="col-xxl-6">
-                                    <label for="passwordInput" class="form-label">keuangan</label>
-                                    <select class="form-control select2" id="tipe_keuangan" name="tipe_keuangan" required>
-                                        <option> Type Keuangan </option>
-                                        <option value="CICILAN">Cicilan</option>
-                                        <option value="PELUNASAN">Pelunasan</option>
+    <div class="modal fade" id="exampleModalgrid" tabindex="-1" aria-labelledby="exampleModalgridLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalgridLabel"><i class=" ri-book-mark-fill"></i> Add Keuangan
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body bg-marketplace d-flex">
+                    <form method="post" action="{{ route('keuangan.store') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row g-3">
+                            <div class="col-xxl-6">
+                                <div>
+                                    <label for="firstName" class="form-label">Nama Jamaah</label>
+                                    <select name="id_jamaah" id="id_jamaah" class="form-control select2">
+                                        <option> Pilih Nama Jamaah </option>
+                                        @foreach ($jamaahs as $jam)
+                                            <option value="{{ $jam->id_jamaah }}"
+                                                {{ old('id_jamaah') == $jam->id_jamaah ? 'selected' : '' }}>
+                                                {{ $jam->nama_lengkap }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
-                                <!--end col-->
-                                <div class="col-lg-12">
-                                    <div class="hstack gap-2 justify-content-end">
-                                        <button type="button" class="btn btn-light"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
-                                </div>
-                                <!--end col-->
                             </div>
-                            <!--end row-->
-                        </form>
-                    </div>
+                            <!--end col-->
+                            <div class="col-xxl-6">
+                                <div>
+                                    <label for="lastName" class="form-label">Nomor Transaksi</label>
+                                    <select name="id_transaksi" id="id_transaksi" class="form-control select2">
+                                        <option> Pilih Nomor Jamaah </option>
+                                        @foreach ($transaksi as $tran)
+                                            <option value="{{ $tran->id_transaksi }}"
+                                                {{ old('id_transaksi') == $tran->id_transaksi ? 'selected' : '' }}>
+                                                {{ $tran->id_transaksi }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-6">
+                                <label for="pembayaran" class="form-label">Pembayaran</label>
+                                <input type="pembayaran" name="pembayaran" class="form-control" id="pembayaran" required
+                                    placeholder="Enter your Pembayaran">
+                            </div>
+                            <!--end col-->
+                            <div class="col-xxl-6">
+                                <label for="passwordInput" class="form-label">keuangan</label>
+                                <select class="form-control select2" id="tipe_keuangan" name="tipe_keuangan" required>
+                                    <option> Type Keuangan </option>
+                                    <option value="CICILAN">Cicilan</option>
+                                    <option value="PELUNASAN">Pelunasan</option>
+                                </select>
+                            </div>
+                            <!--end col-->
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                            <!--end col-->
+                        </div>
+                        <!--end row-->
+                    </form>
                 </div>
             </div>
         </div>
-    @endforeach
+    </div>
     {{-- End Modal Tambah --}}
 
     {{-- Modal Edit --}}
@@ -206,7 +203,7 @@
                                             @foreach ($jamaahs as $jam)
                                                 <option value="{{ $jam->id_jamaah }}"
                                                     {{ $keu->id_jamaah == $jam->id_jamaah ? 'selected' : '' }}>
-                                                    {{ $jam->id_jamaah }}
+                                                    {{ $jam->nama_lengkap }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -258,32 +255,6 @@
                 </div>
             </div>
         </div>
-        {{-- Modal Delte --}}
-        <div class="modal fade" id="confirmDelete{{ $keu->id_keuangan }}" tabindex="-1"
-            aria-labelledby="confirmDeleteLabel{{ $keu->id_keuangan }}" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="confirmDeleteLabel{{ $keu->id_keuangan }}">Konfirmasi Hapus</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Apakah Anda yakin ingin menghapus data keuangan ini?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <form action="{{ route('keuangan.destroy', $keu->id_keuangan) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Hapus</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{-- End Modal Delete --}}
-    @endforeach
-    {{-- End Modal Edit --}}
 
 
     {{-- Modal View --}}
