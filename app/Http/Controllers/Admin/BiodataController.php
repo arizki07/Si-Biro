@@ -47,6 +47,7 @@ class BiodataController extends Controller
                 'no_rekening' => 'required|string|max:30',
                 'no_ktp' => 'required|string|max:16|min:16',
                 'no_kk' => 'required|string|max:17|min:16',
+                // 'no_passport' => 'required',
                 'bank' => 'required|string',
                 'berat_badan' => 'required|string|max:20',
                 'tinggi_badan' => 'required|string|max:20',
@@ -102,6 +103,7 @@ class BiodataController extends Controller
 
             $user = Auth::user();
 
+            // var_dump($user);
             if ($user) {
                 $jamaah = new JamaahModel();
                 $jamaah->id_user = $user->id_user;
@@ -118,6 +120,7 @@ class BiodataController extends Controller
                 $jamaah->no_rekening = $request->input('no_rekening');
                 $jamaah->no_ktp = $request->input('no_ktp');
                 $jamaah->no_kk = $request->input('no_kk');
+                // $jamaah->no_passport = $request->input('no_passport');
                 $jamaah->bank = $request->input('bank');
                 $jamaah->berat_badan = $request->input('berat_badan');
                 $jamaah->tinggi_badan = $request->input('tinggi_badan');
@@ -137,6 +140,9 @@ class BiodataController extends Controller
                 $jamaah->foto_kk = $filenameKk ?? null;
                 $jamaah->foto_passport = $filenamePassport ?? null;
                 $jamaah->pas_foto = $filenamePasFoto ?? null;
+
+                // var_dump($jamaah);
+                // dd($jamaah);
                 $jamaah->save();
             }
             return redirect()->back()->with('success', 'Data jamaah telah berhasil ditambahkan.');

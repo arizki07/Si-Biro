@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('t_uraian_jadwal', function (Blueprint $table) {
             $table->id('id_uraian_jadwal');
-            // $table->unsignedBigInteger('id_jadwal');
+            $table->unsignedBigInteger('id_jadwal');
             $table->string('nomor_jadwal');
 
             // tipe MCU
@@ -36,7 +36,7 @@ return new class extends Migration
             $table->time('jam_mulai_passport')->nullable();
             $table->time('jam_selesai_passport')->nullable();
             $table->string('tempat_pembuatan_passport', 150)->nullable();
-            
+
             $table->string('flag_update', 15);
             $table->timestamps();
 
