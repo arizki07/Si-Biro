@@ -34,4 +34,9 @@ class LayananModel extends Model
 
     protected $keyType = 'int';
     protected $increment = 10;
+
+    public function transaksi()
+    {
+        return $this->hasMany(TransaksiModel::class, 'id_layanan', 'id_layanan');
+    }
 }

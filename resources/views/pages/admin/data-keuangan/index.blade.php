@@ -255,33 +255,7 @@
                 </div>
             </div>
         </div>
-    @endforeach
-    {{-- End Modal Edit --}}
 
-    {{-- Modal Delte --}}
-    {{-- <div class="modal fade" id="confirmDelete{{ $keu->id_keuangan }}" tabindex="-1"
-        aria-labelledby="confirmDeleteLabel{{ $keu->id_keuangan }}" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmDeleteLabel{{ $keu->id_keuangan }}">Konfirmasi Hapus</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Apakah Anda yakin ingin menghapus data keuangan ini?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <form action="{{ route('keuangan.destroy', $keu->id_keuangan) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Hapus</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    {{-- End Modal Delete --}}
 
     {{-- Modal View --}}
     @foreach ($keuangan as $keu)

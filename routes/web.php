@@ -42,8 +42,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/store-biodata', [BiodataController::class, 'store'])->name('store.biodata');
     Route::put('/update/{id}', [BiodataController::class, 'update'])->name('update.biodata');
     Route::delete('/delete/{id}', [BiodataController::class, 'delete'])->name('delete.biodata');
-    //transaksi
+
+    //transaksi gelap wkwk
     Route::get('/data-transaksi', [TransaksiController::class, 'index'])->name('data.transaksi');
+    Route::post('/data-transaksi/store', [TransaksiController::class, 'store'])->name('store.trans');
+    Route::put('/data-transaksi/update/{id}', [TransaksiController::class, 'update'])->name('update.trans');
+    Route::delete('/data-transaksi/delete/{id}', [TransaksiController::class, 'destroy'])->name('destroy.trans');
 
     //role
     Route::get('/data-role', [RoleController::class, 'index'])->name('data.role');
@@ -53,12 +57,15 @@ Route::middleware('auth')->group(function () {
 
     //jadwal
     Route::get('/data-jadwal', [JadwalController::class, 'index'])->name('data.jadwal');
+    Route::get('/data-jadwal/delete/{id}', [JadwalController::class, 'destroy'])->name('delete.data.jadwal');
+    Route::get('/data-uraian-jadwal/delete/{id}', [JadwalController::class, 'destroyUraian'])->name('delete.data.uraian.jadwal');
 
     //layanan
     Route::get('/data-layanan', [LayananController::class, 'index'])->name('data.layanan');
     Route::post('/layanan/store', [LayananController::class, 'store'])->name('layanan.store');
     Route::put('/layanan/update/{id}', [LayananController::class, 'update'])->name('update.layanan');
     Route::delete('/layanan/destroy/{id}', [LayananController::class, 'destroy'])->name('destroy.layanan');
+
     //import
     Route::post('/import', [ImportController::class, 'import'])->name('import');
     Route::get('/data-keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');

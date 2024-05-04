@@ -36,7 +36,7 @@ return new class extends Migration
             $table->time('jam_mulai_passport')->nullable();
             $table->time('jam_selesai_passport')->nullable();
             $table->string('tempat_pembuatan_passport', 150)->nullable();
-            
+
             $table->string('flag_update', 15);
             $table->timestamps();
 
