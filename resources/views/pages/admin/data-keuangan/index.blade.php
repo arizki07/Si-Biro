@@ -243,7 +243,6 @@
                                             {{ $keu->tipe_keuangan == 'PELUNASAN' ? 'selected' : '' }}>Pelunasan</option>
                                     </select>
                                 </div>
-                                <!--end col-->
                                 <div class="col-lg-12">
                                     <div class="hstack gap-2 justify-content-end">
                                         <button type="button" class="btn btn-light"
@@ -251,7 +250,6 @@
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
                                 </div>
-                                <!--end col-->
                             </div>
                         </form>
                     </div>
