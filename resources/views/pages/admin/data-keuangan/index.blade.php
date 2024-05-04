@@ -255,7 +255,7 @@
                 </div>
             </div>
         </div>
-
+    @endforeach
 
     {{-- Modal View --}}
     @foreach ($keuangan as $keu)
