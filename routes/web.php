@@ -42,8 +42,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/store-biodata', [BiodataController::class, 'store'])->name('store.biodata');
     Route::put('/update/{id}', [BiodataController::class, 'update'])->name('update.biodata');
     Route::delete('/delete/{id}', [BiodataController::class, 'delete'])->name('delete.biodata');
-    //transaksi
+
+    //transaksi gelap wkwk
     Route::get('/data-transaksi', [TransaksiController::class, 'index'])->name('data.transaksi');
+    Route::post('/data-transaksi/store', [TransaksiController::class, 'store'])->name('store.trans');
+    Route::put('/data-transaksi/update/{id}', [TransaksiController::class, 'update'])->name('update.trans');
+    Route::delete('/data-transaksi/delete/{id}', [TransaksiController::class, 'destroy'])->name('destroy.trans');
 
     //role
     Route::get('/data-role', [RoleController::class, 'index'])->name('data.role');
