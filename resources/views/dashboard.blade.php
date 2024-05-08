@@ -12,7 +12,7 @@
                                 <div class="d-flex align-items-lg-center flex-lg-row flex-column">
                                     <div class="flex-grow-1">
                                         <h4 class="fs-16 mb-1" id="greeting"></h4>
-                                        <p class="text-muted mb-0">Here's what's happening with your store today.</p>
+                                        <p class="text-muted mb-0">{{ $judul }}.</p>
                                     </div>
                                     <div class="mt-3 mt-lg-0" id="dateTimeSection">
                                         <form action="javascript:void(0);">
@@ -23,7 +23,7 @@
                                                             class="form-control border-0 dash-filter-picker shadow"
                                                             data-provider="flatpickr" data-range-date="true"
                                                             data-date-format="d M, Y"
-                                                            data-deafult-date="01 Jan 2022 to 31 Jan 2022">
+                                                            data-default-date="<?php echo date('d M Y', strtotime('first day of this month')) . ' to ' . date('d M Y'); ?>">
                                                         <div class="input-group-text bg-primary border-primary text-white">
                                                             <i class="ri-calendar-2-line"></i>
                                                         </div>
@@ -31,6 +31,8 @@
                                                 </div>
                                             </div>
                                         </form>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -63,48 +65,34 @@
                                 document.getElementById('currentTime').innerText = formattedDate;
                             }
 
-                            updateGreeting(); // Update greeting immediately
-                            updateTime(); // Update time immediately
+                            updateGreeting();
+                            updateTime();
 
-                            setInterval(updateGreeting, 3600000); // Update greeting every hour (3600000 milliseconds)
-                            setInterval(updateTime, 60000); // Update time every minute (60000 milliseconds)
+                            setInterval(updateGreeting, 3600000);
+                            setInterval(updateTime, 60000);
                         </script>
 
-                        {{-- Card Atas --}}
-                        <div class="row">
-                            <div class="col-xl-10">
-                                <div class="card overflow-hidden">
-                                    <div class="card-body bg-marketplace d-flex">
-                                        <div class="flex-grow-1">
-                                            <h4 class="fs-18 lh-base mb-0">Discover, Collect, Sell and Create
-                                                <br> your own
-                                                <span class="text-success">NFTs.</span>
-                                            </h4>
-                                            <p class="mb-0 mt-2 pt-1 text-muted">The world's first and largest
-                                                digital
-                                                marketplace.</p>
-                                            <div class="d-flex gap-3 mt-4">
-                                                <a href="" class="btn btn-primary">Discover Now </a>
-                                                <a href="" class="btn btn-success">Create Your Own</a>
-                                            </div>
+                        <div class="card card-sm">
+
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-3">
+                                        <iframe
+                                            src="https://lottie.host/embed/0cd165b0-a1f0-4cec-8165-18a468747d07/xEEwK5PWWA.json"
+                                            width="300px" height="300px"></iframe>
+                                    </div>
+                                    <div class="col-9">
+                                        <h3 class="h1">Selamat Datang di Biro Haji, {{ Auth::user()->nama }} 🎉</h3>
+                                        <div class="text-black">
+                                            Aplikasi Biro Haji ini ditujukan untuk memudahkan dan menyediakan layanan
+                                            terbaik bagi para jamaah yang ingin menjalani ibadah haji.
+                                            <br>
+                                            Silahkan pilih menu disamping untuk mulai menggunakan aplikasi.
                                         </div>
-                                        <img src="assets/images/illustrator-1.png" alt="" class="img-fluid" />
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-2">
-                                <div class="card overflow-hidden">
-                                    <div class="card-body bg-marketplace d-flex justify-content-center align-items-center"
-                                        style="height: 180px; width: 160px; border-radius: 50%;">
-                                        <img src="assets/images/user-illustarator-1.png" alt="User dummy image"
-                                            class="img-fluid rounded-circle" style="max-height: 100%; max-width: 100%;" />
-                                    </div>
-                                </div>
-                            </div>
-
-
                         </div>
-                        {{-- end card atas --}}
 
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
@@ -159,7 +147,7 @@
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
                                                         data-target="{{ $role }}"></span>
                                                 </h4>
-                                                <a href="" class="text-decoration-underline">Data
+                                                <a href="/data-role" class="text-decoration-underline">Data
                                                     Role</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
@@ -190,9 +178,9 @@
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
-                                                        data-target="183.35">0</span>M
+                                                        data-target="{{ $user }}"></span>
                                                 </h4>
-                                                <a href="" class="text-decoration-underline">Data
+                                                <a href="/data-biodata" class="text-decoration-underline">Data
                                                     Biodata</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
