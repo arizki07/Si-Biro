@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="row">
-                {{-- @if (!$users)
+                @if (!$users)
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-body bg-marketplace d-flex">
@@ -45,9 +45,9 @@
                             </div>
                         </div>
                     </div>
-                @else --}}
-                    {{-- @foreach ($users as $item)
-                        @foreach ($roles as $role) --}}
+                @else
+                    @foreach ($users as $item)
+                        @foreach ($roles as $role)
 
                 @if (!$users->isEmpty())
                     @foreach ($users as $user)

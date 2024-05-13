@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('t_uraian_jadwal', function (Blueprint $table) {
             $table->id('id_uraian_jadwal');
-            $table->unsignedBigInteger('id_jadwal');
+            // $table->unsignedBigInteger('id_jadwal');
             $table->string('nomor_jadwal');
 
             // tipe MCU
@@ -41,7 +41,7 @@ return new class extends Migration
             $table->timestamps();
 
             // FK
-            $table->foreign('id_jadwal')->references('id_jadwal')->on('t_jadwal')->onDelete('cascade');
+            // $table->foreign('id_jadwal')->references('id_jadwal')->on('t_jadwal')->onDelete('cascade');
         });
     }
 
