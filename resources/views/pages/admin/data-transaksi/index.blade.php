@@ -126,7 +126,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="{{ route('store.trans') }}" enctype="multipart/form-data">
+                    <form method="post" id="createForm" action="{{ route('store.trans') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
                             <div class="card-stamp card-stamp-lg">
@@ -373,5 +373,32 @@
                 imgPreview.src = oFREvent.target.result;
             };
         }
+
+        // $("#createForm").submit(function(e) {
+        //     e.preventDefault();
+
+        //     var formData = $(this).serialize();
+
+        //     $.ajax({
+        //         url: $(this).attr("action"),
+        //         type: "POST",
+        //         data: formData,
+        //         headers: {
+        //             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+        //             "Authorization": "Bearer " + parsedObj.token.access_token
+        //         },
+        //         success: function(response) {
+        //             console.log('berhasil han');
+        //             console.log(response);
+        //             swal("Info", "Data Berhasil disimpan.", "success");
+        //             $('#createForm')[0].reset();
+        //         },
+        //         error: function(error) {
+        //             console.error(error);
+        //             swal("Gagal Menyimpan Data.");
+        //         },
+        //     });
+
+        // });
     </script>
 @endsection
