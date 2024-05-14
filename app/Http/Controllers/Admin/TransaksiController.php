@@ -11,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TransaksiController extends Controller
 {
@@ -64,8 +65,9 @@ class TransaksiController extends Controller
             $validatedData['status_pembayaran'] = 'Berhasil';
 
             // dd($validatedData);
-            TransaksiModel::create($validatedData);
+            $transId = TransaksiModel::insertGetId($validatedData);
 
+            $this->generatePdf($transId, $validatedData);
             return redirect()->back()->with('success', 'Data Transaksi Berhasil Disimpan!');
         } catch (ValidationException $e) {
             if ($request->expectsJson()) {
@@ -167,5 +169,34 @@ class TransaksiController extends Controller
         $trans->delete();;
 
         return redirect()->back()->with('success', 'Data Budaya Berhasil Dihapus!');
+    }
+
+    public function generatePdf($transId, $data)
+    {
+        // dd($transId, $data);
+        $transIdString = strval($transId);
+
+        $pdf = Pdf::setOptions([
+            'isPhpEnabled' => true,
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true,
+            'defaultFont' => 'sans-serif',
+        ])
+        ->loadView('pages.admin.data-transaksi.cetak-trans', [
+            'data' => $data,
+        ])
+        ->setPaper('a4', 'landscape');
+
+        $directoryPath = public_path('arsip/transaksi/pdf/');
+        if (!file_exists($directoryPath)) {
+            mkdir($directoryPath, 0755, true); // Buat direktori dengan izin 0755
+        }
+
+        $filePath = $directoryPath . $transIdString . '.pdf';
+
+        $pdf->save($filePath);
+
+        return response()->json(['message' => 'PDF telah disimpan', 'filePath' => $filePath]);
+
     }
 }
