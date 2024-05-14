@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 @else --}}
-                    {{-- @foreach ($users as $item)
+                {{-- @foreach ($users as $item)
                         @foreach ($roles as $role) --}}
 
                 @if (!$users->isEmpty())
@@ -57,7 +57,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <div class="avatar-md">
-                                                <img src="{{asset('assets/images/users/avatar-1.jpg')}}" alt="user-img"
+                                                <img src="{{ asset('assets/images/users/avatar-1.jpg') }}" alt="user-img"
                                                     class="img-thumbnail rounded-circle" />
                                             </div>
                                         </div>
@@ -96,10 +96,23 @@
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#editUser{{ $user->id_user }}"><i
                                                             class=" ri-edit-2-fill"></i></button>
+                                                    <form id="deleteForm{{ $user->id_user }}"
+                                                        action="{{ route('users.destroy', $user->id_user) }}" method="POST"
+                                                        class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <a href="#" type="button"
+                                                            class="btn btn-danger btn-sm deletePengguna"
+                                                            data-toggle="tooltip"
+                                                            onclick="confirmDelete(event, {{ $user->id_user }})"
+                                                            data-original-title="Delete">
+                                                            <i class="ri-delete-bin-2-fill"></i>
+                                                        </a>
+                                                    </form>
 
-                                                    <form method="POST"
+                                                    {{-- <form method="POST"
                                                         action="{{ route('users.destroy', $user->id_user) }}"
-                                                        id="delete-form" class="d-inline">
+                                                        id="delete-form{{ $user->id_user }}" class="d-inline">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button"
@@ -107,7 +120,7 @@
                                                             onclick="btnDelete()">
                                                             <i class="ri-delete-bin-2-fill"></i>
                                                         </button>
-                                                    </form>
+                                                    </form> --}}
 
                                                 </div>
                                             </div>
@@ -116,7 +129,7 @@
                                 </div>
                             </div>
                         </div>
-                        @endforeach
+                    @endforeach
                 @else
                     <div class="col-md-4">
                         <div class="card">
@@ -143,8 +156,8 @@
     </div>
 
     {{-- Modal View --}}
-    @foreach ($users as $item)
-        <div class="modal fade" id="viewUser{{ $item->id_user }}" tabindex="-1" aria-labelledby="viewUserLabel">
+    @foreach ($users as $user)
+        <div class="modal fade" id="viewUser{{ $user->id_user }}" tabindex="-1" aria-labelledby="viewUserLabel">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">

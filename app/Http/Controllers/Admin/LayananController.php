@@ -82,9 +82,16 @@ class LayananController extends Controller
 
         if ($request->hasFile('foto_bg')) {
             $foto = $request->file('foto_bg');
-            $namaFoto = time() . '.' . $foto->getClientOriginalExtension();
-            $foto->move(public_path('layanan/foto-bg/'), $namaFoto);
-            $layanan->foto_bg = $namaFoto;
+            $filenameLayanan = uniqid() . '_' . date('y-m-d') . '.' . $foto->getClientOriginalExtension();
+            $pathLayanan = 'layanan/foto-bg/' . $filenameLayanan;
+            Storage::disk('public')->put($pathLayanan, file_get_contents($foto));
+
+            // Hapus foto lama jika ada dan simpan foto baru
+            if ($layanan->foto_bg) {
+                Storage::disk('public')->delete('layanan/foto-bg/' . $layanan->foto_bg);
+            }
+
+            $layanan->foto_bg = $filenameLayanan;
         }
 
         $layanan->save();
@@ -96,12 +103,16 @@ class LayananController extends Controller
     {
         $layanan = LayananModel::findOrFail($id);
 
+        // Delete related records in t_jadwal table
+        $layanan->jadwals()->delete();
+
         if (!empty($layanan->foto_bg)) {
             if (file_exists(public_path('layanan/foto-bg/') . '/' . $layanan->foto_bg)) {
                 unlink(public_path('layanan/foto-bg/') . '/' . $layanan->foto_bg);
             }
         }
 
+        // Delete record in t_layanan table
         $layanan->delete();
 
         return redirect()->route('data.layanan')->with('success', 'Layanan berhasil dihapus.');

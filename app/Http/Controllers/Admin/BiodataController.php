@@ -218,32 +218,61 @@ class BiodataController extends Controller
         $biodata->gol_darah = $request->gol_darah;
 
         // Cek apakah ada file foto yang diunggah dan update foto jika ada
+
         if ($request->hasFile('foto_ktp')) {
             $fotoKTP = $request->file('foto_ktp');
-            $namaFotoKTP = time() . '.' . $fotoKTP->getClientOriginalExtension();
-            $fotoKTP->move(public_path('biodata/foto-ktp/'), $namaFotoKTP);
+            $namaFotoKTP = uniqid() . '_' . date('y-m-d') . '.' . $fotoKTP->getClientOriginalExtension();
+            $pathKtp = 'biodata/foto-ktp/' . $namaFotoKTP;
+            Storage::disk('public')->put($pathKtp, file_get_contents($fotoKTP));
+
+            // Hapus foto lama jika ada dan simpan foto baru
+            if ($biodata->foto_ktp) {
+                Storage::disk('public')->delete('biodata/foto-ktp/' . $biodata->foto_ktp);
+            }
+
             $biodata->foto_ktp = $namaFotoKTP;
         }
 
         if ($request->hasFile('foto_kk')) {
             $fotoKK = $request->file('foto_kk');
-            $namaFotoKK = time() . '.' . $fotoKK->getClientOriginalExtension();
-            $fotoKK->move(public_path('biodata/foto-kk/'), $namaFotoKK);
+            $namaFotoKK = uniqid() . '_' . date('y-m-d') . '.' . $fotoKK->getClientOriginalExtension();
+            $pathKk = 'biodata/foto-kk/' . $namaFotoKK;
+            Storage::disk('public')->put($pathKk, file_get_contents($fotoKK));
+
+            // Hapus foto lama jika ada dan simpan foto baru
+            if ($biodata->foto_kk) {
+                Storage::disk('public')->delete('biodata/foto-kk/' . $biodata->foto_kk);
+            }
+
             $biodata->foto_kk = $namaFotoKK;
         }
 
         if ($request->hasFile('foto_passport')) {
             $fotoPassport = $request->file('foto_passport');
-            $namaFotoPassport = time() . '.' . $fotoPassport->getClientOriginalExtension();
-            $fotoPassport->move(public_path('biodata/foto-passport/'), $namaFotoPassport);
-            $biodata->foto_passport = $namaFotoPassport;
+            $namafotoPassport = uniqid() . '_' . date('y-m-d') . '.' . $fotoPassport->getClientOriginalExtension();
+            $pathpass = 'biodata/foto-passport/' . $namafotoPassport;
+            Storage::disk('public')->put($pathpass, file_get_contents($fotoPassport));
+
+            // Hapus foto lama jika ada dan simpan foto baru
+            if ($biodata->foto_passport) {
+                Storage::disk('public')->delete('biodata/foto-passport/' . $biodata->foto_passport);
+            }
+
+            $biodata->foto_passport = $namafotoPassport;
         }
 
         if ($request->hasFile('pas_foto')) {
             $pasFoto = $request->file('pas_foto');
-            $namaPasFoto = time() . '.' . $pasFoto->getClientOriginalExtension();
-            $pasFoto->move(public_path('biodata/pas-foto/'), $namaPasFoto);
-            $biodata->pas_foto = $namaPasFoto;
+            $namapasFoto = uniqid() . '_' . date('y-m-d') . '.' . $pasFoto->getClientOriginalExtension();
+            $pathpasfoto = 'biodata/pas-foto/' . $namapasFoto;
+            Storage::disk('public')->put($pathpasfoto, file_get_contents($pasFoto));
+
+            // Hapus foto lama jika ada dan simpan foto baru
+            if ($biodata->pas_foto) {
+                Storage::disk('public')->delete('biodata/pas-foto/' . $biodata->pas_foto);
+            }
+
+            $biodata->pas_foto = $pasFoto;
         }
 
         $biodata->save();

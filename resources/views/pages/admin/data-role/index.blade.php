@@ -25,7 +25,8 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card bg-marketplace d-flex">
+                    <div class="card">
+
                         <div class="card-header">
                             <h5 class="card-title mb-0">Basic Datatables</h5>
                             <button type="button" class="btn btn-primary" style="float: right" data-bs-toggle="modal"
@@ -33,7 +34,8 @@
                                 <i class=" ri-user-add-fill"></i> Tambah Data Role
                             </button>
                         </div>
-                        <div class="card-body ">
+                        <div class="card-body">
+
                             <table id="example"
                                 class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap"
                                 style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
@@ -56,17 +58,18 @@
                                                     data-bs-toggle="modal" data-bs-target="#editmodal{{ $item->id_role }}">
                                                     <i class=" ri-edit-2-fill"></i>
                                                 </button>
-                                                <form method="POST" action="{{ route('destroy.role', $item->id_role) }}"
-                                                    id="delete-form" class="d-inline">
+                                                <form id="deleteForm{{ $item->id_role }}"
+                                                    action="{{ route('destroy.role', $item->id_role) }}" method="POST"
+                                                    class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
-                                                        onclick="deleteRole()">
+                                                    <a href="#" type="button"
+                                                        class="btn btn-danger btn-sm deletePengguna" data-toggle="tooltip"
+                                                        onclick="confirmDelete(event, {{ $item->id_role }})"
+                                                        data-original-title="Delete">
                                                         <i class="ri-delete-bin-2-fill"></i>
-                                                    </button>
+                                                    </a>
                                                 </form>
-
                                             </td>
                                         </tr>
                                     @endforeach
@@ -91,7 +94,7 @@
                     <form action="{{ route('store.role') }}" method="POST">
                         @csrf
                         <div class="row g-3">
-                            <div class="col-xxl-6">
+                            <div class="col-12">
                                 <div>
                                     <label for="nama_role" class="form-label">Nama Role</label>
                                     <input type="text" class="form-control" id="nama_role" name="nama_role"
@@ -110,6 +113,7 @@
             </div>
         </div>
     </div>
+
     {{-- End Modal Tambah --}}
 
     {{-- modal edit --}}

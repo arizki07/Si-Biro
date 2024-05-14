@@ -39,4 +39,9 @@ class LayananModel extends Model
     {
         return $this->hasMany(TransaksiModel::class, 'id_layanan', 'id_layanan');
     }
+
+    public function jadwals()
+    {
+        return $this->hasMany(JadwalModel::class, 'id_layanan', 'id_layanan');
+    }
 }

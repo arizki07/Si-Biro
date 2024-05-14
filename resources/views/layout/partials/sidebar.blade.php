@@ -53,34 +53,40 @@
             </li> --}}
 
             <li class="nav-item open">
-                <a class="nav-link menu-link {{ ($act == 'jadwal-mcu') ||($act == 'jadwal-passport') || ($act == 'jadwal-bimbingan') ? 'active' : '' }}" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                <a class="nav-link menu-link {{ $act == 'jadwal-mcu' || $act == 'jadwal-passport' || $act == 'jadwal-bimbingan' ? 'active' : '' }}"
+                    href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                    aria-controls="sidebarDashboards">
                     <i class="ri-pencil-ruler-2-line"></i> <span>Data jadwal</span>
                 </a>
-                <div class="collapse menu-dropdown {{ ($act == 'jadwal-mcu') ||($act == 'jadwal-passport') || ($act == 'jadwal-bimbingan') ? 'show' : '' }}" id="sidebarDashboards">
+                <div class="collapse menu-dropdown {{ $act == 'jadwal-mcu' || $act == 'jadwal-passport' || $act == 'jadwal-bimbingan' ? 'show' : '' }}"
+                    id="sidebarDashboards">
                     <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
-                            <a href="/data-jadwal?action=mcu" class="nav-link {{ ($act == 'jadwal-mcu') ? 'active' : '' }}"> MCU </a>
+                            <a href="/data-jadwal?action=mcu"
+                                class="nav-link {{ $act == 'jadwal-mcu' ? 'active' : '' }}"> MCU </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/data-jadwal?action=passport" class="nav-link {{ ($act == 'jadwal-passport') ? 'active' : '' }}"> PASSPORT </a>
+                            <a href="/data-jadwal?action=passport"
+                                class="nav-link {{ $act == 'jadwal-passport' ? 'active' : '' }}"> PASSPORT </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/data-jadwal?action=bimbingan" class="nav-link {{ ($act == 'jadwal-bimbingan') ? 'active' : '' }}"> BIMBINGAN </a>
+                            <a href="/data-jadwal?action=bimbingan"
+                                class="nav-link {{ $act == 'jadwal-bimbingan' ? 'active' : '' }}"> BIMBINGAN </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link" data-bs-toggle="modal"
-                            data-bs-target="#importExcel"> UPLOAD JADWAL </a>
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#importExcel">
+                                UPLOAD JADWAL </a>
                         </li>
                     </ul>
                 </div>
-            </li> 
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link menu-link <?= $act == 'transaksi' ? 'active' : '' ?>" href="/data-transaksi">
                     <i class="ri-pencil-ruler-2-line"></i> <span>Data Transaksi</span>
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link menu-link <?= $act == 'keuangan' ? 'active' : '' ?>" href="/data-keuangan">
                     <i class="ri-pencil-ruler-2-line"></i> <span>Data Keuangan</span>
@@ -90,7 +96,7 @@
             <li class="menu-title"><i class="ri-more-fill"></i> <span>Schedule Report </span></li>
 
             <li class="nav-item">
-                <a class="nav-link menu-link <?= $act == 'arsip' ? 'active' : '' ?>" href="#">
+                <a class="nav-link menu-link <?= $act == 'arsip' ? 'active' : '' ?>" href="/data-arsip">
                     <i class="ri-pencil-ruler-2-line"></i> <span>Data Arsip</span>
                 </a>
             </li>

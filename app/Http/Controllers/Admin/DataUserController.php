@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RoleModel;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -93,17 +94,29 @@ class DataUserController extends Controller
         }
     }
 
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        try {
-            // Hapus user berdasarkan ID
-            $user->delete();
+        // Mengambil ID pengguna yang sedang login
+        $currentUserId = Auth::id();
 
-            // Redirect ke halaman yang sesuai atau kirim respons JSON jika perlu
-            return redirect()->route('data.users')->with('success', 'User deleted successfully');
-        } catch (\Exception $e) {
-            // Tangani kesalahan jika terjadi
-            return redirect()->back()->with('error', 'Failed to delete user: ' . $e->getMessage());
+        // Mencari pengguna berdasarkan ID yang ingin dihapus
+        $user = User::find($id);
+
+        // Jika pengguna tidak ditemukan
+        if (!$user) {
+            return redirect('/data-users')->with('error', 'Data user tidak ditemukan');
+        }
+
+        // Validasi apakah pengguna yang akan dihapus adalah pengguna yang sedang login
+        if ($user->id == $currentUserId) {
+            return redirect('/data-users')->with('error', 'Anda tidak bisa menghapus pengguna yang sedang login');
+        }
+
+        // Jika validasi berhasil, hapus pengguna
+        if ($user->delete()) {
+            return redirect('/data-users')->with('success', 'Data user berhasil dihapus');
+        } else {
+            return redirect('/data-users')->with('error', 'Gagal menghapus data user');
         }
     }
 }

@@ -71,11 +71,10 @@
                                         <th>Paket</th>
                                         <th>Status Paket</th>
                                         <th>Deskripsi</th>
-                                        <th>Jadwal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php ($no = 1)
+                                    @php($no = 1)
                                     @foreach ($layanan as $item)
                                         <tr class="text-center">
                                             <td>{{ $no++ }}</td>
@@ -91,16 +90,18 @@
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#editModal{{ $item->id_layanan }}"><i
                                                         class=" ri-edit-2-fill"></i></button>
-                                                <form method="POST"
+                                                <form id="deleteForm{{ $item->id_layanan }}"
                                                     action="{{ route('destroy.layanan', $item->id_layanan) }}"
-                                                    id="delete-form" class="d-inline">
+                                                    method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
-                                                        onclick="btnDelete()">
+                                                    <a href="#" type="button"
+                                                        class="btn btn-danger icon waves-effect waves-light btn-sm deletePengguna"
+                                                        data-toggle="tooltip"
+                                                        onclick="confirmDelete(event, {{ $item->id_layanan }})"
+                                                        data-original-title="Delete">
                                                         <i class="ri-delete-bin-2-fill"></i>
-                                                    </button>
+                                                    </a>
                                                 </form>
                                             </td>
                                             <td>LA-{{ $item->id_layanan }}</td>
@@ -270,18 +271,17 @@
                                     <div class="card">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Foto BG</h5>
-                                                    </div>
+                                                <div style="text-align: center;">
+                                                    <!-- Menggunakan text-align: center; untuk membuat gambar berada di tengah secara horizontal -->
                                                     <img src="{{ asset('storage/layanan/foto-bg/' . $item->foto_bg) }}"
-                                                        class="card-img-top" alt="Foto BG" width="300"
-                                                        height="300">
+                                                        class="card-img-top" alt="Foto BG"
+                                                        style="width: 100%; object-fit: cover; margin: 0 auto;">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-xxl-6">
                                     <div>
                                         <label for="firstName" class="form-label">Judul Layanan</label>

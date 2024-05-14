@@ -1,6 +1,7 @@
 <?php
 //
 
+use App\Http\Controllers\Admin\ArsipController;
 use App\Http\Controllers\Admin\BiodataController;
 use App\Http\Controllers\Admin\DataUserController;
 use App\Http\Controllers\Admin\ImportController;
@@ -29,7 +30,6 @@ Route::post('/otp-verification', [AuthController::class, 'otpVerificationPost'])
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
 
     //Data-Users
     Route::get('/data-users', [DataUserController::class, 'index'])->name('data.users');
@@ -73,4 +73,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/keuangan/{id}', [KeuanganController::class, 'update'])->name('keuangan.update');
     Route::delete('/keuangan/{id}', [KeuanganController::class, 'destroy'])->name('keuangan.destroy');
     Route::get('/data-verifikasi', [VerifikasiController::class, 'index'])->name('data.verifikasi');
+
+    //Arsip
+    Route::get('/data-arsip', [ArsipController::class, 'index']);
 });

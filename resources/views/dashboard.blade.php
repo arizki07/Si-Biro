@@ -82,10 +82,13 @@
                                             width="300px" height="300px"></iframe>
                                     </div>
                                     <div class="col-9">
-                                        <h3 class="h1">Selamat Datang di Biro Haji, {{ Auth::user()->nama }} 🎉</h3>
+                                        <h3 class="h3">Selamat Datang di YAYASAN KBIH WADI FATIMAH,
+                                            {{ Auth::user()->nama }} 🎉
+                                        </h3>
                                         <div class="text-black">
-                                            Aplikasi Biro Haji ini ditujukan untuk memudahkan dan menyediakan layanan
-                                            terbaik bagi para jamaah yang ingin menjalani ibadah haji.
+                                            Yayasan KBIH WADI FATIMAH menyediakan aplikasi Biro Haji ini ditujukan untuk
+                                            memudahkan dan menyediakan layanan
+                                            terbaik bagi para jamaah yang ingin menjalani ibadah haji/umroh.
                                             <br>
                                             Silahkan pilih menu disamping untuk mulai menggunakan aplikasi.
                                         </div>
@@ -103,24 +106,18 @@
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                     Data Users</p>
                                             </div>
-                                            <div class="flex-shrink-0">
-                                                <h5 class="text-success fs-14 mb-0">
-                                                    <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
-                                                    +16.24 %
-                                                </h5>
-                                            </div>
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
-                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span class="counter-value"
-                                                        data-target="559.25">0</span>k
+                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                                        data-target="{{ $user }}"></span>
                                                 </h4>
                                                 <a href="" class="text-decoration-underline">Data
                                                     Users</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-primary rounded fs-3">
-                                                    <i class="bx bx-dollar-circle text-primary"></i>
+                                                    <i class='bx bxs-user-circle text-danger'></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -135,12 +132,6 @@
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                     Data Role</p>
                                             </div>
-                                            <div class="flex-shrink-0">
-                                                <h5 class="text-danger fs-14 mb-0">
-                                                    <i class="ri-arrow-right-down-line fs-13 align-middle"></i>
-                                                    -3.57 %
-                                                </h5>
-                                            </div>
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
@@ -152,7 +143,7 @@
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-info rounded fs-3">
-                                                    <i class="bx bx-shopping-bag text-info"></i>
+                                                    <i class='bx bxs-user-pin text-success'></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -168,24 +159,18 @@
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                     Data Biodata</p>
                                             </div>
-                                            <div class="flex-shrink-0">
-                                                <h5 class="text-success fs-14 mb-0">
-                                                    <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
-                                                    +29.08 %
-                                                </h5>
-                                            </div>
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
-                                                        data-target="{{ $user }}"></span>
+                                                        data-target="{{ $jamaah }}"></span>
                                                 </h4>
                                                 <a href="/data-biodata" class="text-decoration-underline">Data
                                                     Biodata</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-primary rounded fs-3">
-                                                    <i class="bx bx-user-circle text-primary"></i>
+                                                    <i class='bx bxs-user-account text-primary'></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -201,23 +186,19 @@
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                     Data Transaksi</p>
                                             </div>
-                                            <div class="flex-shrink-0">
-                                                <h5 class="text-muted fs-14 mb-0">
-                                                    +0.00 %
-                                                </h5>
-                                            </div>
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
-                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span
-                                                        class="counter-value" data-target="165.89">0</span>k
+                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                                        data-target="{{ $transaksi }}"></span>
                                                 </h4>
                                                 <a href="" class="text-decoration-underline">Data
                                                     Transaksi</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-info rounded fs-3">
-                                                    <i class="bx bx-wallet text-info"></i>
+                                                    <i class="bx bx-shopping-bag text-black"></i>
+
                                                 </span>
                                             </div>
                                         </div>
@@ -234,24 +215,18 @@
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                     Data Jadwal</p>
                                             </div>
-                                            <div class="flex-shrink-0">
-                                                <h5 class="text-success fs-14 mb-0">
-                                                    <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
-                                                    +16.24 %
-                                                </h5>
-                                            </div>
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
-                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span
-                                                        class="counter-value" data-target="559.25">0</span>k
+                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
+                                                        class="counter-value" data-target="{{ $jadwal }}"></span>
                                                 </h4>
                                                 <a href="" class="text-decoration-underline">Data
                                                     Jadwal</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-primary rounded fs-3">
-                                                    <i class="bx bx-dollar-circle text-primary"></i>
+                                                    <i class='bx bxs-book text-black'></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -266,24 +241,18 @@
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                     Data Arsip</p>
                                             </div>
-                                            <div class="flex-shrink-0">
-                                                <h5 class="text-danger fs-14 mb-0">
-                                                    <i class="ri-arrow-right-down-line fs-13 align-middle"></i>
-                                                    -3.57 %
-                                                </h5>
-                                            </div>
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
-                                                        class="counter-value" data-target="36894">0</span>
+                                                        class="counter-value" data-target="36894"></span>
                                                 </h4>
                                                 <a href="" class="text-decoration-underline">Data
                                                     Arsip</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-info rounded fs-3">
-                                                    <i class="bx bx-shopping-bag text-info"></i>
+                                                    <i class='bx bxl-google-cloud text-black'></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -299,24 +268,18 @@
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                     Data Keuangan</p>
                                             </div>
-                                            <div class="flex-shrink-0">
-                                                <h5 class="text-success fs-14 mb-0">
-                                                    <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
-                                                    +29.08 %
-                                                </h5>
-                                            </div>
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
-                                                        class="counter-value" data-target="183.35">0</span>M
+                                                        class="counter-value" data-target="{{ $keuangan }}"></span>
                                                 </h4>
                                                 <a href="" class="text-decoration-underline">Data
                                                     Keuangan</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-primary rounded fs-3">
-                                                    <i class="bx bx-user-circle text-primary"></i>
+                                                    <i class='bx bxs-badge-dollar text-warning'></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -332,23 +295,18 @@
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
                                                     Data Layanan</p>
                                             </div>
-                                            <div class="flex-shrink-0">
-                                                <h5 class="text-muted fs-14 mb-0">
-                                                    +0.00 %
-                                                </h5>
-                                            </div>
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
-                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span
-                                                        class="counter-value" data-target="165.89">0</span>k
+                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
+                                                        class="counter-value" data-target="{{ $layanan }}"></span>
                                                 </h4>
                                                 <a href="" class="text-decoration-underline">Data
                                                     Layanan</a>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-soft-info rounded fs-3">
-                                                    <i class="bx bx-wallet text-info"></i>
+                                                    <i class='bx bxs-cart-add text-danger'></i>
                                                 </span>
                                             </div>
                                         </div>

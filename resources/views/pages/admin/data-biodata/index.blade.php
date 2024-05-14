@@ -78,16 +78,18 @@
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#editModal{{ $item->id_jamaah }}"><i
                                                         class=" ri-edit-2-fill"></i></button>
-                                                <form method="POST"
-                                                    action="{{ route('delete.biodata', $item->id_jamaah) }}"
-                                                    id="delete-form" class="d-inline">
+                                                <form id="deleteForm{{ $item->id_jamaah }}"
+                                                    action="{{ route('delete.biodata', $item->id_jamaah) }}" method="POST"
+                                                    class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
-                                                        onclick="btnDelete()">
+                                                    <a href="#" type="button"
+                                                        class="btn btn-danger icon waves-effect waves-light btn-sm deletePengguna"
+                                                        data-toggle="tooltip"
+                                                        onclick="confirmDelete(event, {{ $item->id_jamaah }})"
+                                                        data-original-title="Delete">
                                                         <i class="ri-delete-bin-2-fill"></i>
-                                                    </button>
+                                                    </a>
                                                 </form>
                                             </td>
                                             <td>{{ $item['nama_lengkap'] }}</td>
@@ -159,8 +161,8 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Umur</label>
-                                <input type="text" class="form-control border border-dark" name="umur" id="umur"
-                                    placeholder="Masukkan Umur" value="{{ old('umur') }}">
+                                <input type="text" class="form-control border border-dark" name="umur"
+                                    id="umur" placeholder="Masukkan Umur" value="{{ old('umur') }}">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
@@ -225,6 +227,7 @@
                                             id="no_rekening" placeholder="Masukkan Nomor Rekening"
                                             value="{{ old('no_rekening') }}">
                                     </div>
+                                    <div class="text-danger">*Nomor Rekening harus terdiri dari 17 karakter.</div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
@@ -232,6 +235,8 @@
                                         <input type="text" class="form-control border border-dark" name="no_ktp"
                                             id="no_ktp" placeholder="Masukkan Nomor KTP" value="{{ old('no_ktp') }}">
                                     </div>
+                                    <div class="text-danger">*Nomor KTP harus terdiri dari 16 karakter.</div>
+
                                 </div>
                             </div>
                             <div class="row">
@@ -242,6 +247,7 @@
                                             id="no_kk" placeholder="Masukkan Nomor KK" value="{{ old('no_kk') }}">
                                     </div>
                                 </div>
+                                <div class="text-danger">*Nomor KTP harus terdiri dari 17 karakter.</div>
 
                             </div>
                             <div class="row">
@@ -515,12 +521,9 @@
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Jenis Kelamin</label>
-                                                    <select name="jk" id="gender"
-                                                        class="form-select border-dark">
-                                                        <option value="" hidden>-- Pilih Jenis Kelamin --</option>
-                                                        <option value="Pria">Pria</option>
-                                                        <option value="Wanita">Wanita</option>
-                                                    </select>
+                                                    <input type="text"
+                                                        class="form-control border border-dark bg-secondary-lt"
+                                                        name="jk" value="{{ old('jk', $item->jk) }}">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -546,8 +549,8 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">Tanggal Lahir</label>
                                                     <input name="tgl_lahir" type="date"
-                                                        class="form-control border border-dark" placeholder="YYYY-MM-DD" /
-                                                        value="{{ old('tanggal_lahir', $item->tanggal_lahir) }}" readonly>
+                                                        class="form-control border border-dark"
+                                                        value="{{ old('tgl_lahir', $item->tgl_lahir) }}" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -600,39 +603,23 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Nomor Passport</label>
+                                                    <label class="form-label">Bank</label>
                                                     <input type="text" class="form-control border border-dark"
-                                                        name="no_passport" id="no_passport"
-                                                        placeholder="Masukkan Nomor Passport"
-                                                        value="{{ old('no_passport', $item->no_passport) }}" readonly>
+                                                        name="bank" id="bank" placeholder="Masukkan Nomor KK"
+                                                        value="{{ old('bank', $item->bank) }}" readonly>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Bank</label>
-                                                    <select name="bank" id="gender"
-                                                        class="form-select border-dark">
-                                                        <option value="" hidden>-- Pilih Bank --</option>
-                                                        <option value="BCA">BCA</option>
-                                                        <option value="BSI">BSI</option>
-                                                        <option value="BJB">BJB</option>
-                                                        <option value="MANDIRI">MANDIRI</option>
-                                                    </select>
-                                                </div>
-                                            </div>
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Berat Badan</label>
                                                     <input type="text" class="form-control border border-dark"
                                                         name="berat_badan" id="berat_badan"
                                                         placeholder="Masukkan Berat Badan"
-                                                        value="{{ old('verat_badan', $item->verat_badan) }}" readonly>
+                                                        value="{{ old('berat_badan', $item->berat_badan) }}" readonly>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Tinggi Badan</label>
@@ -642,6 +629,9 @@
                                                         value="{{ old('tinggi_badan', $item->tinggi_badan) }}" readonly>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
+
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Warna Kulit</label>
@@ -651,8 +641,6 @@
                                                         value="{{ old('warna_kulit', $item->warna_kulit) }}" readonly>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Pekerjaan</label>
@@ -661,6 +649,9 @@
                                                         value="{{ old('pekerjaan', $item->pekerjaan) }}" readonly>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
+
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Pendidikan</label>
@@ -670,8 +661,6 @@
                                                         value="{{ old('pendidikan', $item->pendidikan) }}" readonly>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Pernah Haji/Umroh</label>
@@ -680,14 +669,6 @@
                                                         placeholder="Masukkan Pernah Haji/Umroh"
                                                         value="{{ old('pernah_haji_umroh', $item->pernah_haji_umroh) }}"
                                                         readonly>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Kelurahan</label>
-                                                    <input type="text" class="form-control border border-dark"
-                                                        name="kelurahan" id="kelurahan" placeholder="Masukkan Kelurahan"
-                                                        value="{{ old('kelurahan', $item->kelurahan) }}" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -702,6 +683,16 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
+                                                    <label class="form-label">Kelurahan</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="kelurahan" id="kelurahan" placeholder="Masukkan Kelurahan"
+                                                        value="{{ old('kelurahan', $item->kelurahan) }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
                                                     <label class="form-label">Kota/Kabupaten</label>
                                                     <input type="text" class="form-control border border-dark"
                                                         name="kota_kabupaten" id="kota_kabupaten"
@@ -710,8 +701,6 @@
                                                         readonly>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Provinsi</label>
@@ -720,19 +709,6 @@
                                                         value="{{ old('provinsi', $item->provinsi) }}" readonly>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Kode Pos</label>
-                                                    <input type="text" class="form-control border border-dark"
-                                                        name="kode_pos" id="kode_pos" placeholder="Masukkan Kode Pos"
-                                                        value="{{ old('kode_pos', $item->kode_pos) }}" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Alamat Lengkap</label>
-                                            <textarea name="alamat_lengkap" id="alamat_lengkap" cols="30" rows="3"
-                                                class="form-control border border-dark" placeholder="Masukkan Alamat Lengkap" value="" readonly>{{ old('alamat_lengkap', $item->alamat_lengkap) }}</textarea>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6">
@@ -746,6 +722,16 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
+                                                    <label class="form-label">Kode Pos</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="kode_pos" id="kode_pos" placeholder="Masukkan Kode Pos"
+                                                        value="{{ old('kode_pos', $item->kode_pos) }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
                                                     <label class="form-label">Golongan Darah</label>
                                                     <input type="text" class="form-control border border-dark"
                                                         name="gol_darah" id="gol_darah"
@@ -754,6 +740,12 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Alamat Lengkap</label>
+                                            <textarea name="alamat_lengkap" id="alamat_lengkap" cols="30" rows="3"
+                                                class="form-control border border-dark" placeholder="Masukkan Alamat Lengkap" value="" readonly>{{ old('alamat_lengkap', $item->alamat_lengkap) }}</textarea>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -811,11 +803,13 @@
                                     <select name="id_layanan" id="id_layanan" class="form-select border border-dark">
                                         <option value="" hidden>-- Pilih Layanan --</option>
                                         @foreach ($layanans as $layanan)
-                                            <option value="{{ $layanan->id_layanan }}">{{ $layanan->judul_layanan }}
-                                            </option>
+                                            <option value="{{ $layanan->id_layanan }}"
+                                                @if ($layanan->id_layanan == $layanan->id_layanan) selected @endif>
+                                                {{ $layanan->judul_layanan }}</option>
                                         @endforeach
                                     </select>
                                 </div>
+
 
                                 <div class="mb-3">
                                     <label class="form-label">Nama Lengkap</label>
@@ -1137,9 +1131,9 @@
                                         class="fa-solid fa-fw fa-arrow-rotate-left"></i> Kembali</a>
                                 <button type="submit" class="btn btn-primary ms-auto">
                                     <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="icon icon-tabler icon-tabler-device-floppy" width="24"
-                                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                         <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
                                         <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />

@@ -34,7 +34,7 @@ class RoleController extends Controller
         $role->nama_role = $request->input('nama_role');
         $role->save();
 
-        return redirect()->route('index.role')->with('success', 'Data Role Berhasil Di Tambahkan');
+        return redirect()->route('data.role')->with('success', 'Data Role Berhasil Di Tambahkan');
     }
 
     public function update(Request $request, $id)
@@ -47,13 +47,13 @@ class RoleController extends Controller
         $role->nama_role = $request->input('nama_role');
         $role->save();
 
-        return redirect()->route('index.role')->with('success', 'Data Role Berhasil Di Update');
+        return redirect()->route('data.role')->with('success', 'Data Role Berhasil Di Update');
     }
 
     public function destroy($id)
     {
         $role = RoleModel::findOrFail($id);
         $role->delete();
-        return redirect()->route('index.role')->with('success', 'Data Role Berhasil Di Delete');
+        return redirect()->route('data.role')->with('success', 'Data Role Berhasil Di Delete');
     }
 }
