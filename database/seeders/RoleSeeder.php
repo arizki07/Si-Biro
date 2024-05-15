@@ -16,23 +16,23 @@ class RoleSeeder extends Seeder
         DB::table('t_role')->insert([
             [
                 'id_role' => '1',
-                'nama_role' => 'Admin'
+                'role' => 'admin'
             ],
             [
                 'id_role' => '2',
-                'nama_role' => 'Jamaah'
+                'role' => 'jamaah'
             ],
             [
                 'id_role' => '3',
-                'nama_role' => 'Finance'
+                'role' => 'finance'
             ],
             [
                 'id_role' => '4',
-                'nama_role' => 'Keuangan'
+                'role' => 'front office'
             ],
             [
                 'id_role' => '5',
-                'nama_role' => 'Kbih'
+                'role' => 'kbih'
             ]
         ]);
     }
