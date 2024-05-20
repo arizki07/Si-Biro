@@ -22,7 +22,7 @@ class BiodataController extends Controller
             'jamaah' => $jamaah,
             'roles' => $roles,
             'layanans' => $layanans,
-            'title' => 'Biodata',
+            'title' => 'Data Biodata',
             'act' => 'biodata',
             'json_bank' => json_decode(file_get_contents(public_path('json/bank.json')), true),
             'json_provinsi' => json_decode(file_get_contents(public_path('json/provinsi.json')), true),

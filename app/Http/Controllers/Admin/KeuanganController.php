@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\JamaahModel;
 use App\Models\Keuangan;
 use App\Models\Transaksi;
+use App\Models\TransaksiModel;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class KeuanganController extends Controller
     {
         $keuangan = Keuangan::all();
         $jamaahs = JamaahModel::all();
-        $transaksi = Transaksi::all();
+        $transaksi = TransaksiModel::all();
 
         return view('pages.admin.data-keuangan.index', [
             'keuangan' => $keuangan,

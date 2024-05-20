@@ -17,6 +17,7 @@ class LayananController extends Controller
         $jadwal = JadwalModel::all();
         return view('pages.admin.data-layanan.index', [
             'act' => 'layanan',
+            'title' => 'Data Layanan',
             'layanan' => $layanan,
             'jadwal' => $jadwal
         ]);

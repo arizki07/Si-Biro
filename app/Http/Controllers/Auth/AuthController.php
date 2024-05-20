@@ -16,7 +16,9 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return view('pages.auth.login');
+        return view('pages.auth.login', [
+            'judul' => 'Halaman Login'
+        ]);
     }
 
     public function login(Request $request)
@@ -70,7 +72,9 @@ class AuthController extends Controller
 
     public function register()
     {
-        return view('pages.auth.register');
+        return view('pages.auth.register', [
+            'judul' => 'Halaman Register',
+        ]);
     }
 
     public function registerPost(Request $request)

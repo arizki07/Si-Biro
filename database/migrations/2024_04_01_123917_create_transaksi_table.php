@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('status_pembayaran', 20);
             $table->string('tanggal_pembayaran', 20);
             $table->string('foto_bukti_pembayaran', 200);
+            $table->string('verifikasi')->default('pending')->nullable();
             $table->timestamps();
 
             $table->foreign('id_jamaah')->references('id_jamaah')->on('t_jamaah');
