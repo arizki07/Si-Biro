@@ -46,6 +46,7 @@ class JamaahModel extends Model
         'foto_kk',
         'foto_passport',
         'pas_foto',
+        'status',
     ];
 
     public function user()

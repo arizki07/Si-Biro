@@ -47,6 +47,7 @@ return new class extends Migration
             $table->string('foto_kk', 200);
             $table->string('foto_passport', 200)->nullable(); // jika blm ada, biarkan null
             $table->string('pas_foto', 200);
+            $table->string('verifikasi', 20)->default('pending')->nullable();
             $table->timestamps();
 
             $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');

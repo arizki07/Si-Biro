@@ -25,6 +25,8 @@ class DashboardController extends Controller
         $jadwal = JadwalModel::count();
         $keuangan = Keuangan::count();
         $layanan = LayananModel::count();
+        $jamaahs = JamaahModel::all();
+        $transaksis = TransaksiModel::all();
         return view('dashboard', [
             'act' => 'dashboard',
             'judul' => 'Halaman Utama',
@@ -35,6 +37,8 @@ class DashboardController extends Controller
             'jadwal' => $jadwal,
             'keuangan' => $keuangan,
             'layanan' => $layanan,
+            'jamaahs' => $jamaahs,
+            'transaksis' => $transaksis
         ]);
     }
 }
