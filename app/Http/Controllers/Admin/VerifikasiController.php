@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\JamaahModel;
+use App\Models\LayananModel;
+use App\Models\TransaksiModel;
 use Illuminate\Http\Request;
 
 class VerifikasiController extends Controller
@@ -12,9 +15,15 @@ class VerifikasiController extends Controller
      */
     public function index()
     {
+        $jamaah = JamaahModel::all();
+        $transaksi = TransaksiModel::all();
+        $layanan = LayananModel::all();
         return view('pages.admin.data-verifikasi.index', [
             'title' => 'Data Verifikasi',
             'act' => 'verifikasi',
+            'jamaah' => $jamaah,
+            'transaksi' => $transaksi,
+            'layanan' => $layanan
         ]);
     }
 

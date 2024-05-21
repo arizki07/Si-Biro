@@ -51,41 +51,24 @@
                                 style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
                                 <thead>
                                     <tr class="text-center">
-                                        <th>No.</th>
+                                        <th>Opsi</th>
                                         <th>Nama Jamaah</th>
                                         <th>Layanan</th>
                                         <th>Tipe Pembayaran</th>
                                         <th>Jumlah Pembayaran</th>
                                         <th>Status Pembayaran</th>
                                         <th>Tanggal Pembayaran</th>
-                                        <th>Foto Bukti Pembayaran</th>
-                                        <th>Opsi</th>
+                                        <th>Verifikasi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $i = 1; ?>
                                     @foreach ($data as $item)
                                         <tr class="text-center">
-                                            <td><?= $i++ ?></td>
-                                            <td>{{ $item->jamaah->nama_lengkap }}</td>
-                                            <td>{{ $item->layanan->judul_layanan }}</td>
-                                            <td>{{ $item->tipe_pembayaran }}</td>
-                                            <td>{{ $item->jumlah_pembayaran }}</td>
-                                            <td>{{ $item->status_pembayaran }}</td>
-                                            <td>{{ $item->tanggal_pembayaran }}</td>
                                             <td>
                                                 <button type="button"
                                                     class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#detailTrans{{ $item->id_transaksi }}">
-                                                    <i class="ri-eye-fill"></i>
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button type="button"
-                                                    class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#detailTrans{{ $item->id_transaksi }}">
+                                                    data-bs-target="#detailTransall{{ $item->id_transaksi }}">
                                                     <i class="ri-eye-fill"></i>
                                                 </button>
                                                 <button type="button"
@@ -104,6 +87,21 @@
                                                         <i class="ri-delete-bin-2-fill"></i>
                                                     </button>
                                                 </form>
+                                            </td>
+                                            <td>{{ $item->jamaah->nama_lengkap }}</td>
+                                            <td>{{ $item->layanan->judul_layanan }}</td>
+                                            <td>{{ $item->tipe_pembayaran }}</td>
+                                            <td>{{ $item->jumlah_pembayaran }}</td>
+                                            <td>{{ $item->status_pembayaran }}</td>
+                                            <td>{{ $item->tanggal_pembayaran }}</td>
+                                            <td>
+                                                @if ($item->verifikasi == 'approved')
+                                                    <span class="badge text-bg-success">Approved</span>
+                                                @elseif($item->verifikasi == 'rejected')
+                                                    <span class="badge text-bg-danger">Rejected</span>
+                                                @else
+                                                    <span class="badge text-bg-secondary"">Pending</span>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -320,6 +318,94 @@
         </div>
     @endforeach
     {{-- end modal edit --}}
+    @foreach ($data as $item)
+        <div class="modal modal-blur fade" id="detailTransall{{ $item->id_jamaah }}" tabindex="-1" role="dialog"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="fa-solid fa-user" style="margin-right: 5px"></i> Detail
+                            Jamaah</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <!-- Foto KTP -->
+                                <div class="card" style="max-width: 300px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Pas Foto</h5>
+                                    </div>
+                                    <img src="{{ asset('storage/transaksi/foto-bukti/' . $item->foto_bukti_pembayaran) }}"
+                                        class="card-img-top" alt="Pas Foto" style="max-width: 200px; max-height: 200px;">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card bg-secondary text-white">
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label">Nama Lengkap</label>
+                                            <input type="text" class="form-control border border-dark bg-secondary-lt"
+                                                name="nama_lengkap"
+                                                value="{{ old('nama_lengkap', $item->jamaah->nama_lengkap) }}" readonly>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Layanan</label>
+                                            <input type="text" class="form-control border border-dark" name="umur"
+                                                id="umur" placeholder="Masukkan Umur"
+                                                value="LA-{{ old('umur', $item->id_layanan) }}" readonly>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Tipe Pembayaran</label>
+                                                    <input type="text"
+                                                        class="form-control border border-dark bg-secondary-lt"
+                                                        name="jk" value="{{ old('jk', $item->tipe_pembayaran) }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Jumlah Pembayaran</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="status" placeholder="Masukkan Status"
+                                                        value="{{ old('status', $item->jumlah_pembayaran) }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Status Pembayaran</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="tempat_lahir" id="tempat_lahir"
+                                                        placeholder="Masukkan Tempat Lahir"
+                                                        value="{{ old('tempat_lahir', $item->status_pembayaran) }}"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Tanggal Pembayaran</label>
+                                                    <input name="tgl_lahir" type="date"
+                                                        class="form-control border border-dark"
+                                                        value="{{ old('tgl_lahir', $item->tanggal_pembayaran) }}"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" data-bs-dismiss="modal">Kembali</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 
     <script>
         function formatRupiah(value) {

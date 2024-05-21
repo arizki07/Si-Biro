@@ -369,7 +369,7 @@
                                                                     LA-{{ $item->id_layanan }}<span
                                                                         class="text-uppercase ms-1"></span></h6>
                                                                 <p class="text-muted fs-13 mb-0">
-                                                                    {{ $item->alamat_lengkap }}
+                                                                    {{ $item->tgl_lahir }}
                                                                 </p>
                                                             </div>
                                                         </div>

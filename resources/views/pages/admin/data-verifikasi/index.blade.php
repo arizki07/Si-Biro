@@ -3,287 +3,512 @@
     @include('components.alerts')
     <div class="page-content">
         <div class="container-fluid">
+
+            <!-- start page title -->
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Datatables</h4>
+                        <h4 class="mb-sm-0">{{ $title }}</h4>
 
                         <div class="page-title-right">
-                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#adduser"><i class="ri-user-add-fill"></i> Add Users</button>
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item text-blue"><a href="/dashboard">Dashboard</a></li>
+                                <li class="breadcrumb-item active">{{ $title }}</li>
+                            </ol>
                         </div>
 
                     </div>
                 </div>
             </div>
+            <!-- end page title -->
+
             <div class="row">
-                @if (!$users)
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body bg-marketplace d-flex">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <div class="avatar-md">
-                                            <img src="assets/images/users/avatar-1.jpg" alt="user-img"
-                                                class="img-thumbnail rounded-circle" />
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col">
-                                        <div class="p-2">
-                                            <h3 class="mb-1">Data Tidak Ada</h3>
-                                            <p class="text-muted"></p>
-                                            <div class="d-flex align-items-center text-muted">
-                                                <i class="ri-map-pin-user-line me-1 fs-16"></i>
-                                                <span></span>
-                                            </div>
-                                            <div class="d-flex align-items-center text-muted">
-                                                <i class="ri-building-line me-1 fs-16"></i>
-                                                <span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">{{ $title }} - Jamaah</h5>
+                        </div>
+                        <div class="card-body">
+                            <table id="example"
+                                class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap"
+                                style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Layanan</th>
+                                        <th>Verifikasi</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($jamaah as $key => $item)
+                                        <tr class="text-center">
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $item['nama_lengkap'] }}</td>
+                                            <td>LA-{{ $item->id_layanan }}</td>
+                                            <td>
+                                                @if ($item->verifikasi == 'approved')
+                                                    <span class="badge text-bg-success">Approved</span>
+                                                @elseif($item->verifikasi == 'rejected')
+                                                    <span class="badge text-bg-danger">Rejected</span>
+                                                @else
+                                                    <span class="badge text-bg-secondary">Pending</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#detailjamaah{{ $item->id_jamaah }}">
+                                                    <i class="ri-eye-fill"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                @else
-                    @foreach ($users as $item)
-                        @foreach ($roles as $role)
+                </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">{{ $title }} - Transaksi</h5>
+                        </div>
+                        <div class="card-body">
+                            <table id="scroll-vertical"
+                                class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap"
+                                style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Layanan</th>
+                                        <th>Verifikasi</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($transaksi as $key => $item)
+                                        <tr class="text-center">
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $item->jamaah->nama_lengkap }}</td>
+                                            <td>LA-{{ $item->id_layanan }}</td>
+                                            <td>
+                                                @if ($item->verifikasi == 'approved')
+                                                    <span class="badge text-bg-success">Approved</span>
+                                                @elseif($item->verifikasi == 'rejected')
+                                                    <span class="badge text-bg-danger">Rejected</span>
+                                                @else
+                                                    <span class="badge text-bg-secondary">Pending</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#detailTransaksi{{ $item->id_transaksi }}">
+                                                    <i class="ri-eye-fill"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @foreach ($jamaah as $item)
+        <div class="modal modal-blur fade" id="detailjamaah{{ $item->id_jamaah }}" tabindex="-1" role="dialog"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="fa-solid fa-user" style="margin-right: 5px"></i> Detail
+                            Jamaah</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
                             <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body bg-marketplace d-flex">
-                                        <div class="row align-items-center">
-                                            <div class="col-auto">
-                                                <div class="avatar-md">
-                                                    <img src="assets/images/users/avatar-1.jpg" alt="user-img"
-                                                        class="img-thumbnail rounded-circle" />
+                                <!-- Foto KTP -->
+                                <div class="card" style="max-width: 300px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Pas Foto</h5>
+                                    </div>
+                                    <img src="{{ asset('storage/biodata/pas-foto/' . $item->pas_foto) }}"
+                                        class="card-img-top" alt="Pas Foto" style="max-width: 200px; max-height: 200px;">
+                                </div>
+                                <br>
+                                <div class="card" style="max-width: 300px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Foto KTP</h5>
+                                    </div>
+                                    <img src="{{ asset('storage/biodata/foto-ktp/' . $item->foto_ktp) }}"
+                                        class="card-img-top" alt="Foto KTP" style="max-width: 200px; max-height: 200px;">
+                                </div>
+                                <br>
+                                <div class="card" style="max-width: 300px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Foto KK</h5>
+                                    </div>
+                                    <img src="{{ asset('storage/biodata/foto-kk/' . $item->foto_kk) }}"
+                                        class="card-img-top" alt="Foto kk" style="max-width: 200px; max-height: 200px;">
+                                </div>
+                                <!-- Pas Foto -->
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card bg-secondary text-white">
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label">Nama Lengkap</label>
+                                            <input type="text" class="form-control border border-dark bg-secondary-lt"
+                                                name="nama_lengkap" value="{{ old('nama_lengkap', $item->nama_lengkap) }}"
+                                                readonly>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Umur</label>
+                                            <input type="text" class="form-control border border-dark" name="umur"
+                                                id="umur" placeholder="Masukkan Umur"
+                                                value="{{ old('umur', $item->umur) }}" readonly>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Jenis Kelamin</label>
+                                                    <input type="text"
+                                                        class="form-control border border-dark bg-secondary-lt"
+                                                        name="jk" value="{{ old('jk', $item->jk) }}">
                                                 </div>
                                             </div>
-                                            <!--end col-->
-                                            <div class="col">
-                                                <div class="p-2">
-                                                    <h3 class="mb-1">{{ $item->nama }}</h3>
-                                                    <p class="text-muted">{{ $item->email }}</p>
-                                                    <div class="d-flex align-items-center text-muted">
-                                                        <i class="ri-map-pin-user-line me-1 fs-16"></i>
-                                                        <span>
-                                                            @if ($item->id_role == $role->id_role)
-                                                                Role {{ $role->nama_role }}
-                                                            @else
-                                                                Role Tidak Ada
-                                                            @endif
-                                                        </span>
-                                                    </div>
-                                                    <div class="d-flex align-items-center text-muted">
-                                                        <i class="ri-building-line me-1 fs-16"></i>
-                                                        <span>
-                                                            @if ($item->status == 1)
-                                                                Akun Aktif
-                                                            @elseif ($item->status == 2)
-                                                                Akun Nonaktif
-                                                            @else
-                                                                Akun Ter-Blokir
-                                                            @endif
-                                                        </span>
-                                                    </div>
-                                                    <div class="mt-3">
-                                                        <button type="button" class="btn btn-secondary btn-sm"
-                                                            data-bs-toggle="modal" data-bs-target="#viewUser"><i
-                                                                class="ri-eye-fill"></i></button>
-                                                        <button type="button" class="btn btn-success btn-sm"
-                                                            data-bs-toggle="modal" data-bs-target="#editUser"><i
-                                                                class=" ri-edit-2-fill"></i></button>
-                                                        <button class="btn btn-danger btn-sm"><i
-                                                                class=" ri-delete-bin-6-fill"></i></button>
-                                                    </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Status</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="status" placeholder="Masukkan Status"
+                                                        value="{{ old('status', $item->status) }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Tempat Lahir</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="tempat_lahir" id="tempat_lahir"
+                                                        placeholder="Masukkan Tempat Lahir"
+                                                        value="{{ old('tempat_lahir', $item->tempat_lahir) }}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Tanggal Lahir</label>
+                                                    <input name="tgl_lahir" type="date"
+                                                        class="form-control border border-dark"
+                                                        value="{{ old('tgl_lahir', $item->tgl_lahir) }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Nomor HP</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="no_hp" id="no_hp" placeholder="Masukkan Nomor HP"
+                                                        value="{{ old('no_hp', $item->no_hp) }}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Nomor HP Wali</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="no_hp_wali" id="no_hp_wali"
+                                                        placeholder="Masukkan Nomor HP Wali"
+                                                        value="{{ old('no_hp_wali', $item->no_hp_wali) }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Nomor Rekening</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="no_rekening" id="no_rekening"
+                                                        placeholder="Masukkan Nomor Rekening"
+                                                        value="{{ old('no_rekening', $item->no_rekening) }}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Nomor KTP</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="no_ktp" id="no_ktp" placeholder="Masukkan Nomor KTP"
+                                                        value="{{ old('no_ktp', $item->no_ktp) }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Nomor KK</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="no_kk" id="no_kk" placeholder="Masukkan Nomor KK"
+                                                        value="{{ old('no_kk', $item->no_kk) }}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Bank</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="bank" id="bank" placeholder="Masukkan Nomor KK"
+                                                        value="{{ old('bank', $item->bank) }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Berat Badan</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="berat_badan" id="berat_badan"
+                                                        placeholder="Masukkan Berat Badan"
+                                                        value="{{ old('berat_badan', $item->berat_badan) }}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Tinggi Badan</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="tinggi_badan" id="tinggi_badan"
+                                                        placeholder="Masukkan Tinggi Badan"
+                                                        value="{{ old('tinggi_badan', $item->tinggi_badan) }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Warna Kulit</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="warna_kulit" id="warna_kulit"
+                                                        placeholder="Masukkan Warna Kulit"
+                                                        value="{{ old('warna_kulit', $item->warna_kulit) }}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Pekerjaan</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="pekerjaan" id="pekerjaan" placeholder="Masukkan Pekerjaan"
+                                                        value="{{ old('pekerjaan', $item->pekerjaan) }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Pendidikan</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="pendidikan" id="pendidikan"
+                                                        placeholder="Masukkan Pendidikan"
+                                                        value="{{ old('pendidikan', $item->pendidikan) }}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Pernah Haji/Umroh</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="pernah_haji_umroh" id="pernah_haji_umroh"
+                                                        placeholder="Masukkan Pernah Haji/Umroh"
+                                                        value="{{ old('pernah_haji_umroh', $item->pernah_haji_umroh) }}"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Kecamatan</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="kecamatan" id="kecamatan" placeholder="Masukkan Kecamatan"
+                                                        value="{{ old('kecamatan', $item->kecamatan) }}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Kelurahan</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="kelurahan" id="kelurahan" placeholder="Masukkan Kelurahan"
+                                                        value="{{ old('kelurahan', $item->kelurahan) }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Kota/Kabupaten</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="kota_kabupaten" id="kota_kabupaten"
+                                                        placeholder="Masukkan Kota/Kabupaten"
+                                                        value="{{ old('kota_kabupaten', $item->kota_kabupaten) }}"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Provinsi</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="provinsi" id="provinsi" placeholder="Masukkan Provinsi"
+                                                        value="{{ old('provinsi', $item->provinsi) }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Warga Negara</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="warga_negara" id="warga_negara"
+                                                        placeholder="Masukkan Warga Negara"
+                                                        value="{{ old('warga_negara', $item->warga_negara) }}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Kode Pos</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="kode_pos" id="kode_pos" placeholder="Masukkan Kode Pos"
+                                                        value="{{ old('kode_pos', $item->kode_pos) }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Golongan Darah</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="gol_darah" id="gol_darah"
+                                                        placeholder="Masukkan Golongan Darah"
+                                                        value="{{ old('gol_darah', $item->gol_darah) }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Alamat Lengkap</label>
+                                            <textarea name="alamat_lengkap" id="alamat_lengkap" cols="30" rows="3"
+                                                class="form-control border border-dark" placeholder="Masukkan Alamat Lengkap" value="" readonly>{{ old('alamat_lengkap', $item->alamat_lengkap) }}</textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" data-bs-dismiss="modal">Kembali</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    {{-- detail transaksi --}}
+    @foreach ($transaksi as $item)
+        <div class="modal modal-blur fade" id="detailTransaksi{{ $item->id_transaksi }}" tabindex="-1" role="dialog"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="fa-solid fa-user" style="margin-right: 5px"></i> Detail
+                            Transaksi</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <!-- Foto KTP -->
+                                <div class="card" style="max-width: 300px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Foto Pembayaran</h5>
+                                    </div>
+                                    <img src="{{ asset('storage/transaksi/foto-bukti/' . $item->foto_bukti_pembayaran) }}"
+                                        class="card-img-top" alt="Pas Foto" style="max-width: 200px; max-height: 200px;">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card bg-secondary text-white">
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label">Nama Lengkap</label>
+                                            <input type="text" class="form-control border border-dark bg-secondary-lt"
+                                                name="nama_lengkap"
+                                                value="{{ old('nama_lengkap', $item->jamaah->nama_lengkap) }}" readonly>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Layanan</label>
+                                            <input type="text" class="form-control border border-dark" name="umur"
+                                                id="umur" placeholder="Masukkan Umur"
+                                                value="{{ old('umur', $item->id_layanan) }}" readonly>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Tipe Pembayaran</label>
+                                                    <input type="text"
+                                                        class="form-control border border-dark bg-secondary-lt"
+                                                        name="jk"
+                                                        value="{{ old('tipe_pembayaran', $item->tipe_pembayaran) }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Jumlah Pembayaran</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="status" placeholder="Masukkan Status"
+                                                        value="{{ old('jumlah_pembayaran', $item->jumlah_pembayaran) }}"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Status Pembayaran</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="tempat_lahir" id="tempat_lahir"
+                                                        placeholder="Masukkan Tempat Lahir"
+                                                        value="{{ old('status_pembayaran', $item->status_pembayaran) }}"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Tanggal Pembayaran</label>
+                                                    <input name="tgl_lahir" type="date"
+                                                        class="form-control border border-dark"
+                                                        value="{{ old('tanggal_pembayaran', $item->tanggal_pembayaran) }}"
+                                                        readonly>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
-                    @endforeach
-                @endif
-            </div>
-        </div>
-    </div>
-
-    {{-- Modal View --}}
-    <div class="modal fade" id="viewUser" tabindex="-1" aria-labelledby="viewUserLabel">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="viewUserLabel">Detail Data User</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="javascript:void(0);">
-                        <div class="row g-3">
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="nama" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="nama">
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="email" class="form-label">Email</label>
-                                    <div class="form-icon right">
-                                        <input type="email" class="form-control form-control-icon" id="email"
-                                            placeholder="example@gmail.com">
-                                        <i class="ri-mail-unread-line"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="role" class="form-label">Role</label>
-                                    <div class="form-icon right">
-                                        <input type="text" class="form-control form-control-icon" id="role"
-                                            placeholder="Role">
-                                        <i class="ri-folder-user-fill"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div>
-                                    <label for="basiInput" class="form-label">Status</label>
-                                    <input type="password" class="form-control" id="basiInput">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="hstack gap-2 justify-content-end">
-                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
-                            <!--end col-->
                         </div>
-                        <!--end row-->
-                    </form>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" data-bs-dismiss="modal">Kembali</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
-    {{-- end modal view --}}
-
-    {{-- Modal Edit --}}
-    <div id="editUser" class="modal fade fadeInLeft" tabindex="-1" aria-labelledby="editUserLabel" aria-hidden="true"
-        style="display: none;">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editUserLabel">Edit Data Users</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="javascript:void(0);">
-                        <div class="row g-3">
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="firstName" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" id="firstName"
-                                        placeholder="Enter firstname">
-                                </div>
-                            </div>
-                            <!--end col-->
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="lastName" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="lastName"
-                                        placeholder="Enter lastname">
-                                </div>
-                            </div>
-                            <div class="col-xxl-6">
-                                <label for="emailInput" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="emailInput"
-                                    placeholder="Enter your email">
-                            </div>
-                            <!--end col-->
-                            <div class="col-xxl-6">
-                                <label for="passwordInput" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="passwordInput" value="451326546"
-                                    placeholder="Enter password">
-                            </div>
-                            <!--end col-->
-                            <div class="col-lg-12">
-                                <div class="hstack gap-2 justify-content-end">
-                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                            <!--end col-->
-                        </div>
-                        <!--end row-->
-                    </form>
-                </div>
-
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div>
-    {{-- End Modal edit --}}
-
-    {{-- Modal Add --}}
-    <div id="adduser" class="modal fade fadeInLeft" tabindex="-1" aria-labelledby="adduserLabel" aria-hidden="true"
-        style="display: none;">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="adduserLabel">Add Data Users</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="post">
-                        @csrf <!-- Laravel memerlukan token CSRF untuk form POST -->
-                        <div class="row g-3">
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="nama" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="namaInput"
-                                        placeholder="Enter Username" name="nama" required>
-                                </div>
-                            </div>
-                            <div class="col-xxl-6">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="emailInput1"
-                                    placeholder="Enter your email" name="email" required>
-                            </div>
-                            <div class="col-xxl-6">
-                                <label for="role" class="form-label">Role</label>
-                                <select class="form-select mb-3" id="roleSelect" name="id_role" required>
-                                    <option selected disabled>-- Pilih Role --</option>
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role->id_role }}">{{ $role->nama_role }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-xxl-6">
-                                <label for="status" class="form-label">Status</label>
-                                <select class="form-select mb-3" id="statusSelect" name="status" required>
-                                    <option selected disabled>-- Select Status --</option>
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                </select>
-                            </div>
-                            <div class="col-xxl-6">
-                                <label for="passwordInput" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="passwordInput1"
-                                    placeholder="Enter password" name="password" required>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="hstack gap-2 justify-content-end">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
+    @endforeach
+    {{-- end detail  --}}
 @endsection

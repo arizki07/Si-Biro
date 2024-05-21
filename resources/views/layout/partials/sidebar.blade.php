@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link <?= $act == 'verif' ? 'active' : '' ?>" href="/data-verifikasi">
+                    <a class="nav-link menu-link <?= $act == 'verifikasi' ? 'active' : '' ?>" href="/data-verifikasi">
                         <i class="ri-rotate-lock-line"></i> <span>Verifikasi</span>
                     </a>
                 </li>
