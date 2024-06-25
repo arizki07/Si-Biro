@@ -25,6 +25,7 @@ use App\Http\Controllers\FrontOffice\OfficeReportController;
 use App\Http\Controllers\FrontOffice\OfficeTransakController;
 use App\Http\Controllers\FrontOffice\OfficeTransController;
 use App\Http\Controllers\FrontOffice\OfficeVerifController;
+use App\Http\Controllers\FrontOffice\OfficeVerifTransController;
 use App\Http\Controllers\Jamaah\JamaahController;
 use App\Http\Controllers\Jamaah\JamaahTransController;
 use App\Http\Controllers\Jamaah\KeuanganJamaahController;
@@ -102,10 +103,112 @@ Route::middleware('auth')->group(function () {
     Route::post('/verif/{id}', [VerifikasiController::class, 'verif'])->name('verif');
     // Route::post('/verif/{id}', [VerifikasiController::class, 'verif_transaksi'])->name('verif.transaksi');
 
+<<<<<<< Updated upstream
     // Whatsapp TEST
     Route::post('/testing', [WhatsappController::class, 'testing'])->name('wa.testing');
     Route::get('/whatsapp', [WhatsappController::class, 'index'])->name('whatsapp.index');
     
     // Whatsapp 
     Route::post('/send-whatsapp/verifikasi/{id}', [WhatsappController::class, 'send_verifikasi'])->name('whatsapp.verifikasi');
+=======
+        Route::controller(ReportController::class)->group(function () {
+            Route::get('/report', 'index');
+            Route::get('/view', 'view');
+        });
+    });
+
+    Route::middleware('role:jamaah')->group(function () {
+        Route::controller(JamaahController::class)->group(function () {
+            Route::get('/data-jamaah', 'index');
+            Route::post('/data-jamaah/store', 'store')->name('jamaah.store');
+        });
+
+        Route::controller(LayananJamaahController::class)->group(function () {
+            Route::get('/layanan-jamaah', 'index');
+        });
+
+        Route::controller(JamaahTransController::class)->group(function () {
+            Route::get('/jamaah-transaksi', 'index');
+            Route::post('/jamaah-transaksi-store', 'store')->name('Jamaah.transaksi');
+        });
+
+        Route::controller(KeuanganJamaahController::class)->group(function () {
+            Route::get('/jamaah-keuangan', 'index');
+        });
+    });
+    Route::middleware('role:finance')->group(function () {
+        Route::controller(FKeuanganController::class)->group(function () {
+            Route::get('/f-keuangan', 'index');
+            Route::post('/f-keuangan-store', 'store')->name('finance.store');
+            Route::post('/f-keuangan-update/{id}', 'update')->name('finance.update');
+            Route::delete('/f-keuangan-destroy', 'destroy');
+        });
+
+        Route::controller(FTransaksiController::class)->group(function () {
+            Route::get('/f-transaksi', 'index');
+        });
+
+        Route::controller(ReportFinanceController::class)->group(function () {
+            Route::get('/reportK', 'index');
+            Route::get('/report-view', 'view');
+        });
+    });
+    Route::middleware('role:front office')->group(function () {
+        Route::controller(OfficeVerifController::class)->group(function () {
+            Route::get('/Office-verif', 'index');
+            Route::post('/office-verif/approve/{id}', 'approve')->name('office-verif.approve');
+            Route::post('/office-verif/reject/{id}', 'reject')->name('office-verif.reject');
+        });
+
+        Route::controller(OfficeVerifTransController::class)->group(function () {
+            Route::get('/Office-transaksi', 'index');
+            Route::post('/office-trans/approve/{id}', 'approve')->name('office-trans.approve');
+            Route::post('/office-trans/reject/{id}', 'reject')->name('office-trans.reject');
+        });
+
+        Route::controller(OfficeLayananController::class)->group(function () {
+            Route::get('/office-layanan', 'index');
+        });
+
+        Route::controller(OfficeTransakController::class)->group(function () {
+            Route::get('/front-transaksi', 'index');
+        });
+
+        Route::controller(OfficeReportController::class)->group(function () {
+            Route::get('/office-report', 'index');
+            Route::get('/office-report-view', 'view');
+        });
+    });
+    Route::middleware('role:kbih')->group(function () {
+
+        Route::controller(KBUserController::class)->group(function () {
+            Route::get('/kb-user', 'index');
+        });
+
+        Route::controller(KBRoleController::class)->group(function () {
+            Route::get('/kb-role', 'index');
+        });
+
+        Route::controller(KBBioController::class)->group(function () {
+            Route::get('/kb-biodata', 'index');
+        });
+
+        Route::controller(KBLayananController::class)->group(function () {
+            Route::get('/kb-layanan', 'index');
+        });
+
+        Route::controller(KBTransaksiController::class)->group(function () {
+            Route::get('/kb-transaksi', 'index');
+        });
+
+        Route::controller(KBKeuanganController::class)->group(function () {
+            Route::get('/kb-keuangan', 'index');
+        });
+
+        Route::controller(KBReportController::class)->group(function () {
+            Route::get('/kb-report', 'index');
+            Route::get('/kb-view', 'view');
+        });
+    });
+>>>>>>> Stashed changes
 });

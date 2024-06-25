@@ -34,6 +34,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
+
 {{-- bootstrap-datepicker --}}
 <script src="{{ asset('assets/js/custom/bootstrap-datepicker.js') }}"></script>
 

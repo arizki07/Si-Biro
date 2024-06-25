@@ -22,7 +22,7 @@
                                             <!-- Embedding Lottie Animation -->
                                             <iframe
                                                 src="https://lottie.host/embed/610c7eea-c632-419b-b4da-d4c68dbde373/TMgeLKVlTI.json"
-                                                width="550px" height="550px"></iframe>
+                                                width="450px" height="450px"></iframe>
                                         </div>
                                     </div>
                                 </div>
@@ -32,8 +32,8 @@
                                 <div class="col-lg-6">
                                     <div class="p-lg-5 p-4">
                                         <div>
-                                            <h5 class="text-primary">Welcome Back !</h5>
-                                            <p class="text-muted">Sign in to continue to Velzon.</p>
+                                            <h5 class="text-primary">Registration Form !</h5>
+                                            <p class="text-muted">Please register to Wadi Fatimah.</p>
                                         </div>
 
                                         <div class="mt-4">
@@ -86,26 +86,6 @@
 
                                                 <div class="mt-4">
                                                     <button class="btn btn-info w-100" type="submit">Sign In</button>
-                                                </div>
-
-                                                <div class="mt-4 text-center">
-                                                    <div class="signin-other-title">
-                                                        <h5 class="fs-13 mb-4 title">Sign In with</h5>
-                                                    </div>
-                                                    <div>
-                                                        <button type="button"
-                                                            class="btn btn-primary btn-icon waves-effect waves-light"><i
-                                                                class="ri-facebook-fill fs-16"></i></button>
-                                                        <button type="button"
-                                                            class="btn btn-danger btn-icon waves-effect waves-light"><i
-                                                                class="ri-google-fill fs-16"></i></button>
-                                                        <button type="button"
-                                                            class="btn btn-dark btn-icon waves-effect waves-light"><i
-                                                                class="ri-github-fill fs-16"></i></button>
-                                                        <button type="button"
-                                                            class="btn btn-info btn-icon waves-effect waves-light"><i
-                                                                class="ri-twitter-fill fs-16"></i></button>
-                                                    </div>
                                                 </div>
                                             </form>
                                         </div>

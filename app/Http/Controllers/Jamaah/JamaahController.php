@@ -15,7 +15,7 @@ class JamaahController extends Controller
 {
     public function index()
     {
-        $jamaah = JamaahModel::all();
+        $jamaah = JamaahModel::where('id_user', Auth::id())->get();
         $roles = RoleModel::all();
         $layanans = LayananModel::all();
         return view('pages.jamaah.biodata-jamaah.index', [

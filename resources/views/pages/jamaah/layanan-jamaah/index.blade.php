@@ -140,4 +140,99 @@
             </div>
         </div>
     </div>
+
+    @foreach ($layanan as $item)
+        <div class="modal fade" id="detailModal{{ $item->id_layanan }}" tabindex="-1" aria-labelledby="detailModalLabel">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="detailModalLabel"><i class="ri-phone-fill"></i>Detail Layanan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body bg-marketplace d-flex">
+                        <form enctype="multipart/form-data">
+                            <div class="row g-3">
+                                <div class="row">
+                                    <div class="card">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div style="text-align: center;">
+                                                    <!-- Menggunakan text-align: center; untuk membuat gambar berada di tengah secara horizontal -->
+                                                    <img src="{{ asset('storage/layanan/foto-bg/' . $item->foto_bg) }}"
+                                                        class="card-img-top" alt="Foto BG"
+                                                        style="width: 100%; object-fit: cover; margin: 0 auto;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xxl-6">
+                                    <div>
+                                        <label for="firstName" class="form-label">Judul Layanan</label>
+                                        <input type="text" class="form-control" id="firstName"
+                                            placeholder="Enter Layanan" name="judul_layanan"
+                                            value="{{ old('judul_layanan', $item->judul_layanan) }}" readonly>
+                                    </div>
+                                </div>
+                                <!--end col-->
+                                <div class="col-xxl-6">
+                                    <div>
+                                        <label for="lastName" class="form-label">Kuota</label>
+                                        <input type="text" class="form-control" id="lastName"
+                                            placeholder="Enter Kuota" name="kuota"
+                                            value="{{ old('kuota', $item->kuota) }}" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-xxl-6">
+                                    <label for="emailInput" class="form-label">Tahun Pemberangkatan</label>
+                                    <input type="text" class="form-control" id="emailInput"
+                                        placeholder="Enter Tahum Pemberangkatan" name="tahun_pemberangkatan"
+                                        value="{{ old('tahun_pemberangkatan', $item->tahun_pemberangkatan) }}" readonly>
+                                </div>
+                                <!--end col-->
+                                <div class="col-xxl-6">
+                                    <label for="passwordInput" class="form-label">Bulan Pemberangkatan</label>
+                                    <input type="text" class="form-control" id="passwordInput"
+                                        placeholder="Enter Bulan Pemberangkatan" name="bulan_pemberangkatan"
+                                        value="{{ old('bulan_pemberangkatan', $item->bulan_pemberangkatan) }}" readonly>
+                                </div>
+                                <!--end col-->
+                                <div class="col-xxl-6">
+                                    <label for="passwordInput" class="form-label">Paket</label>
+                                    <input type="text" class="form-control" id="passwordInput"
+                                        placeholder="Enter Paket" name="paket"
+                                        value="{{ old('paket', $item->paket) }}" readonly>
+                                </div>
+                                <!--end col-->
+                                <!--end col-->
+                                <div class="col-xxl-6">
+                                    <label for="passwordInput" class="form-label">Status Paket</label>
+                                    <input type="text" class="form-control" id="passwordInput"
+                                        placeholder="Enter Status Paket" name="status_paket"
+                                        value="{{ old('status_paket', $item->status_paket) }}" readonly>
+                                </div>
+                                <!--end col-->
+                                <div class="mb-3">
+                                    <label class="form-label">Deksripsi</label>
+                                    <textarea id="" cols="30" rows="3" class="form-control border border-dark"
+                                        placeholder="Masukkan Deskripsi" name="deskripsi" readonly>{{ old('deskripsi', $item->deskripsi) }} </textarea>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="hstack gap-2 justify-content-end">
+                                        <button type="button" class="btn btn-light"
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                <!--end col-->
+                            </div>
+                            <!--end row-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
