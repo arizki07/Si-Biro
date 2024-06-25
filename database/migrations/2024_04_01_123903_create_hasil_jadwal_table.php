@@ -11,45 +11,55 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('t_hasil_jadwal', function (Blueprint $table) {
-            $table->id('id_hasil');
-            $table->unsignedBigInteger('id_jadwal');
-            $table->unsignedBigInteger('id_jamaah');
-            $table->string('nomor_jadwal');
+        Schema::create('t_report', function (Blueprint $table) {
+            // $table->id('id_hasil');
+            // $table->unsignedBigInteger('id_jadwal');
+            // $table->unsignedBigInteger('id_jamaah');
+            // $table->string('nomor_jadwal');
 
-            // tipe MCU
-            $table->date('tgl_mulai_mcu')->nullable();
-            $table->date('tgl_selesai_mcu')->nullable();
-            $table->time('jam_mulai_mcu')->nullable();
-            $table->time('jam_selesai_mcu')->nullable();
-            $table->string('tempat_mcu', 100)->nullable();
-            $table->string('hasil_mcu', 100)->nullable();
-            $table->string('status_mcu', 100)->nullable();
+            // // tipe MCU
+            // $table->date('tgl_mulai_mcu')->nullable();
+            // $table->date('tgl_selesai_mcu')->nullable();
+            // $table->time('jam_mulai_mcu')->nullable();
+            // $table->time('jam_selesai_mcu')->nullable();
+            // $table->string('tempat_mcu', 100)->nullable();
+            // $table->string('hasil_mcu', 100)->nullable();
+            // $table->string('status_mcu', 100)->nullable();
 
-            // tipe BIMBINGAN
-            $table->date('tgl_mulai_bimbingan')->nullable();
-            $table->date('tgl_selesai_bimbingan')->nullable();
-            $table->time('jam_mulai_bimbingan')->nullable();
-            $table->time('jam_selesai_bimbingan')->nullable();
-            $table->string('nama_bimbingan', 150)->nullable();
-            $table->string('hasil_bimbingan', 100)->nullable();
-            $table->string('status_bimbingan', 100)->nullable();
+            // // tipe BIMBINGAN
+            // $table->date('tgl_mulai_bimbingan')->nullable();
+            // $table->date('tgl_selesai_bimbingan')->nullable();
+            // $table->time('jam_mulai_bimbingan')->nullable();
+            // $table->time('jam_selesai_bimbingan')->nullable();
+            // $table->string('nama_bimbingan', 150)->nullable();
+            // $table->string('hasil_bimbingan', 100)->nullable();
+            // $table->string('status_bimbingan', 100)->nullable();
 
-            // tipe PASSPORT
-            $table->date('tgl_mulai_passport')->nullable();
-            $table->date('tgl_selesai_passport')->nullable();
-            $table->time('jam_mulai_passport')->nullable();
-            $table->time('jam_selesai_passport')->nullable();
-            $table->string('tempat_pembuatan_passport', 150)->nullable();
-            $table->string('hasil_passport', 100)->nullable();
-            $table->string('status_passport', 100)->nullable();
-            $table->string('nomor_passport', 100)->nullable();
+            // // tipe PASSPORT
+            // $table->date('tgl_mulai_passport')->nullable();
+            // $table->date('tgl_selesai_passport')->nullable();
+            // $table->time('jam_mulai_passport')->nullable();
+            // $table->time('jam_selesai_passport')->nullable();
+            // $table->string('tempat_pembuatan_passport', 150)->nullable();
+            // $table->string('hasil_passport', 100)->nullable();
+            // $table->string('status_passport', 100)->nullable();
+            // $table->string('nomor_passport', 100)->nullable();
 
+            // $table->timestamps();
+
+            // // FK
+            // $table->foreign('id_jadwal')->references('id_jadwal')->on('t_jadwal');
+            // $table->foreign('id_jamaah')->references('id_jamaah')->on('t_jamaah');
+
+            $table->id('id_report');
+            $table->string('id_layanan', 11);
+            $table->string('id_jadwal', 11);
+            $table->string('id_jamaah', 11);
+            $table->string('tipe_report', 20); // MCU-PASSPORT-BIMBINGAN
+            $table->string('status_report', 20);
+            $table->text('keterangan');
+            $table->string('file_opsional', 200)->nullable();
             $table->timestamps();
-
-            // FK
-            $table->foreign('id_jadwal')->references('id_jadwal')->on('t_jadwal');
-            $table->foreign('id_jamaah')->references('id_jamaah')->on('t_jamaah');
         });
     }
 
@@ -58,6 +68,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('t_hasil_jadwal');
+        Schema::dropIfExists('t_report');
     }
 };
