@@ -87,6 +87,52 @@
                     </div>
                 </li>
 
+            <li class="nav-item">
+                <a class="nav-link menu-link <?= $act == 'transaksi' ? 'active' : '' ?>" href="/data-transaksi">
+                    <i class="ri-pencil-ruler-2-line"></i> <span>Data Transaksi</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link menu-link <?= $act == 'keuangan' ? 'active' : '' ?>" href="/data-keuangan">
+                    <i class="ri-pencil-ruler-2-line"></i> <span>Data Keuangan</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link menu-link <?= $act == 'arsip' ? 'active' : '' ?>" href="#">
+                    <i class="ri-pencil-ruler-2-line"></i> <span>Data Arsip</span>
+                </a>
+            </li>
+
+            <li class="menu-title"><i class="ri-more-fill"></i> <span>Schedule Report </span></li>
+
+            <li class="nav-item open">
+                <a class="nav-link menu-link {{ ($act == 'report-mcu') ||($act == 'report-passport') || ($act == 'report-bimbingan') ? 'active' : '' }}" href="#sidebarReport" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarReport">
+                    <i class="ri-pencil-ruler-2-line"></i> <span>Report Hasil</span>
+                </a>
+                <div class="collapse menu-dropdown {{ ($act == 'report-mcu') ||($act == 'report-passport') || ($act == 'report-bimbingan') ? 'show' : '' }}" id="sidebarReport">
+                    <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
+                            <a href="/data-report?action=mcu" class="nav-link {{ ($act == 'report-mcu') ? 'active' : '' }}"> Report MCU </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/data-report?action=passport" class="nav-link {{ ($act == 'report-passport') ? 'active' : '' }}"> Report PASSPORT </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/data-report?action=bimbingan" class="nav-link {{ ($act == 'report-bimbingan') ? 'active' : '' }}"> Report BIMBINGAN </a>
+                        </li>
+                    </ul>
+                </div>
+            </li> 
+
+            {{-- TESTING WHATSAPP HIDE --}}
+            <li class="nav-item" style="display: none;">
+                <a class="nav-link menu-link <?= $act == 'wa' ? 'active' : '' ?>" href="/whatsapp">
+                    <i class="ri-pencil-ruler-2-line"></i> <span>Testing Whatsapp</span>
+                </a>
+            </li>
+            
+            {{-- <li class="nav-item">
                 <li class="nav-item">
                     <a class="nav-link menu-link <?= $act == 'transaksi' ? 'active' : '' ?>" href="/data-transaksi">
                         <i class="ri-wallet-2-line"></i> <span>Data Transaksi</span>

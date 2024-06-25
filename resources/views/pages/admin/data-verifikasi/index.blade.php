@@ -37,7 +37,8 @@
                                         <th>No</th>
                                         <th>Nama</th>
                                         <th>Layanan</th>
-                                        <th>Verifikasi</th>
+                                        <th>Keterangan</th>
+                                        <th>Verif</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -49,12 +50,22 @@
                                             <td>LA-{{ $item->id_layanan }}</td>
                                             <td>
                                                 @if ($item->verifikasi == 'approved')
-                                                    <span class="badge text-bg-success">Approved</span>
+                                                <span class="badge text-bg-success">Approved</span>
                                                 @elseif($item->verifikasi == 'rejected')
-                                                    <span class="badge text-bg-danger">Rejected</span>
+                                                <span class="badge text-bg-danger">Rejected</span>
                                                 @else
-                                                    <span class="badge text-bg-secondary">Pending</span>
+                                                <span class="badge text-bg-secondary">Pending</span>
                                                 @endif
+                                            </td>
+                                            <td>
+                                                <form action="{{ route('verif', $item->id_jamaah) }}?type=approved&verif=biodata" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-success btn-sm">Approved</button>
+                                                </form>
+                                                <form action="{{ route('verif', $item->id_jamaah) }}?type=rejected&verif=biodata" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-sm">Rejected</button>
+                                                </form>        
                                             </td>
                                             <td>
                                                 <button type="button"
@@ -85,7 +96,8 @@
                                         <th>No</th>
                                         <th>Nama</th>
                                         <th>Layanan</th>
-                                        <th>Verifikasi</th>
+                                        <th>Keterangan</th>
+                                        <th>Verif</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -103,6 +115,16 @@
                                                 @else
                                                     <span class="badge text-bg-secondary">Pending</span>
                                                 @endif
+                                            </td>
+                                            <td>
+                                                <form action="{{ route('verif', $item->id_transaksi) }}?type=approved&verif=transaksi" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-success btn-sm">Approved</button>
+                                                </form>
+                                                <form action="{{ route('verif', $item->id_transaksi) }}?type=rejected&verif=transaksi" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-sm">Rejected</button>
+                                                </form>        
                                             </td>
                                             <td>
                                                 <button type="button"
