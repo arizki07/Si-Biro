@@ -44,7 +44,7 @@ class AuthController extends Controller
 
                     if ($user->role) {
                         // return view('dashboard');
-                        return redirect()->route('dashboard');
+                        return redirect()->route('loading');
                         // ->withSuccess('You have successfully logged in!');
                     }
 
@@ -151,7 +151,7 @@ class AuthController extends Controller
             $user->save();
 
             Session::flash('Success', 'Verifikasi OTP berhasil.');
-            return redirect()->route('dashboard');
+            return redirect()->route('loading');
         } else {
             // Session::flash('Error', 'Kode OTP tidak valid.');
             // return back();

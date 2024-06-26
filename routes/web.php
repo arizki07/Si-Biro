@@ -52,15 +52,22 @@ Route::get('/generate-new-otp', [AuthController::class, 'generateNewOTP'])->name
 Route::post('/otp-verification', [AuthController::class, 'otpVerificationPost']);
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/loading', function () {
+        return view('pages.auth.loading');
+    })->name('loading');
+
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    //Data-Users
-    Route::get('/data-users', [DataUserController::class, 'index'])->name('data.users');
-    Route::post('/add/users', [DataUserController::class, 'add'])->name('users.add');
-    Route::put('users/{user}', [DataUserController::class, 'update'])->name('users.update');
-    Route::delete('/users/{user}}', [DataUserController::class, 'destroy'])->name('users.destroy');
+    Route::middleware('role:admin')->group(function () {
+
+        //Data-Users
+        Route::get('/data-users', [DataUserController::class, 'index'])->name('data.users');
+        Route::post('/add/users', [DataUserController::class, 'add'])->name('users.add');
+        Route::put('users/{user}', [DataUserController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}}', [DataUserController::class, 'destroy'])->name('users.destroy');
 
         //biodata
         Route::get('/data-biodata', [BiodataController::class, 'index'])->name('data.biodata');
@@ -91,26 +98,18 @@ Route::middleware('auth')->group(function () {
         Route::put('/layanan/update/{id}', [LayananController::class, 'update'])->name('update.layanan');
         Route::delete('/layanan/destroy/{id}', [LayananController::class, 'destroy'])->name('destroy.layanan');
 
-    //import
-    Route::post('/import', [ImportController::class, 'import'])->name('import');
-    Route::get('/data-keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
-    Route::post('/data-keuangan', [KeuanganController::class, 'store'])->name('keuangan.store');
-    Route::put('/keuangan/{id}', [KeuanganController::class, 'update'])->name('keuangan.update');
-    Route::delete('/keuangan/{id}', [KeuanganController::class, 'destroy'])->name('keuangan.destroy');
-    Route::get('/data-verifikasi', [VerifikasiController::class, 'index'])->name('data.verifikasi');
+        //import
+        Route::post('/import', [ImportController::class, 'import'])->name('import');
+        Route::get('/data-keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
+        Route::post('/data-keuangan', [KeuanganController::class, 'store'])->name('keuangan.store');
+        Route::put('/keuangan/{id}', [KeuanganController::class, 'update'])->name('keuangan.update');
+        Route::delete('/keuangan/{id}', [KeuanganController::class, 'destroy'])->name('keuangan.destroy');
+        Route::get('/data-verifikasi', [VerifikasiController::class, 'index'])->name('data.verifikasi');
 
-    // Verif
-    Route::post('/verif/{id}', [VerifikasiController::class, 'verif'])->name('verif');
-    // Route::post('/verif/{id}', [VerifikasiController::class, 'verif_transaksi'])->name('verif.transaksi');
+        // Verif
+        Route::post('/verif/{id}', [VerifikasiController::class, 'verif'])->name('verif');
+        // Route::post('/verif/{id}', [VerifikasiController::class, 'verif_transaksi'])->name('verif.transaksi');
 
-<<<<<<< Updated upstream
-    // Whatsapp TEST
-    Route::post('/testing', [WhatsappController::class, 'testing'])->name('wa.testing');
-    Route::get('/whatsapp', [WhatsappController::class, 'index'])->name('whatsapp.index');
-    
-    // Whatsapp 
-    Route::post('/send-whatsapp/verifikasi/{id}', [WhatsappController::class, 'send_verifikasi'])->name('whatsapp.verifikasi');
-=======
         Route::controller(ReportController::class)->group(function () {
             Route::get('/report', 'index');
             Route::get('/view', 'view');
@@ -154,16 +153,21 @@ Route::middleware('auth')->group(function () {
         });
     });
     Route::middleware('role:front office')->group(function () {
+
         Route::controller(OfficeVerifController::class)->group(function () {
             Route::get('/Office-verif', 'index');
-            Route::post('/office-verif/approve/{id}', 'approve')->name('office-verif.approve');
-            Route::post('/office-verif/reject/{id}', 'reject')->name('office-verif.reject');
+            Route::post('/verif/jamaah/{id}', 'verif')->name('verif.office');
+
+            // Route::post('/office-verif/approve/{id}', 'approve')->name('office-verif.approve');
+            // Route::post('/office-verif/reject/{id}', 'reject')->name('office-verif.reject');
         });
 
         Route::controller(OfficeVerifTransController::class)->group(function () {
             Route::get('/Office-transaksi', 'index');
-            Route::post('/office-trans/approve/{id}', 'approve')->name('office-trans.approve');
-            Route::post('/office-trans/reject/{id}', 'reject')->name('office-trans.reject');
+            Route::post('/verif/transaksi{id}', 'verif')->name('verif.trans');
+
+            // Route::post('/office-trans/approve/{id}', 'approve')->name('office-trans.approve');
+            // Route::post('/office-trans/reject/{id}', 'reject')->name('office-trans.reject');
         });
 
         Route::controller(OfficeLayananController::class)->group(function () {
@@ -210,5 +214,4 @@ Route::middleware('auth')->group(function () {
             Route::get('/kb-view', 'view');
         });
     });
->>>>>>> Stashed changes
 });

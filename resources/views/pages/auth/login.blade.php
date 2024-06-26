@@ -22,7 +22,7 @@
                                             <!-- Embedding Lottie Animation -->
                                             <iframe
                                                 src="https://lottie.host/embed/2f60ceca-c799-4293-960b-d10674d84d12/nb2I5XOTeV.json"
-                                                width="450px" height="450px"></iframe>
+                                                width="350px" height="350px"></iframe>
                                         </div>
                                     </div>
                                 </div>

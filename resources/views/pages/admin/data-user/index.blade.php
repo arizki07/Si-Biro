@@ -23,7 +23,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <div class="avatar-md">
-                                                <img src="{{asset('assets/images/users/avatar-1.jpg')}}" alt="user-img"
+                                                <img src="{{ asset('assets/images/users/avatar-1.jpg') }}" alt="user-img"
                                                     class="img-thumbnail rounded-circle" />
                                             </div>
                                         </div>
@@ -62,8 +62,7 @@
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#editUser{{ $user->id_user }}"><i
                                                             class=" ri-edit-2-fill"></i></button>
-                                                    <a type="button" class="btn btn-danger btn-sm"
-                                                        data-bs-toggle="modal"
+                                                    <a type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                                         data-bs-target="#delete{{ $user->id_user }}"><i
                                                             class=" ri-delete-bin-2-fill"></i></a>
 
@@ -86,125 +85,127 @@
                                 </div>
                             </div>
                         </div>
-                @if (!$users)
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body bg-marketplace d-flex">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <div class="avatar-md">
-                                            <img src="{{ asset('assets/images/users/avatar-1.jpg') }}" alt="user-img"
-                                                class="img-thumbnail rounded-circle" />
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col">
-                                        <div class="p-2">
-                                            <h3 class="mb-1">Data Tidak Ada</h3>
-                                            <p class="text-muted"></p>
-                                            <div class="d-flex align-items-center text-muted">
-                                                <i class="ri-map-pin-user-line me-1 fs-16"></i>
-                                                <span></span>
-                                            </div>
-                                            <div class="d-flex align-items-center text-muted">
-                                                <i class="ri-building-line me-1 fs-16"></i>
-                                                <span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @else
-                    @if (!$users->isEmpty())
-                        @foreach ($users as $user)
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body bg-marketplace d-flex">
-                                        <div class="row align-items-center">
-                                            <div class="col-auto">
-                                                <div class="avatar-md">
-                                                    <img src="{{ asset('assets/images/users/avatar-1.jpg') }}"
-                                                        alt="user-img" class="img-thumbnail rounded-circle" />
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="p-2">
-                                                    <h3 class="mb-1">{{ $user->nama }}</h3>
-                                                    <p class="text-muted">{{ $user->email }}</p>
-                                                    <div class="d-flex align-items-center text-muted">
-                                                        <i class="ri-map-pin-user-line me-1 fs-16"></i>
-                                                        <span>
-                                                            @foreach ($roles as $role)
-                                                                @if ($user->id_role == $role->id_role)
-                                                                    {{ $role->role }}
-                                                                @endif
-                                                            @endforeach
-                                                        </span>
-                                                    </div>
-                                                    <div class="d-flex align-items-center text-muted">
-                                                        <i class="ri-building-line me-1 fs-16"></i>
-                                                        <span>
-                                                            @if ($user->status == 1)
-                                                                Akun Aktif
-                                                            @elseif ($user->status == 2)
-                                                                Akun Nonaktif
-                                                            @else
-                                                                Akun Ter-Blokir
-                                                            @endif
-                                                        </span>
-                                                    </div>
-                                                    <div class="mt-3">
-                                                        <button type="button" class="btn btn-secondary btn-sm"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#viewUser{{ $user->id_user }}"><i
-                                                                class="ri-eye-fill"></i></button>
-                                                        <button type="button" class="btn btn-success btn-sm"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#editUser{{ $user->id_user }}"><i
-                                                                class=" ri-edit-2-fill"></i></button>
-                                                        <form id="deleteForm{{ $user->id_user }}"
-                                                            action="{{ route('users.destroy', $user->id_user) }}"
-                                                            method="POST" class="d-inline">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <a href="#" type="button"
-                                                                class="btn btn-danger btn-sm deletePengguna"
-                                                                data-toggle="tooltip"
-                                                                onclick="confirmDelete(event, {{ $user->id_user }})"
-                                                                data-original-title="Delete">
-                                                                <i class="ri-delete-bin-2-fill"></i>
-                                                            </a>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    @else
+                    @endforeach
+                    @if (!$users)
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-body bg-marketplace d-flex">
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <div class="avatar-md">
-                                                <img src="assets/images/users/avatar-1.jpg" alt="user-img"
+                                                <img src="{{ asset('assets/images/users/avatar-1.jpg') }}" alt="user-img"
                                                     class="img-thumbnail rounded-circle" />
                                             </div>
                                         </div>
+                                        <!--end col-->
                                         <div class="col">
                                             <div class="p-2">
                                                 <h3 class="mb-1">Data Tidak Ada</h3>
+                                                <p class="text-muted"></p>
+                                                <div class="d-flex align-items-center text-muted">
+                                                    <i class="ri-map-pin-user-line me-1 fs-16"></i>
+                                                    <span></span>
+                                                </div>
+                                                <div class="d-flex align-items-center text-muted">
+                                                    <i class="ri-building-line me-1 fs-16"></i>
+                                                    <span></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    @else
+                        @if (!$users->isEmpty())
+                            @foreach ($users as $user)
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body bg-marketplace d-flex">
+                                            <div class="row align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="avatar-md">
+                                                        <img src="{{ asset('assets/images/users/avatar-1.jpg') }}"
+                                                            alt="user-img" class="img-thumbnail rounded-circle" />
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="p-2">
+                                                        <h3 class="mb-1">{{ $user->nama }}</h3>
+                                                        <p class="text-muted">{{ $user->email }}</p>
+                                                        <div class="d-flex align-items-center text-muted">
+                                                            <i class="ri-map-pin-user-line me-1 fs-16"></i>
+                                                            <span>
+                                                                @foreach ($roles as $role)
+                                                                    @if ($user->id_role == $role->id_role)
+                                                                        {{ $role->role }}
+                                                                    @endif
+                                                                @endforeach
+                                                            </span>
+                                                        </div>
+                                                        <div class="d-flex align-items-center text-muted">
+                                                            <i class="ri-building-line me-1 fs-16"></i>
+                                                            <span>
+                                                                @if ($user->status == 1)
+                                                                    Akun Aktif
+                                                                @elseif ($user->status == 2)
+                                                                    Akun Nonaktif
+                                                                @else
+                                                                    Akun Ter-Blokir
+                                                                @endif
+                                                            </span>
+                                                        </div>
+                                                        <div class="mt-3">
+                                                            <button type="button" class="btn btn-secondary btn-sm"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#viewUser{{ $user->id_user }}"><i
+                                                                    class="ri-eye-fill"></i></button>
+                                                            <button type="button" class="btn btn-success btn-sm"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#editUser{{ $user->id_user }}"><i
+                                                                    class=" ri-edit-2-fill"></i></button>
+                                                            <form id="deleteForm{{ $user->id_user }}"
+                                                                action="{{ route('users.destroy', $user->id_user) }}"
+                                                                method="POST" class="d-inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <a href="#" type="button"
+                                                                    class="btn btn-danger btn-sm deletePengguna"
+                                                                    data-toggle="tooltip"
+                                                                    onclick="confirmDelete(event, {{ $user->id_user }})"
+                                                                    data-original-title="Delete">
+                                                                    <i class="ri-delete-bin-2-fill"></i>
+                                                                </a>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body bg-marketplace d-flex">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <div class="avatar-md">
+                                                    <img src="assets/images/users/avatar-1.jpg" alt="user-img"
+                                                        class="img-thumbnail rounded-circle" />
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="p-2">
+                                                    <h3 class="mb-1">Data Tidak Ada</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     @endif
                 @endif
             </div>
@@ -354,18 +355,19 @@
                     <div class="modal-body bg-marketplace d-flex">
                         <div class="row g-3">
                             <p>Yakin ingin mneghapus data ini?</p>
-                        <!--end row--><br>
-                        <div class="col-lg-12">
-                            <div class="hstack gap-2 justify-content-end">
-                                <a type="button" href="/data-users/delete/{{ $user['id_user'] }}" class="btn btn-primary">Hapus</a>
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Tutup</button>
+                            <!--end row--><br>
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <a type="button" href="/data-users/delete/{{ $user['id_user'] }}"
+                                        class="btn btn-primary">Hapus</a>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Tutup</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     @endforeach
     {{-- End Modal edit --}}
 

@@ -45,7 +45,6 @@
                 </form>
 
             </div>
-
             <div class="d-flex align-items-center">
                 <div class="dropdown d-md-none topbar-head-dropdown header-item">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
@@ -68,8 +67,10 @@
                     </div>
                 </div>
 
+                <span style="font-size: 15px;color:rgb(0, 0, 0); margin-top: 14px;"id="timer">15:00</span>
 
                 <div class="dropdown topbar-head-dropdown ms-1 header-item">
+
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class='bx bx-category-alt fs-22'></i>
@@ -160,7 +161,9 @@
                                         {{ Auth::user()->nama }}
                                     @endauth
                                 </span>
-                                <span class="d-none d-xl-block ms-1 fs-13 text-muted user-name-sub-text">Founder</span>
+                                <span
+                                    class="d-none d-xl-block ms-1 fs-13 text-muted user-name-sub-text">{{ Auth::user()->role->role }}</span>
+
                             </span>
                         </span>
                     </button>

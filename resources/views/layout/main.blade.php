@@ -7,12 +7,15 @@
     @include('layout.partials.header')
     <!-- ========== App Menu ========== -->
     <div class="app-menu navbar-menu">
-        <!-- LOGO -->
-        @include('layout.partials.navbar')
+        <div class="page" id="focusArea" onmousemove="getPos(event)"
+            onmouseout="startTimerWhenStopped(60 * 15, $('#timer'))" onmouseover="stopTimerWhenMoving()">
+            <!-- LOGO -->
+            @include('layout.partials.navbar')
 
-        @include('layout.partials.sidebar')
+            @include('layout.partials.sidebar')
 
-        <div class="sidebar-background"></div>
+            <div class="sidebar-background"></div>
+        </div>
     </div>
     <!-- Left Sidebar End -->
     <!-- Vertical Overlay-->
@@ -25,12 +28,12 @@
 
         @yield('content')
         <!-- End Page-content -->
-        
+
         @include('layout.partials.footer')
     </div>
     <!-- end main content-->
-    
 </div>
+
 <!-- END layout-wrapper -->
 
 @yield('scripting')

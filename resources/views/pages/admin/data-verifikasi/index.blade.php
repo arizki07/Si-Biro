@@ -50,22 +50,32 @@
                                             <td>LA-{{ $item->id_layanan }}</td>
                                             <td>
                                                 @if ($item->verifikasi == 'approved')
-                                                <span class="badge text-bg-success">Approved</span>
+                                                    <span class="badge text-bg-success">Approved</span>
                                                 @elseif($item->verifikasi == 'rejected')
-                                                <span class="badge text-bg-danger">Rejected</span>
+                                                    <span class="badge text-bg-danger">Rejected</span>
                                                 @else
-                                                <span class="badge text-bg-secondary">Pending</span>
+                                                    <span class="badge text-bg-secondary">Pending</span>
                                                 @endif
                                             </td>
                                             <td>
-                                                <form action="{{ route('verif', $item->id_jamaah) }}?type=approved&verif=biodata" method="POST">
+                                                <form
+                                                    action="{{ route('verif', $item->id_jamaah) }}?type=approved&verif=biodata"
+                                                    method="POST" style="display:inline;" id="formApprove">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-success btn-sm">Approved</button>
+                                                    <button type="button" id="btnApprove"
+                                                        class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm">
+                                                        <i class="ri-lock-unlock-fill"></i>
+                                                    </button>
                                                 </form>
-                                                <form action="{{ route('verif', $item->id_jamaah) }}?type=rejected&verif=biodata" method="POST">
+                                                <form
+                                                    action="{{ route('verif', $item->id_jamaah) }}?type=rejected&verif=biodata"
+                                                    method="POST" style="display:inline;" id="formReject">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-danger btn-sm">Rejected</button>
-                                                </form>        
+                                                    <button type="button" id="btnReject"
+                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm">
+                                                        <i class="ri-lock-password-fill"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                             <td>
                                                 <button type="button"
@@ -117,14 +127,24 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <form action="{{ route('verif', $item->id_transaksi) }}?type=approved&verif=transaksi" method="POST">
+                                                <form
+                                                    action="{{ route('verif', $item->id_transaksi) }}?type=approved&verif=transaksi"
+                                                    method="POST" style="display:inline;" id="formApproveTr">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-success btn-sm">Approved</button>
+                                                    <button type="button" id="btnApproveTr"
+                                                        class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm">
+                                                        <i class="ri-lock-unlock-fill"></i>
+                                                    </button>
                                                 </form>
-                                                <form action="{{ route('verif', $item->id_transaksi) }}?type=rejected&verif=transaksi" method="POST">
+                                                <form
+                                                    action="{{ route('verif', $item->id_transaksi) }}?type=rejected&verif=transaksi"
+                                                    method="POST" style="display:inline;" id="formRejecttr">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-danger btn-sm">Rejected</button>
-                                                </form>        
+                                                    <button type="button" id="btnRejecttr"
+                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm">
+                                                        <i class="ri-lock-password-fill"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                             <td>
                                                 <button type="button"
@@ -190,8 +210,8 @@
                                         <div class="mb-3">
                                             <label class="form-label">Nama Lengkap</label>
                                             <input type="text" class="form-control border border-dark bg-secondary-lt"
-                                                name="nama_lengkap" value="{{ old('nama_lengkap', $item->nama_lengkap) }}"
-                                                readonly>
+                                                name="nama_lengkap"
+                                                value="{{ old('nama_lengkap', $item->nama_lengkap) }}" readonly>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Umur</label>
@@ -533,4 +553,113 @@
         </div>
     @endforeach
     {{-- end detail  --}}
+
+    <script>
+        document.getElementById('btnApprove').addEventListener('click', function() {
+            swal.fire({
+                icon: 'info',
+                title: 'Proses Approve',
+                html: `
+                    <center>
+                        <lottie-player src="https://lottie.host/342270a8-7db0-488c-8edb-1a386c5af482/N5LB2hnV0P.json"  
+                            background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
+                        </lottie-player>
+                    </center>
+                    <br>
+                    <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
+                    <h4 class="h4">
+                        <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
+                    </h4>
+                `,
+                showConfirmButton: false,
+                showCancelButton: false,
+                allowOutsideClick: false
+            });
+
+            setTimeout(function() {
+                document.getElementById('formApprove').submit();
+            }, 15000);
+        });
+
+        //reject
+        document.getElementById('btnReject').addEventListener('click', function() {
+            swal.fire({
+                icon: 'info',
+                title: 'Proses Reject',
+                html: `
+                    <center>
+                        <lottie-player src="https://lottie.host/04412762-9109-48c0-b6f6-c57c9ff72cdc/rgc7wXYfLY.json"  
+                            background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
+                        </lottie-player>
+                    </center>
+                    <br>
+                    <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
+                    <h4 class="h4">
+                        <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
+                    </h4>
+                `,
+                showConfirmButton: false,
+                showCancelButton: false,
+                allowOutsideClick: false
+            });
+
+            setTimeout(function() {
+                document.getElementById('formReject').submit();
+            }, 15000);
+        });
+
+        //TRANSAKSI
+        document.getElementById('btnApproveTr').addEventListener('click', function() {
+            swal.fire({
+                icon: 'info',
+                title: 'Proses Approve',
+                html: `
+                    <center>
+                        <lottie-player src="https://lottie.host/1ae8263e-7260-48e6-89c7-282ab5ce909a/FhOMekG3Tf.json"  
+                            background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
+                        </lottie-player>
+                    </center>
+                    <br>
+                    <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
+                    <h4 class="h4">
+                        <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
+                    </h4>
+                `,
+                showConfirmButton: false,
+                showCancelButton: false,
+                allowOutsideClick: false
+            });
+
+            setTimeout(function() {
+                document.getElementById('formApproveTr').submit();
+            }, 15000);
+        });
+
+        //reject
+        document.getElementById('btnRejecttr').addEventListener('click', function() {
+            swal.fire({
+                icon: 'info',
+                title: 'Proses Reject',
+                html: `
+                    <center>
+                        <lottie-player src="https://lottie.host/04412762-9109-48c0-b6f6-c57c9ff72cdc/rgc7wXYfLY.json"  
+                            background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
+                        </lottie-player>
+                    </center>
+                    <br>
+                    <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
+                    <h4 class="h4">
+                        <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
+                    </h4>
+                `,
+                showConfirmButton: false,
+                showCancelButton: false,
+                allowOutsideClick: false
+            });
+
+            setTimeout(function() {
+                document.getElementById('formRejecttr').submit();
+            }, 15000);
+        });
+    </script>
 @endsection
