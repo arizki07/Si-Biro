@@ -4,6 +4,7 @@
 use App\Http\Controllers\Admin\ArsipController;
 use App\Http\Controllers\Admin\BiodataController;
 use App\Http\Controllers\Admin\DataUserController;
+use App\Http\Controllers\Admin\HasilController;
 use App\Http\Controllers\Admin\ImportController;
 use App\Http\Controllers\Admin\JadwalController;
 use App\Http\Controllers\Admin\KeuanganController;
@@ -111,7 +112,7 @@ Route::middleware('auth')->group(function () {
         // Route::post('/verif/{id}', [VerifikasiController::class, 'verif_transaksi'])->name('verif.transaksi');
 
         Route::controller(ReportController::class)->group(function () {
-            Route::get('/report', 'index');
+            Route::get('/mcu', 'index');
             Route::get('/view', 'view');
         });
     });

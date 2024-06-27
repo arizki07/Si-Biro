@@ -25,12 +25,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ $title; }}</h4>
+                        <h4 class="mb-sm-0">{{ $title }}</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-                                <li class="breadcrumb-item active">{{ $title; }}</li>
+                                <li class="breadcrumb-item active">{{ $title }}</li>
                             </ol>
                         </div>
 
@@ -43,11 +43,11 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title mb-0">Data {{ $title; }}</h5>
+                            <h5 class="card-title mb-0">Data {{ $title }}</h5>
                             <div style="float: right;">
                                 <button type="button" class="btn btn-primary mr-2" data-bs-toggle="modal"
                                     data-bs-target="#exampleModalgrid">
-                                    <i class="ri-phone-fill"></i> Tambah Data {{ $title; }}
+                                    <i class="ri-phone-fill"></i> Tambah Data {{ $title }}
                                 </button>
                                 {{-- <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                     data-bs-target="#importExcel">
@@ -76,8 +76,16 @@
                                             <tr class="text-center">
                                                 <td>{{ $i++ }}</td>
                                                 <td>
-                                                    <a type="button" class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#detail{{ $rep->id_report }}"><i class="ri-eye-fill"></i></a>
-                                                    <a type="button" class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $rep->id_report }}"><i class="ri-delete-bin-2-fill"></i></a>
+                                                    <a type="button"
+                                                        class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#detail{{ $rep->id_report }}"><i
+                                                            class="ri-eye-fill"></i></a>
+                                                    <a type="button"
+                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#delete{{ $rep->id_report }}"><i
+                                                            class="ri-delete-bin-2-fill"></i></a>
                                                 </td>
                                                 @foreach ($biodata as $bio)
                                                     <td>{{ $bio->nama_lengkap }}</td>
@@ -98,5 +106,5 @@
 @endsection
 
 @section('scripting')
-{{--  --}}
+    {{--  --}}
 @endsection

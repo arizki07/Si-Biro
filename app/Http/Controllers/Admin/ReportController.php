@@ -16,9 +16,9 @@ class ReportController extends Controller
     {
         $action = $request->get('action');
         $bios = ReportModel::join('t_jamaah', 't_report.id_jamaah', '=', 't_jamaah.id_jamaah')
-                ->select('t_report.*', 't_jamaah.*') 
-                ->get();
-                // dd($bios);
+            ->select('t_report.*', 't_jamaah.*')
+            ->get();
+        // dd($bios);
 
         if ($action == 'mcu') {
             $data = [
@@ -50,7 +50,7 @@ class ReportController extends Controller
             ];
         }
 
-        return view('pages.admin.data-report.index', $data, [
+        return view('pages.admin.data-report.mcu', $data, [
             'urJadwal' => UraianJadwalModel::all(),
             'jadwal' => JadwalModel::all(),
             'biodata' => JamaahModel::all(),
@@ -58,43 +58,3 @@ class ReportController extends Controller
         ]);
     }
 }
-
-// <?php
-
-// namespace App\Http\Controllers\Admin;
-
-// use App\Http\Controllers\Controller;
-// use App\Models\JamaahModel;
-// use App\Models\Keuangan;
-// use App\Models\LayananModel;
-// use App\Models\TransaksiModel;
-// use Illuminate\Http\Request;
-
-// class ReportController extends Controller
-// {
-//     public function index()
-//     {
-//         $jamaah = JamaahModel::all();
-//         $layanan = LayananModel::all();
-//         return view('pages.admin.report.index', [
-//             'act' => 'Report',
-//             'judul' => 'Data Report Keuangan',
-//             'jamaah' => $jamaah,
-//             'layanan' => $layanan,
-//         ]);
-//     }
-
-//     public function view()
-//     {
-//         $jamaah = JamaahModel::all();
-//         $keuangan = Keuangan::all();
-//         $transaksi = TransaksiModel::all();
-//         return view('pages.admin.report.view', [
-//             'act' => 'Report',
-//             'judul' => 'Data Report',
-//             'jamaah' => $jamaah,
-//             'keuangan' => $keuangan,
-//             'transaksi' => $transaksi,
-//         ]);
-//     }
-// }
