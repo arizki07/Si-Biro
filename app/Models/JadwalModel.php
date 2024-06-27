@@ -12,13 +12,10 @@ class JadwalModel extends Model
     protected $primaryKey = 'id_jadwal';
     protected $fillable = [
         'id_layanan',
-        'kuota',
         'nomor_jadwal',
         'judul_jadwal',
         'tipe_jadwal',
-        'jangka_waktu',
         'tgl_mulai',
-        'tgl_selesai',
-        'flag_update'
+        'tgl_selesai'
     ];
 }

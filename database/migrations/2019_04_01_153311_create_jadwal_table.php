@@ -16,11 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('id_layanan');
             $table->string('nomor_jadwal', 30);
             $table->string('judul_jadwal', 150);
-            $table->string('tipe_jadwal', 30); // tipe => 1 = jadwal_MCU, 2 = jadwal_PASPORT, 3 = jadwal_BIMBINGAN 
-            $table->string('jangka_waktu', 20); // dalam bentuk hari INT cth : 3 berarti 3 hari
+            $table->string('tipe_jadwal', 30);
             $table->date('tgl_mulai');
             $table->date('tgl_selesai');
-            $table->string('flag_update', 15);
             $table->timestamps();
 
             $table->foreign('id_layanan')->references('id_layanan')->on('t_layanan');

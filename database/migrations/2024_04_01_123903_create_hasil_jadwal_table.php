@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('id_layanan', 11);
             $table->string('id_jadwal', 11);
             $table->string('id_jamaah', 11);
-            $table->string('tipe_report', 20); // MCU-PASSPORT-BIMBINGAN
+            $table->string('tipe_report', 30); // MCU-PASSPORT-BIMBINGAN-MANASIK
             $table->string('status_report', 20);
             $table->text('keterangan');
-            $table->string('file_opsional', 200)->nullable();
+            $table->string('file_opsional', 255)->nullable();
             $table->timestamps();
         });
     }

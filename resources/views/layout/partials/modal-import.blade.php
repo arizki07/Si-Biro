@@ -10,7 +10,8 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="mb-3">
+                <input class="form-check-input" type="hidden" name="type" id="type1" value="add">
+                {{-- <div class="mb-3">
                     <label class="form-label">Pilih Type Proses</label>
                     <div class="col-lg-4 col-md-6">
                         <div class="row">
@@ -34,7 +35,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="mb-3">
                     <label class="form-label">Pilih file excel (xlsx)</label>
                     <input type="file" name="file" required="required" accept=".xlsx"

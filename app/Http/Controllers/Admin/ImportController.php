@@ -82,9 +82,6 @@ class ImportController extends Controller
         }
     }
 
-    // IMPORT LAYANAN
-    // SYARIF START 2024-04-25 20:30:02
-
     private function create_folder($folder_path)
     {
         if (!file_exists($folder_path)) {
