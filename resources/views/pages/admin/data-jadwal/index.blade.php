@@ -70,7 +70,7 @@
                                         <th>Nomor Jadwal</th>
                                         <th>Judul Jadwal</th>
                                         <th>Tipe Jadwal</th>
-                                        <th>Jangka Waktu</th>
+                                        {{-- <th>Jangka Waktu</th> --}}
                                         <th>Tanggal Mulai</th>
                                         <th>Tanggal Selesai</th>
                                     </tr>
@@ -93,7 +93,6 @@
                                                 <td>MCU-{{ $jad->nomor_jadwal }}</td>
                                                 <td>{{ $jad->judul_jadwal }}</td>
                                                 <td>Jadwal {{ $jad->tipe_jadwal }}</td>
-                                                <td>{{ $jad->jangka_waktu }} Hari</td>
                                                 <td>{{ \Carbon\Carbon::parse($jad->tgl_mulai)->format('d M Y') }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($jad->tgl_selesai)->format('d M Y') }}</td>
                                             </tr>
@@ -113,7 +112,6 @@
                                                 <td>PA-{{ $jad->nomor_jadwal }}</td>
                                                 <td>{{ $jad->judul_jadwal }}</td>
                                                 <td>Jadwal {{ $jad->tipe_jadwal }}</td>
-                                                <td>{{ $jad->jangka_waktu }} Hari</td>
                                                 <td>{{ \Carbon\Carbon::parse($jad->tgl_mulai)->format('d M Y') }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($jad->tgl_selesai)->format('d M Y') }}</td>
                                             </tr>
@@ -133,16 +131,29 @@
                                                 <td>BM-{{ $jad->nomor_jadwal }}</td>
                                                 <td>{{ $jad->judul_jadwal }}</td>
                                                 <td>Jadwal {{ $jad->tipe_jadwal }}</td>
-                                                <td>{{ $jad->jangka_waktu }} Hari</td>
+                                                <td>{{ \Carbon\Carbon::parse($jad->tgl_mulai)->format('d M Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($jad->tgl_selesai)->format('d M Y') }}</td>
+                                            </tr>
+                                        @elseif ($jad->tipe_jadwal == 'MANASIK')
+                                            <tr class="text-center">
+                                                <td>{{ $i++ }}</td>
+                                                <td>
+                                                    <a type="button"
+                                                        class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
+                                                        data-bs-toggle="modal" data-bs-target="#detail{{ $jad->id_jadwal }}">
+                                                        <i class="ri-eye-fill"></i></a>
+                                                    </button>
+                                                    <a type="button"
+                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $jad->id_jadwal }}"><i
+                                                            class="ri-delete-bin-2-fill"></i></a>
+                                                </td>
+                                                <td>BM-{{ $jad->nomor_jadwal }}</td>
+                                                <td>{{ $jad->judul_jadwal }}</td>
+                                                <td>Jadwal {{ $jad->tipe_jadwal }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($jad->tgl_mulai)->format('d M Y') }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($jad->tgl_selesai)->format('d M Y') }}</td>
                                             </tr>
                                         @endif
-
-
-                                        
-
-
                                     @endforeach
                                 </tbody>
                             </table>
@@ -206,47 +217,75 @@
                                 style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
                                 <thead>
                                     <tr class="text-center">
+                                        <th>No</th>
                                         <th>No Jadwal</th>
+                                        <th>Judul</th>
                                         <th>Tgl Mulai</th>
                                         <th>Tgl Selesai</th>
                                         <th>Jam Mulai</th>
                                         <th>Jam Selesai</th>
+                                        <th>Tempat</th>
                                         <th>Keterangan</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
+                            @php ($i = 1)
                             @foreach ($urJadwal as $urj)
                                 <tbody>
                                     <tr class="text-center">
                                     @if ($jad->tipe_jadwal == 'MCU' && $urj->nomor_jadwal == $jad->nomor_jadwal)
+                                            <td>{{ $i++; }}</td>
                                             <td>MCU-{{ $urj->nomor_jadwal }}</td>
+                                            <td>{{ $urj->judul_mcu }}</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_mcu)->format('d M Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_mcu)->format('d M Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_mcu)->format('H:i:s') }} WIB</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_mcu)->format('H:i:s') }} WIB</td>
                                             <td>{{ $urj->tempat_mcu }}</td>
+                                            <td>{{ $urj->keterangan_mcu }}</td>
                                             <td>
                                                 <a type="button" class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i class="ri-delete-bin-2-fill"></i></a>
                                             </td>
                                     @elseif ($jad->tipe_jadwal == 'PASSPORT' && $urj->nomor_jadwal == $jad->nomor_jadwal)
+                                            <td>{{ $i++; }}</td>
                                             <td>PA-{{ $urj->nomor_jadwal }}</td>
+                                            <td>{{ $urj->judul_passport }}</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_passport)->format('d M Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_passport)->format('d M Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_passport)->format('H:i:s') }} WIB</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_passport)->format('H:i:s') }} WIB</td>
-                                            <td>{{ $urj->tempat_pembuatan_passport }}</td>
+                                            <td>{{ $urj->tempat_passport }}</td>
+                                            <td>{{ $urj->keterangan_passport }}</td>
                                             <td>
                                                 <a type="button"
                                                 class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i
                                                 class="ri-delete-bin-2-fill"></i></a>
                                             </td>
                                     @elseif ($jad->tipe_jadwal == 'BIMBINGAN' && $urj->nomor_jadwal == $jad->nomor_jadwal)
+                                            <td>{{ $i++; }}</td>
                                             <td>BM-{{ $urj->nomor_jadwal }}</td>
+                                            <td>{{ $urj->judul_bimbingan }}</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_bimbingan)->format('d M Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_bimbingan)->format('d M Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_bimbingan)->format('H:i:s') }} WIB</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_bimbingan)->format('H:i:s') }} WIB</td>
-                                            <td>{{ $urj->nama_bimbingan }}</td>
+                                            <td>{{ $urj->tempat_bimbingan }}</td>
+                                            <td>{{ $urj->keterangan_bimbingan }}</td>
+                                            <td>
+                                                <a type="button"
+                                                class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i
+                                                class="ri-delete-bin-2-fill"></i></a>
+                                            </td>
+                                    @elseif ($jad->tipe_jadwal == 'MANASIK' && $urj->nomor_jadwal == $jad->nomor_jadwal)
+                                            <td>{{ $i++; }}</td>
+                                            <td>BM-{{ $urj->nomor_jadwal }}</td>
+                                            <td>{{ $urj->judul_manasik }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_manasik)->format('d M Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_manasik)->format('d M Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_manasik)->format('H:i:s') }} WIB</td>
+                                            <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_manasik)->format('H:i:s') }} WIB</td>
+                                            <td>{{ $urj->tempat_manasik }}</td>
+                                            <td>{{ $urj->keterangan_manasik }}</td>
                                             <td>
                                                 <a type="button"
                                                 class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i

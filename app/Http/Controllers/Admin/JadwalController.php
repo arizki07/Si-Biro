@@ -31,6 +31,12 @@ class JadwalController extends Controller
                 'act' => 'jadwal-bimbingan',
                 'jadwal' => JadwalModel::where('tipe_jadwal', 'BIMBINGAN')->get()
             ];
+        } elseif ($action == 'manasik') {
+            $data = [
+                'title' => 'Data Jadwal Manasik',
+                'act' => 'jadwal-manasik',
+                'jadwal' => JadwalModel::where('tipe_jadwal', 'MANASIK')->get()
+            ];
         } else {
             $data = [
                 'title' => 'Data Jadwal MCU',

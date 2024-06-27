@@ -15,7 +15,10 @@ class HeaderImport implements WithMultipleSheets
     {
         return [
             'JADWAL' => new JadwalImport(),
-            'URAIAN JADWAL' => new UraianJadwalImport()
+            'UR MCU' => new McuImport(),
+            'UR BIMBINGAN' => new BimbinganImport(),
+            'UR PASSPORT' => new PassportImport(),
+            'UR MANASIK' => new ManasikImport()
         ];
     }
 

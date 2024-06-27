@@ -19,19 +19,19 @@ class JadwalImport implements ToModel, WithStartRow
     public function model(array $row)
     {
         // dd ($row); die;
-        $tgl_mulai = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[5]));
-        $tgl_selesai = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[6]));
+        $tgl_mulai = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[4]));
+        $tgl_selesai = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[5]));
 
-        // $cek = LayananModel::where('id_layanan', $row[0])->exists();
+        $cek = LayananModel::where('id_layanan', $row[0])->exists();
 
-        // if (!$cek) {
-        //     throw new \Exception("Nomor Layanan Tidak Ditemukan.");
-        // }
-
-        if (JadwalModel::where('id_layanan', $row[0])->exists()) {
-            throw new \Exception("Nomor layanan Sudah Dipakai.");
-            return null;
+        if (!$cek) {
+            throw new \Exception("Terdapat Nomor Layanan Yang Tidak Terdaftar Dalam Database.");
         }
+
+        // if (JadwalModel::where('id_layanan', $row[0])->exists()) {
+        //     throw new \Exception("Nomor layanan Sudah Dipakai.");
+        //     return null;
+        // }
 
         if (JadwalModel::where('nomor_jadwal', $row[1])->exists()) {
             throw new \Exception("Nomor Jadwal Sudah Ada Dalam Database.");
@@ -43,10 +43,10 @@ class JadwalImport implements ToModel, WithStartRow
             'nomor_jadwal' => $row[1],
             'judul_jadwal' => $row[2],
             'tipe_jadwal' => $row[3],
-            'jangka_waktu' => $row[4],
+            // 'jangka_waktu' => $row[4],
             'tgl_mulai' => $tgl_mulai->toDateString(),
             'tgl_selesai' => $tgl_selesai->toDateString(),
-            'flag_update' => $row[7],
+            // 'flag_update' => $row[7],
         ]);
         // dd ($model); die;
         $model->save();

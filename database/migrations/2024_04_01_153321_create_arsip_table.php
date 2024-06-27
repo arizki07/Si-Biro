@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_layanan');
             $table->unsignedBigInteger('id_jadwal');
             $table->unsignedBigInteger('id_jamaah');
-            $table->unsignedBigInteger('id_hasil');
+            $table->unsignedBigInteger('id_report');
             $table->text('nama_dokumen');
             $table->text('url_directory');
             $table->timestamps();
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreign('id_layanan')->references('id_layanan')->on('t_layanan');
             $table->foreign('id_jadwal')->references('id_jadwal')->on('t_jadwal');
             $table->foreign('id_jamaah')->references('id_jamaah')->on('t_jamaah');
-            $table->foreign('id_hasil')->references('id_hasil')->on('t_hasil_jadwal');
+            $table->foreign('id_report')->references('id_report')->on('t_report');
         });
     }
 
