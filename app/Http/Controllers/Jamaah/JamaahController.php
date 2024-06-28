@@ -146,9 +146,6 @@ class JamaahController extends Controller
             $jamaah->foto_kk = $filenameKk ?? null;
             $jamaah->foto_passport = $filenamePassport ?? null;
             $jamaah->pas_foto = $filenamePasFoto ?? null;
-
-            // var_dump($jamaah);
-            // dd($jamaah);
             $jamaah->save();
         }
         return redirect()->back()->with('success', 'Data jamaah telah berhasil ditambahkan.');

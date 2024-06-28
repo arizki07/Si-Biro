@@ -78,18 +78,10 @@ class JamaahTransController extends Controller
 
             $this->generatePdf($transId, $validatedData);
             return redirect()->back()->with('success', 'Data Transaksi Berhasil Disimpan!');
-        } catch (ValidationException $e) {
-            if ($request->expectsJson()) {
-                return response()->json(['errors' => $e->errors()], 422);
-            }
-
-            return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
             if ($request->expectsJson()) {
                 return response()->json(['error' => 'Gagal menyimpan data. Silakan coba lagi.'], 500);
             }
-
-            return redirect()->back()->with('error', 'Gagal menyimpan data. Silakan coba lagi.');
         }
     }
 }

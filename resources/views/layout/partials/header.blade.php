@@ -153,8 +153,26 @@
                     <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
-                            <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg"
-                                alt="Header Avatar">
+                            @php
+                                $userRole = Auth::user()->id_role;
+                            @endphp
+                            @if ($userRole === 1)
+                                <img class="rounded-circle header-profile-user" src="assets/images/users/avatar.png"
+                                    alt="Header Avatar">
+                            @elseif ($userRole === 2)
+                                <img class="rounded-circle header-profile-user" src="assets/images/users/avatar.png"
+                                    alt="Header Avatar">
+                            @elseif ($userRole === 3)
+                                <img class="rounded-circle header-profile-user" src="assets/images/users/avatar.png"
+                                    alt="Header Avatar">
+                            @elseif ($userRole === 4)
+                                <img class="rounded-circle header-profile-user" src="assets/images/users/avatar.png"
+                                    alt="Header Avatar">
+                            @elseif ($userRole === 5)
+                                <img class="rounded-circle header-profile-user" src="assets/images/users/avatar.png"
+                                    alt="Header Avatar">
+                            @endif
+
                             <span class="text-start ms-xl-2">
                                 <span class="d-none d-xl-inline-block ms-1 fw-semibold user-name-text">
                                     @auth
