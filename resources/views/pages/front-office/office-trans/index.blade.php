@@ -65,8 +65,7 @@
                                                     data-bs-target="#detailTransaksi{{ $item->id_transaksi }}">
                                                     <i class="ri-eye-fill"></i>
                                                 </button>
-                                                <form
-                                                    action="{{ route('verif.trans', $item->id_transaksi) }}?type=approved&verif=transaksi"
+                                                <form action="{{ url('/verif/transaksi', $item->id_transaksi) }}"
                                                     method="POST" style="display:inline;" id="formApprove">
                                                     @csrf
                                                     <button type="button" id="btnApprove"
@@ -74,8 +73,7 @@
                                                         <i class="ri-lock-unlock-fill"></i>
                                                     </button>
                                                 </form>
-                                                <form
-                                                    action="{{ route('verif.trans', $item->id_transaksi) }}?type=rejected&verif=transaksi"
+                                                <form action="{{ url('/verif/transaksi', $item->id_transaksi) }}"
                                                     method="POST" style="display:inline;" id="formReject">
                                                     @csrf
                                                     <button type="button" id="btnReject"

@@ -7,6 +7,7 @@ use App\Models\JamaahModel;
 use App\Models\LayananModel;
 use App\Models\TransaksiModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -15,16 +16,26 @@ class JamaahTransController extends Controller
 {
     public function index()
     {
+        $userId = Auth::id();
+
         $data = TransaksiModel::with('jamaah', 'layanan')->get();
         $layanan = LayananModel::all();
-        $jamaah = JamaahModel::all();;
+        $jamaah = JamaahModel::all();
+
+        // Cek apakah biodata telah diisi
+        $isBiodataFilled = JamaahModel::where('id_jamaah', $userId)->exists();
+
+        // Cek apakah transaksi telah diisi
+        $isTransactionFilled = TransaksiModel::where('id_jamaah', $userId)->exists();
 
         return view('pages.jamaah.transaksi-jamaah.index', [
             'title' => 'Data Transaksi Jamaah',
             'act' => 'TransJamaah',
             'data' => $data,
             'layanans' => $layanan,
-            'jamaahs' => $jamaah
+            'jamaahs' => $jamaah,
+            'isBiodataFilled' => $isBiodataFilled,
+            'isTransactionFilled' => $isTransactionFilled,
         ]);
     }
 

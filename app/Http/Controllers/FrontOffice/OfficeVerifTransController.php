@@ -8,12 +8,19 @@ use App\Models\LayananModel;
 use App\Models\TransaksiModel;
 use App\Models\WhatsappModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OfficeVerifTransController extends Controller
 {
     public function index()
     {
+        $jamaahId = Auth::user()->jamaah->id_jamaah;
+
+        $isTransactionApproved = TransaksiModel::where('id_jamaah', $jamaahId)
+            ->where('verifikasi', 'approved')
+            ->exists();
+
         $jamaah = JamaahModel::all();
         $layanan = LayananModel::all();
         $transaksi = TransaksiModel::all();
@@ -23,6 +30,7 @@ class OfficeVerifTransController extends Controller
             'transaksi' => $transaksi,
             'jamaah' => $jamaah,
             'layanan' => $layanan,
+            'isTransactionApproved' => $isTransactionApproved,
         ]);
     }
 

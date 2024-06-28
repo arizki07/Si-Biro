@@ -115,7 +115,9 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Role</label>
-                                <select name="id_role" id="id_role" class="form-select border border-dark">
+                                <input type="text" class="form-control border border-dark bg-secondary-lt" name="id_role"
+                                    value="{{ Auth::user()->role->role }}" readonly disabled>
+                                {{-- <select name="id_role" id="id_role" class="form-select border border-dark">
                                     <option value="" hidden>-- Pilih Role --</option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id_role }}"
@@ -123,19 +125,17 @@
                                             {{ $role->role }}
                                         </option>
                                     @endforeach
-                                </select>
+                                </select> --}}
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Layanan</label>
                                 <select name="id_layanan" id="id_layanan" class="form-select border border-dark">
-                                    <option value="" hidden>-- Pilih Layanan --</option>
+                                    <option selected disabled>-- Pilih Layanan --</option>
                                     @foreach ($layanans as $layanan)
                                         <option value="{{ $layanan->id_layanan }}">{{ $layanan->judul_layanan }}</option>
                                     @endforeach
                                 </select>
                             </div>
-
-
 
                             <div class="mb-3">
                                 <label class="form-label">Nama Lengkap</label>

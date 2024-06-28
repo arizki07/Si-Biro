@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\JamaahModel;
 use App\Models\LayananModel;
 use App\Models\RoleModel;
+use App\Models\TransaksiModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -15,6 +16,12 @@ class JamaahController extends Controller
 {
     public function index()
     {
+        $userId = Auth::id();
+        $isBiodataApproved = JamaahModel::where('id_user', $userId)->where('verifikasi', 'approved')->exists();
+        $isTransactionApproved = TransaksiModel::whereHas('jamaah', function ($query) use ($userId) {
+            $query->where('id_user', $userId);
+        })->where('verifikasi', 'approved')->exists();
+
         $jamaah = JamaahModel::where('id_user', Auth::id())->get();
         $roles = RoleModel::all();
         $layanans = LayananModel::all();
@@ -24,6 +31,8 @@ class JamaahController extends Controller
             'jamaah' => $jamaah,
             'roles' => $roles,
             'layanans' => $layanans,
+            'isBiodataApproved' => $isBiodataApproved,
+            'isTransactionApproved' => $isTransactionApproved,
             'json_bank' => json_decode(file_get_contents(public_path('json/bank.json')), true),
             'json_provinsi' => json_decode(file_get_contents(public_path('json/provinsi.json')), true),
             'json_kecamatan' => json_decode(file_get_contents(public_path('json/kecamatan.json')), true),

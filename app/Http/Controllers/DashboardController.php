@@ -17,6 +17,22 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $userId = Auth::id();
+
+        $isBiodataApproved = JamaahModel::where('id_user', $userId)->where('verifikasi', 'approved')->exists();
+
+        $isTransactionApproved = TransaksiModel::whereHas('jamaah', function ($query) use ($userId) {
+            $query->where('id_user', $userId);
+        })->where('verifikasi', 'approved')->exists();
+
+        // Debugging
+        // \Log::info('Biodata Approved: ' . ($isBiodataApproved ? 'Yes' : 'No'));
+        // \Log::info('Transaction Approved: ' . ($isTransactionApproved ? 'Yes' : 'No'));
+
+        $notification = '';
+        if (!$isBiodataApproved || !$isTransactionApproved) {
+            $notification = '<h4 class="text-black">Data biodata atau transaksi Anda belum disetujui Admin. Mohon tunggu proses verifikasi.</h4>';
+        }
 
         $role = RoleModel::count();
         $user = User::count();
@@ -38,7 +54,10 @@ class DashboardController extends Controller
             'keuangan' => $keuangan,
             'layanan' => $layanan,
             'jamaahs' => $jamaahs,
-            'transaksis' => $transaksis
+            'transaksis' => $transaksis,
+            'isBiodataApproved' => $isBiodataApproved,
+            'isTransactionApproved' => $isTransactionApproved,
+            'notification' => $notification,
         ]);
     }
 }

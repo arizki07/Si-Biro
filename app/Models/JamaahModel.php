@@ -69,6 +69,11 @@ class JamaahModel extends Model
         return $this->hasMany(TransaksiModel::class, 'id_jamaah', 'id_jamaah');
     }
 
+    public function isBiodataFilled()
+    {
+        return $this->exists();
+    }
+
     public function pesanVerifBiodata($type, $tanggalUpdate, $tanggalApp)
     {
         $message = "*Whatsapp KBIH Wadi Fatimah*\n\n";
@@ -84,7 +89,7 @@ class JamaahModel extends Model
         $message .= "No Ktp : *" . $this->no_ktp . "*\n";
         $message .= "Umur : *" . $this->umur . " Tahun*\n";
         $message .= "Alamat : *" . $this->kecamatan . ", " . $this->kota_kabupaten . ", " . $this->provinsi . " " . $this->kode_pos . "*\n";
-        
+
         if ($type == 'approved') {
             $message .= "\n_**Pesan ini dikirim secara otomatis pada $tanggalApp. Mohon tidak membalas pesan ini.*_";
         } else {

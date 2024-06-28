@@ -194,41 +194,60 @@
             </div>
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link <?= $act == 'dashboard' ? 'active' : '' ?>" href="/dashboard">
-                        <i class="ri-dashboard-2-line"></i> <span>Dashboards</span>
-                    </a>
-
-                </li> <!-- end Dashboard Menu -->
-
-                <li class="nav-item">
-                    <a class="nav-link menu-link <?= $act == 'Jamaah' ? 'active' : '' ?>" href="/data-jamaah">
-                        <i class="ri-git-repository-commits-fill"></i> <span>Data Biodata</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link <?= $act == 'JamaahLayanan' ? 'active' : '' ?>"
-                        href="/layanan-jamaah">
-                        <i class="ri-cellphone-fill"></i> <span>Data Layanan</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link <?= $act == 'JamaahLayanan' ? 'active' : '' ?>" href="#">
-                        <i class="ri-pencil-ruler-2-line"></i> <span>Data Jadwal</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link <?= $act == 'KeuanganJam' ? 'active' : '' ?>"
-                        href="/jamaah-keuangan">
-                        <i class="ri-money-dollar-circle-line"></i> <span>Data Keuangan</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link <?= $act == 'TransJamaah' ? 'active' : '' ?>"
-                        href="/jamaah-transaksi">
-                        <i class="ri-wallet-2-line"></i> <span>Data Transaksi</span>
-                    </a>
-                </li>
+                @if (isset($isBiodataApproved) && $isBiodataApproved && isset($isTransactionApproved) && $isTransactionApproved)
+                    <!-- Tampilkan sidebar lengkap -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ $act == 'dashboard' ? 'active' : '' }}" href="/dashboard">
+                            <i class="ri-dashboard-2-line"></i> <span>Dashboards</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ $act == 'Jamaah' ? 'active' : '' }}" href="/data-jamaah">
+                            <i class="ri-git-repository-commits-fill"></i> <span>Data Biodata</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ $act == 'TransJamaah' ? 'active' : '' }}"
+                            href="/jamaah-transaksi">
+                            <i class="ri-wallet-2-line"></i> <span>Data Transaksi</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ $act == 'JamaahLayanan' ? 'active' : '' }}"
+                            href="/layanan-jamaah">
+                            <i class="ri-cellphone-fill"></i> <span>Data Layanan</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ $act == 'JamaahLayanan' ? 'active' : '' }}" href="#">
+                            <i class="ri-pencil-ruler-2-line"></i> <span>Data Jadwal</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ $act == 'KeuanganJam' ? 'active' : '' }}"
+                            href="/jamaah-keuangan">
+                            <i class="ri-money-dollar-circle-line"></i> <span>Data Keuangan</span>
+                        </a>
+                    </li>
+                @else
+                    <!-- Tampilkan sidebar dasar -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ $act == 'dashboard' ? 'active' : '' }}" href="/dashboard">
+                            <i class="ri-dashboard-2-line"></i> <span>Dashboards</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ $act == 'Jamaah' ? 'active' : '' }}" href="/data-jamaah">
+                            <i class="ri-git-repository-commits-fill"></i> <span>Data Biodata</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ $act == 'TransJamaah' ? 'active' : '' }}"
+                            href="/jamaah-transaksi">
+                            <i class="ri-wallet-2-line"></i> <span>Data Transaksi</span>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

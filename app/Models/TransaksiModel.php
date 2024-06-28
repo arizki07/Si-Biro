@@ -32,6 +32,11 @@ class TransaksiModel extends Model
         return $this->belongsTo(LayananModel::class, 'id_layanan', 'id_layanan');
     }
 
+    public function isTransactionFilled()
+    {
+        return $this->exists();
+    }
+
     public function pesanVerifTransaksi($type, $tanggalUpdate, $tanggalApp, $id)
     {
         $Q_transaksi = DB::table('t_transaksi as a')
