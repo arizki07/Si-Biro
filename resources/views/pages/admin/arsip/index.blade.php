@@ -30,7 +30,7 @@
             </div>
             <br>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="card bg-marketplace d-flex">
 
                         <div class="card-body">
@@ -91,6 +91,74 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <style>
+                                #scroll-horizontal thead th {
+                                    border-bottom: 1px solid #ddd;
+                                }
+
+                                #scroll-horizontal tbody td {
+                                    border-right: 1px solid #ddd;
+                                }
+
+                                #scroll-horizontal tbody tr:last-child td {
+                                    border-bottom: 1px solid #ddd;
+                                }
+                            </style>
+                            <div class="table-responsive">
+                                <table id="alternative-pagination"
+                                    class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap"
+                                    style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>Opsi</th>
+                                            <th>Nama Jamaah</th>
+                                            <th>Layanan</th>
+                                            <th>Tipe Pembayaran</th>
+                                            <th>Jumlah Pembayaran</th>
+                                            <th>Status Pembayaran</th>
+                                            <th>Tanggal Pembayaran</th>
+                                            <th>Verifikasi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($transaksi as $item)
+                                            <tr class="text-center">
+                                                <td>
+                                                    <button type="button"
+                                                        class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#detailTransaksi{{ $item->id_transaksi }}">
+                                                        <i class="ri-eye-fill"></i>
+                                                    </button>
+                                                </td>
+                                                <td>{{ $item->jamaah->nama_lengkap }}</td>
+                                                <td>{{ $item->layanan->judul_layanan }}</td>
+                                                <td>{{ $item->tipe_pembayaran }}</td>
+                                                <td>{{ $item->jumlah_pembayaran }}</td>
+                                                <td>{{ $item->status_pembayaran }}</td>
+                                                <td>{{ $item->tanggal_pembayaran }}</td>
+                                                <td>
+                                                    @if ($item->verifikasi == 'approved')
+                                                        <span class="badge text-bg-success">Approved</span>
+                                                    @elseif($item->verifikasi == 'rejected')
+                                                        <span class="badge text-bg-danger">Rejected</span>
+                                                    @else
+                                                        <span class="badge text-bg-secondary">Pending</span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -141,8 +209,8 @@
                                         <div class="mb-3">
                                             <label class="form-label">Nama Lengkap</label>
                                             <input type="text" class="form-control border border-dark bg-secondary-lt"
-                                                name="nama_lengkap" value="{{ old('nama_lengkap', $item->nama_lengkap) }}"
-                                                readonly>
+                                                name="nama_lengkap"
+                                                value="{{ old('nama_lengkap', $item->nama_lengkap) }}" readonly>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Umur</label>
@@ -393,6 +461,98 @@
     @endforeach
     {{-- end modal Detail --}}
 
+    {{-- detail transaksi --}}
+    @foreach ($transaksi as $item)
+        <div class="modal modal-blur fade" id="detailTransaksi{{ $item->id_transaksi }}" tabindex="-1" role="dialog"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="fa-solid fa-user" style="margin-right: 5px"></i> Detail
+                            Transaksi</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <!-- Foto KTP -->
+                                <div class="card" style="max-width: 300px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Foto Pembayaran</h5>
+                                    </div>
+                                    <img src="{{ asset('storage/transaksi/foto-bukti/' . $item->foto_bukti_pembayaran) }}"
+                                        class="card-img-top" alt="Pas Foto" style="max-width: 200px; max-height: 200px;">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card bg-secondary text-white">
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label">Nama Lengkap</label>
+                                            <input type="text" class="form-control border border-dark bg-secondary-lt"
+                                                name="nama_lengkap"
+                                                value="{{ old('nama_lengkap', $item->jamaah->nama_lengkap) }}" readonly>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Layanan</label>
+                                            <input type="text" class="form-control border border-dark" name="umur"
+                                                id="umur" placeholder="Masukkan Umur"
+                                                value="{{ old('umur', $item->id_layanan) }}" readonly>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Tipe Pembayaran</label>
+                                                    <input type="text"
+                                                        class="form-control border border-dark bg-secondary-lt"
+                                                        name="jk"
+                                                        value="{{ old('tipe_pembayaran', $item->tipe_pembayaran) }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Jumlah Pembayaran</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="status" placeholder="Masukkan Status"
+                                                        value="{{ old('jumlah_pembayaran', $item->jumlah_pembayaran) }}"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Status Pembayaran</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="tempat_lahir" id="tempat_lahir"
+                                                        placeholder="Masukkan Tempat Lahir"
+                                                        value="{{ old('status_pembayaran', $item->status_pembayaran) }}"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Tanggal Pembayaran</label>
+                                                    <input name="tgl_lahir" type="date"
+                                                        class="form-control border border-dark"
+                                                        value="{{ old('tanggal_pembayaran', $item->tanggal_pembayaran) }}"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" data-bs-dismiss="modal">Kembali</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+    {{-- end detail  --}}
     <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
     <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script src="assets/js/pages/sweetalerts.init.js"></script>
