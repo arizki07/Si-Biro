@@ -69,11 +69,6 @@ class JamaahModel extends Model
         return $this->hasMany(TransaksiModel::class, 'id_jamaah', 'id_jamaah');
     }
 
-    public function isBiodataFilled()
-    {
-        return $this->exists();
-    }
-
     public function pesanVerifBiodata($type, $tanggalUpdate, $tanggalApp)
     {
         $message = "*Whatsapp KBIH Wadi Fatimah*\n\n";

@@ -103,7 +103,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link <?= $act == 'arsip' ? 'active' : '' ?>" href="#">
+                    <a class="nav-link menu-link <?= $act == 'AdminArsip' ? 'active' : '' ?>"
+                        href="{{ route('arsip.index') }}">
                         <i class="ri-pencil-ruler-2-line"></i> <span>Data Arsip</span>
                     </a>
                 </li>
@@ -144,44 +145,6 @@
                     </a>
                 </li>
 
-                {{-- <li class="nav-item">
-                <li class="nav-item">
-                    <a class="nav-link menu-link <?= $act == 'transaksi' ? 'active' : '' ?>" href="/data-transaksi">
-                        <i class="ri-wallet-2-line"></i> <span>Data Transaksi</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link menu-link <?= $act == 'keuangan' ? 'active' : '' ?>" href="/data-keuangan">
-                        <i class="ri-money-dollar-circle-line"></i> <span>Data Keuangan</span>
-                    </a>
-                </li>
-
-                <li class="menu-title"><i class="ri-more-fill"></i> <span>Schedule Report </span></li>
-
-                <li class="nav-item">
-                    <a class="nav-link menu-link <?= $act == 'arsip' ? 'active' : '' ?>" href="/data-arsip">
-                        <i class="ri-file-paper-2-line"></i> <span>Data Arsip</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link <?= $act == 'Report' ? 'active' : '' ?>" href="/report">
-                        <i class="ri-file-chart-line"></i> <span>Data Report</span>
-                    </a>
-                </li>
-                {{-- <li class="nav-item">
-                <a class="nav-link menu-link" href="#">
-                    <i class=" ri-file-paper-fill"></i> <span>Data Uraian Layanan</span>
-                </a>
-            </li>
-
-            <li class="menu-title"><i class="ri-more-fill"></i> <span>Report </span></li>
-
-            <li class="nav-item">
-                <a class="nav-link menu-link" href="#">
-                    <i class="ri-red-packet-fill"></i> <span>Data Arsip</span>
-                </a>
-            </li> --}}
             </ul>
         </div>
     </div>

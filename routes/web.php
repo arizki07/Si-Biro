@@ -115,6 +115,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/mcu', 'index');
             Route::get('/view', 'view');
         });
+
+        //arsip
+        Route::get('/data-arsip', [ArsipController::class, 'index'])->name('arsip.index');
+        Route::get('/export/excel', [ArsipController::class, 'exportToExcel'])->name('export.excel');
+        Route::get('/export/pdf', [ArsipController::class, 'exportToPDF'])->name('export.pdf');
+        // Route::get('/export-pdf/{id_jamaah}', [ArsipController::class, 'exportToPDFId'])->name('export.id.jamaah');
     });
 
     Route::middleware('role:jamaah')->group(function () {

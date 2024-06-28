@@ -66,7 +66,7 @@
                     </a>
                 </div>
                 <div class="text-secondary mb-3">
-                    <h3>Sedang proses masuk halaman dashboard</h3> {{ Auth::user()->role->role }}
+                    <h3 class="text-center">Sedang proses masuk halaman dashboard {{ Auth::user()->role->role }}</h3>
                 </div>
                 <div class="progress progress-sm">
                     <div class="progress-bar progress-bar-indeterminate"></div>
