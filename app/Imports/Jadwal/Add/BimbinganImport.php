@@ -31,6 +31,7 @@ class BimbinganImport implements ToModel, WithStartRow
             'tempat_bimbingan' => $row[5],
             'keterangan_bimbingan' => $row[6],
             'judul_bimbingan' => $row[7],
+            'tahap' => $row[8],
         ]);
         // dd ($model); die;
     }

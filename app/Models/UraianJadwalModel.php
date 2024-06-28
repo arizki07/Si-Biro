@@ -12,6 +12,7 @@ class UraianJadwalModel extends Model
     protected $primaryKey = 'id_uraian_jadwal';
     protected $fillable = [
         'nomor_jadwal',
+        'tahap',
 
         // MCU
         'judul_mcu',

@@ -112,7 +112,7 @@ Route::middleware('auth')->group(function () {
         // Route::post('/verif/{id}', [VerifikasiController::class, 'verif_transaksi'])->name('verif.transaksi');
 
         Route::controller(ReportController::class)->group(function () {
-            Route::get('/mcu', 'index');
+            Route::get('/data-report', 'index');
             Route::get('/view', 'view');
         });
     });

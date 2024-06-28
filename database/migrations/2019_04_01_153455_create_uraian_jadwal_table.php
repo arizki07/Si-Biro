@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_uraian_jadwal');
             // $table->unsignedBigInteger('id_jadwal');
             $table->string('nomor_jadwal');
+            $table->string('tahap');
 
             // tipe MCU
             $table->string('judul_mcu', 255)->nullable();

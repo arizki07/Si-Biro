@@ -110,7 +110,7 @@
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span>Schedule Report </span></li>
 
-                <li class="nav-item open">
+                {{-- <li class="nav-item open">
                     <a class="nav-link menu-link {{ $act == 'report-mcu' || $act == 'report-passport' || $act == 'report-bimbingan' ? 'active' : '' }}"
                         href="#sidebarReport" data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebarReport">
@@ -120,21 +120,29 @@
                         id="sidebarReport">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="/mcu" class="nav-link {{ $act == 'report-mcu' ? 'active' : '' }}">
-                                    Report MCU </a>
+                                <a href="/data-report?action=mcu"
+                                    class="nav-link {{ $act == 'jadwal-mcu' ? 'active' : '' }}"> MCU </a>
                             </li>
                             <li class="nav-item">
                                 <a href="/data-report?action=passport"
-                                    class="nav-link {{ $act == 'report-passport' ? 'active' : '' }}"> Report PASSPORT
-                                </a>
+                                    class="nav-link {{ $act == 'jadwal-passport' ? 'active' : '' }}"> PASSPORT </a>
                             </li>
                             <li class="nav-item">
                                 <a href="/data-report?action=bimbingan"
-                                    class="nav-link {{ $act == 'report-bimbingan' ? 'active' : '' }}"> Report
-                                    BIMBINGAN </a>
+                                    class="nav-link {{ $act == 'jadwal-bimbingan' ? 'active' : '' }}"> BIMBINGAN </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/data-report?action=manasik"
+                                    class="nav-link {{ $act == 'jadwal-manasik' ? 'active' : '' }}"> MANASIK HAJI </a>
                             </li>
                         </ul>
                     </div>
+                </li> --}}
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link <?= $act == 'report' ? 'active' : '' ?>" href="/data-report">
+                        <i class="ri-pencil-ruler-2-line"></i> <span>Report</span>
+                    </a>
                 </li>
 
                 {{-- TESTING WHATSAPP HIDE --}}

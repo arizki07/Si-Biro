@@ -55,11 +55,12 @@
                                 <thead>
                                     <tr class="text-center">
                                         <th>Opsi</th>
+                                        <th>No Jamaah</th>
                                         <th>Nama Lengkap</th>
                                         <th>JK</th>
                                         <th>No Hp</th>
                                         <th>No Ktp</th>
-                                        <th>No KK</th>
+                                        {{-- <th>No KK</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -92,11 +93,11 @@
                                                     </a>
                                                 </form>
                                             </td>
+                                            <td>JA-{{ $item['id_jamaah'] }}</td>
                                             <td>{{ $item['nama_lengkap'] }}</td>
                                             <td>{{ $item['jk'] }}</td>
                                             <td>{{ $item['no_hp'] }}</td>
                                             <td>{{ $item['no_ktp'] }}</td>
-                                            <td>{{ $item['no_kk'] }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -137,7 +138,7 @@
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id_role }}"
                                             {{ $role->id_role == $role->id_role ? 'selected' : '' }}>
-                                            {{ $role->nama_role }}
+                                            {{ $role->role }}
                                         </option>
                                     @endforeach
                                 </select>

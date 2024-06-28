@@ -31,6 +31,7 @@ class ManasikImport implements ToModel, WithStartRow
             'tempat_manasik' => $row[5],
             'keterangan_manasik' => $row[6],
             'judul_manasik' => $row[7],
+            'tahap' => $row[8],
         ]);
         // dd ($model); die;
     }

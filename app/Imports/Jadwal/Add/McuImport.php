@@ -31,6 +31,7 @@ class McuImport implements ToModel, WithStartRow
             'tempat_mcu' => $row[5],
             'keterangan_mcu' => $row[6],
             'judul_mcu' => $row[7],
+            'tahap' => $row[8],
         ]);
         // dd ($model); die;
     }
