@@ -31,6 +31,7 @@ class PassportImport implements ToModel, WithStartRow
             'tempat_passport' => $row[5],
             'keterangan_passport' => $row[6],
             'judul_passport' => $row[7],
+            'tahap' => $row[8],
         ]);
         // dd ($model); die;
     }

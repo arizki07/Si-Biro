@@ -217,7 +217,7 @@
                                 style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
                                 <thead>
                                     <tr class="text-center">
-                                        <th>No</th>
+                                        <th>Tahap</th>
                                         <th>No Jadwal</th>
                                         <th>Judul</th>
                                         <th>Tgl Mulai</th>
@@ -234,7 +234,7 @@
                                 <tbody>
                                     <tr class="text-center">
                                     @if ($jad->tipe_jadwal == 'MCU' && $urj->nomor_jadwal == $jad->nomor_jadwal)
-                                            <td>{{ $i++; }}</td>
+                                            <td>{{ $urj->tahap }}</td>
                                             <td>MCU-{{ $urj->nomor_jadwal }}</td>
                                             <td>{{ $urj->judul_mcu }}</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_mcu)->format('d M Y') }}</td>
@@ -247,7 +247,7 @@
                                                 <a type="button" class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i class="ri-delete-bin-2-fill"></i></a>
                                             </td>
                                     @elseif ($jad->tipe_jadwal == 'PASSPORT' && $urj->nomor_jadwal == $jad->nomor_jadwal)
-                                            <td>{{ $i++; }}</td>
+                                            <td>{{ $urj->tahap }}</td>
                                             <td>PA-{{ $urj->nomor_jadwal }}</td>
                                             <td>{{ $urj->judul_passport }}</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_passport)->format('d M Y') }}</td>
@@ -262,7 +262,7 @@
                                                 class="ri-delete-bin-2-fill"></i></a>
                                             </td>
                                     @elseif ($jad->tipe_jadwal == 'BIMBINGAN' && $urj->nomor_jadwal == $jad->nomor_jadwal)
-                                            <td>{{ $i++; }}</td>
+                                            <td>{{ $urj->tahap }}</td>
                                             <td>BM-{{ $urj->nomor_jadwal }}</td>
                                             <td>{{ $urj->judul_bimbingan }}</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_bimbingan)->format('d M Y') }}</td>
@@ -277,7 +277,7 @@
                                                 class="ri-delete-bin-2-fill"></i></a>
                                             </td>
                                     @elseif ($jad->tipe_jadwal == 'MANASIK' && $urj->nomor_jadwal == $jad->nomor_jadwal)
-                                            <td>{{ $i++; }}</td>
+                                            <td>{{ $urj->tahap }}</td>
                                             <td>BM-{{ $urj->nomor_jadwal }}</td>
                                             <td>{{ $urj->judul_manasik }}</td>
                                             <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_manasik)->format('d M Y') }}</td>

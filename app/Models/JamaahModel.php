@@ -49,6 +49,20 @@ class JamaahModel extends Model
         'status',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->id_jamaah = '199000' . random_int(10000, 99999);
+            while (JamaahModel::where('id_jamaah', $model->id_jamaah)->exists()) {
+                $model->id_jamaah = '199000' . random_int(10000, 99999);
+            }
+        });
+    }
+
+    protected $keyType = 'int';
+    protected $increment = 10;
+
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user', 'id_user');

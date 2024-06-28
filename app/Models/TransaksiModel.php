@@ -76,7 +76,6 @@ class TransaksiModel extends Model
         return $message;
     }
 
-
     protected static function boot()
     {
         parent::boot();

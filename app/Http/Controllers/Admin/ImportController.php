@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\Jadwal\Add\HeaderImport;
+use App\Imports\Report\HeaderReport;
 use App\Imports\Jadwal\Update\HeaderUpdateImport;
 use DateTime;
 
@@ -45,6 +46,18 @@ class ImportController extends Controller
                     Excel::import(new HeaderImport(), $request->file('file'), $destination_folder . '/' . $file_name);
                 } catch (\Exception $e) {
                     return redirect()->to('data-layanan')->with('error', $e->getMessage());
+                }
+            } elseif ($act == 'upload_report') {
+                // echo "MASOK"; die;
+                $file_name = 'Report_' . $formatted_datetime . '.xlsx';
+                $destination_folder = 'doc/jadwal';
+
+                $this->create_folder($destination_folder);
+
+                try {
+                    Excel::import(new HeaderReport(), $request->file('file'), $destination_folder . '/' . $file_name);
+                } catch (\Exception $e) {
+                    return redirect()->to('data-report')->with('error', $e->getMessage());
                 }
             } else {
                 return redirect()->back()->with('error', 'Type tidak dikenali.');
