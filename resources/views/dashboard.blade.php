@@ -509,34 +509,14 @@
                                 setInterval(updateGreeting, 3600000);
                                 setInterval(updateTime, 60000);
                             </script>
-                            <style>
-                                .custom-alert {
-                                    border: 1px solid #ff0707;
-                                    border-radius: 0.25rem;
-                                    color: #fc0707;
-                                    background-color: #d9e6d6;
-                                    padding: 1rem;
-                                    margin-bottom: 1rem;
-                                }
-
-                                .custom-alert .btn-close {
-                                    padding: 0.5rem;
-                                    margin-left: 0.75rem;
-                                    font-size: 1rem;
-                                }
-                            </style>
-                            @if (!empty($notification))
-                                <div class="alert alert-white alert-dismissible fade show custom-alert" role="alert">
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-grow-1">
-                                            <strong>Perhatian!</strong> {!! $notification !!}
-                                        </div>
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                            aria-label="Close"></button>
-                                    </div>
-                                </div>
+                            @if ($biodataStatus == 'kosong')
+                                <div class="alert alert-danger"><i class="ri-error-warning-fill"></i> Silahkan isi biodata
+                                    terlebih dahulu</div>
+                            @elseif ($biodataStatus == 'pending')
+                                <div class="alert alert-danger"><i class="ri-error-warning-fill"></i> Biodata sudah
+                                    terisi, silahkan menunggu untuk verifikasi
+                                    Administrator</div>
                             @endif
-
 
                             <div class="card card-sm">
 

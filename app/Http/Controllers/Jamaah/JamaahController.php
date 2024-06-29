@@ -16,11 +16,12 @@ class JamaahController extends Controller
 {
     public function index()
     {
-        $userId = Auth::id();
-        $isBiodataApproved = JamaahModel::where('id_user', $userId)->where('verifikasi', 'approved')->exists();
-        $isTransactionApproved = TransaksiModel::whereHas('jamaah', function ($query) use ($userId) {
-            $query->where('id_user', $userId);
-        })->where('verifikasi', 'approved')->exists();
+        $userJamaah = JamaahModel::where('id_user', Auth::id())->first();
+        $biodataStatus = 'pending'; // Default status
+
+        if ($userJamaah) {
+            $biodataStatus = $userJamaah->verifikasi;
+        }
 
         $jamaah = JamaahModel::where('id_user', Auth::id())->get();
         $roles = RoleModel::all();
@@ -31,8 +32,7 @@ class JamaahController extends Controller
             'jamaah' => $jamaah,
             'roles' => $roles,
             'layanans' => $layanans,
-            'isBiodataApproved' => $isBiodataApproved,
-            'isTransactionApproved' => $isTransactionApproved,
+            '$biodataStatus' => $biodataStatus,
             'json_bank' => json_decode(file_get_contents(public_path('json/bank.json')), true),
             'json_provinsi' => json_decode(file_get_contents(public_path('json/provinsi.json')), true),
             'json_kecamatan' => json_decode(file_get_contents(public_path('json/kecamatan.json')), true),
