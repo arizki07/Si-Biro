@@ -18,10 +18,17 @@ class DashboardController extends Controller
     public function index()
     {
         $userJamaah = JamaahModel::where('id_user', Auth::id())->first();
-        $biodataStatus = 'kosong'; // Default status
 
+        // Default status biodata
+        $biodataStatus = 'kosong'; // Atur default sebagai kosong
+
+        // Jika data Jamaah ditemukan, atur status berdasarkan verifikasi
         if ($userJamaah) {
-            $biodataStatus = $userJamaah->verifikasi;
+            if ($userJamaah->verifikasi == 'approved') {
+                $biodataStatus = 'approved'; // Jika disetujui, ubah status ke approved
+            } else {
+                $biodataStatus = 'pending'; // Jika belum disetujui, ubah status ke pending
+            }
         }
         $role = RoleModel::count();
         $user = User::count();
