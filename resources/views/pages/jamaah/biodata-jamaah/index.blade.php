@@ -302,11 +302,15 @@
                                 <select name="id_layanan" id="id_layanan" class="form-select border border-dark">
                                     <option selected disabled>-- Pilih Layanan --</option>
                                     @foreach ($layanans as $layanan)
-                                        <option value="{{ $layanan->id_layanan }}">{{ $layanan->judul_layanan }}
+                                        <option value="{{ $layanan->id_layanan }}"
+                                            {{ $layanan->kuota <= 0 ? 'disabled' : '' }}>
+                                            {{ $layanan->judul_layanan }}
+                                            ({{ $layanan->kuota > 0 ? 'Kuota Tersedia' : 'Kuota Habis' }})
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
+
 
                             <div class="mb-3">
                                 <label class="form-label">Nama Lengkap</label>
