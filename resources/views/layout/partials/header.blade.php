@@ -157,19 +157,19 @@
                                 $userRole = Auth::user()->id_role;
                             @endphp
                             @if ($userRole === 1)
-                                <img class="rounded-circle header-profile-user" src="assets/images/users/avatar.png"
+                                <img class="rounded-circle header-profile-user" src="{{asset('assets/images/users/avatar.png')}}"
                                     alt="Header Avatar">
                             @elseif ($userRole === 2)
-                                <img class="rounded-circle header-profile-user" src="assets/images/users/avatar.png"
+                                <img class="rounded-circle header-profile-user" src="{{asset('assets/images/users/avatar.png')}}"
                                     alt="Header Avatar">
                             @elseif ($userRole === 3)
-                                <img class="rounded-circle header-profile-user" src="assets/images/users/avatar.png"
+                                <img class="rounded-circle header-profile-user" src="{{asset('assets/images/users/avatar.png')}}"
                                     alt="Header Avatar">
                             @elseif ($userRole === 4)
-                                <img class="rounded-circle header-profile-user" src="assets/images/users/avatar.png"
+                                <img class="rounded-circle header-profile-user" src="{{asset('assets/images/users/avatar.png')}}"
                                     alt="Header Avatar">
                             @elseif ($userRole === 5)
-                                <img class="rounded-circle header-profile-user" src="assets/images/users/avatar.png"
+                                <img class="rounded-circle header-profile-user" src="{{asset('assets/images/users/avatar.png')}}"
                                     alt="Header Avatar">
                             @endif
 

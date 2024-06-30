@@ -24,6 +24,7 @@ class PassportReport implements ToModel, WithHeadingRow
     {
         // dd($row);
         // echo "Masuk Sini"; die;
+        date_default_timezone_set('Asia/Jakarta');
         if (!array_key_exists('nomor_jamaah', $row)) {
             Log::error("nomor_jamaah tidak boleh kosong: " . json_encode($row));
             throw ValidationException::withMessages(['nomor_jamaah' => 'Jamaah tidak ditemukan dalam data.']);

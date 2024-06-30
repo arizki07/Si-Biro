@@ -11,6 +11,7 @@ class WhatsappModel extends Model
     protected $table = 'log_app';
     protected $fillable = [
         'action',
+        'id_jamaah',
         'ip',
         'json',
         'status',

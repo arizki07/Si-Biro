@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('log_app', function (Blueprint $table) {
             $table->id();
             $table->string('action');
+            $table->string('id_jamaah');
             $table->string('ip');
             $table->TEXT('json');
             $table->string('status');
