@@ -15,43 +15,46 @@ use Illuminate\Validation\ValidationException;
 class JamaahTransController extends Controller
 {
     public function index()
-    {
-        $userJamaah = JamaahModel::where('id_user', Auth::id())->first();
+{
+    $userJamaah = JamaahModel::where('id_user', Auth::id())->first();
 
-        // Default status biodata
-        $biodataStatus = 'kosong'; // Atur default sebagai kosong
+    // Default status biodata
+    $biodataStatus = 'kosong'; // Atur default sebagai kosong
 
-        // Jika data Jamaah ditemukan, atur status berdasarkan verifikasi
-        if ($userJamaah) {
-            if ($userJamaah->verifikasi == 'approved') {
-                $biodataStatus = 'approved'; // Jika disetujui, ubah status ke approved
-            } else {
-                $biodataStatus = 'pending'; // Jika belum disetujui, ubah status ke pending
-            }
+    // Jika data Jamaah ditemukan, atur status berdasarkan verifikasi
+    if ($userJamaah) {
+        if ($userJamaah->verifikasi == 'approved') {
+            $biodataStatus = 'approved'; // Jika disetujui, ubah status ke approved
+        } else {
+            $biodataStatus = 'pending'; // Jika belum disetujui, ubah status ke pending
         }
-        $userId = Auth::id();
-
-        $data = TransaksiModel::with('jamaah', 'layanan')->get();
-        $layanan = LayananModel::all();
-        $jamaah = JamaahModel::all();
-
-        // Cek apakah biodata telah diisi
-        $isBiodataFilled = JamaahModel::where('id_jamaah', $userId)->exists();
-
-        // Cek apakah transaksi telah diisi
-        $isTransactionFilled = TransaksiModel::where('id_jamaah', $userId)->exists();
-
-        return view('pages.jamaah.transaksi-jamaah.index', [
-            'title' => 'Data Transaksi Jamaah',
-            'act' => 'TransJamaah',
-            'data' => $data,
-            'layanans' => $layanan,
-            'jamaahs' => $jamaah,
-            'isBiodataFilled' => $isBiodataFilled,
-            'isTransactionFilled' => $isTransactionFilled,
-            'biodataStatus' => $biodataStatus,
-        ]);
     }
+
+    $userId = Auth::id();
+
+    $data = TransaksiModel::with('jamaah', 'layanan')->get();
+    $layanan = LayananModel::all();
+    // Get only the logged-in user's Jamaah data
+    $jamaah = JamaahModel::where('id_user', $userId)->get();
+
+    // Cek apakah biodata telah diisi
+    $isBiodataFilled = JamaahModel::where('id_user', $userId)->exists();
+
+    // Cek apakah transaksi telah diisi
+    $isTransactionFilled = TransaksiModel::where('id_jamaah', $userId)->exists();
+
+    return view('pages.jamaah.transaksi-jamaah.index', [
+        'title' => 'Data Transaksi Jamaah',
+        'act' => 'TransJamaah',
+        'data' => $data,
+        'layanans' => $layanan,
+        'jamaahs' => $jamaah,
+        'isBiodataFilled' => $isBiodataFilled,
+        'isTransactionFilled' => $isTransactionFilled,
+        'biodataStatus' => $biodataStatus,
+    ]);
+}
+
 
     public function store(Request $request)
     {

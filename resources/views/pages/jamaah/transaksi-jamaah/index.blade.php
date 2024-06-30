@@ -112,13 +112,18 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Nama Jamaah</label>
-                                @foreach ($jamaahs as $jamaah)
-                                    <input type="text" id="id_jamaah_{{ $jamaah->id_jamaah }}"
-                                        class="form-control border border-dark bg-secondary-lt" name="id_jamaah"
-                                        value="{{ old('id_jamaah', $jamaah->nama_lengkap) }}" disabled>
-                                    <input type="hidden" name="id_jamaah" value="{{ $jamaah->id_jamaah }}">
-                                @endforeach
+                                @if($jamaahs->isNotEmpty())
+                                    @foreach ($jamaahs as $jamaah)
+                                        <input type="text" id="id_jamaah_{{ $jamaah->id_jamaah }}"
+                                            class="form-control border border-dark bg-secondary-lt" name="id_jamaah"
+                                            value="{{ old('id_jamaah', $jamaah->nama_lengkap) }}" disabled>
+                                        <input type="hidden" name="id_jamaah" value="{{ $jamaah->id_jamaah }}">
+                                    @endforeach
+                                @else
+                                    <input type="text" class="form-control border border-dark bg-secondary-lt" name="id_jamaah" value="Nama Jamaah tidak ditemukan" disabled>
+                                @endif
                             </div>
+                            
                             <div class="mb-3">
                                 <label class="form-label">Layanan</label>
                                 <select name="id_layanan" id="id_layanan" class="form-select border border-dark">

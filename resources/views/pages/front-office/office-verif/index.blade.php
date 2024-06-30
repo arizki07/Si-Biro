@@ -55,7 +55,7 @@
                                                 @elseif($item->verifikasi == 'rejected')
                                                     <span class="badge text-bg-danger">Rejected</span>
                                                 @else
-                                                    <span class="badge text-bg-secondary"">Pending</span>
+                                                    <span class="badge text-bg-secondary">Pending</span>
                                                 @endif
                                             </td>
                                             <td>
@@ -67,22 +67,23 @@
                                                 </button>
                                                 <form
                                                     action="{{ route('verif.office', $item->id_jamaah) }}?type=approved&verif=biodata"
-                                                    method="POST" style="display:inline;" id="formApprove">
+                                                    method="POST" style="display:inline;" id="formApprove{{ $item->id_jamaah }}">
                                                     @csrf
-                                                    <button type="button" id="btnApprove"
+                                                    <button type="button" id="btnApprove{{ $item->id_jamaah }}"
                                                         class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm">
                                                         <i class="ri-lock-unlock-fill"></i>
                                                     </button>
                                                 </form>
                                                 <form
                                                     action="{{ route('verif.office', $item->id_jamaah) }}?type=rejected&verif=biodata"
-                                                    method="POST" style="display:inline;" id="formReject">
+                                                    method="POST" style="display:inline;" id="formReject{{ $item->id_jamaah }}">
                                                     @csrf
-                                                    <button type="button" id="btnReject"
+                                                    <button type="button" id="btnReject{{ $item->id_jamaah }}"
                                                         class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm">
                                                         <i class="ri-lock-password-fill"></i>
                                                     </button>
                                                 </form>
+                                            
                                             </td>
                                         </tr>
                                     @endforeach
@@ -397,57 +398,63 @@
     <script src="assets/js/pages/sweetalerts.init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
     <script>
-        document.getElementById('btnApprove').addEventListener('click', function() {
-            swal.fire({
-                icon: 'info',
-                title: 'Proses Approve',
-                html: `
-                    <center>
-                        <lottie-player src="https://lottie.host/342270a8-7db0-488c-8edb-1a386c5af482/N5LB2hnV0P.json"  
-                            background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
-                        </lottie-player>
-                    </center>
-                    <br>
-                    <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
-                    <h4 class="h4">
-                        <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
-                    </h4>
-                `,
-                showConfirmButton: false,
-                showCancelButton: false,
-                allowOutsideClick: false
+        document.querySelectorAll('[id^="btnApprove"]').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.id.replace('btnApprove', '');
+                swal.fire({
+                    icon: 'info',
+                    title: 'Proses Approve',
+                    html: `
+                        <center>
+                            <lottie-player src="https://lottie.host/342270a8-7db0-488c-8edb-1a386c5af482/N5LB2hnV0P.json"
+                                background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
+                            </lottie-player>
+                        </center>
+                        <br>
+                        <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
+                        <h4 class="h4">
+                            <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
+                        </h4>
+                    `,
+                    showConfirmButton: false,
+                    showCancelButton: false,
+                    allowOutsideClick: false
+                });
+    
+                setTimeout(function() {
+                    document.getElementById('formApprove' + id).submit();
+                }, 6000);
             });
-
-            setTimeout(function() {
-                document.getElementById('formApprove').submit();
-            }, 6000);
         });
-
-        //reject
-        document.getElementById('btnReject').addEventListener('click', function() {
-            swal.fire({
-                icon: 'info',
-                title: 'Proses Reject',
-                html: `
-                    <center>
-                        <lottie-player src="https://lottie.host/04412762-9109-48c0-b6f6-c57c9ff72cdc/rgc7wXYfLY.json"  
-                            background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
-                        </lottie-player>
-                    </center>
-                    <br>
-                    <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
-                    <h4 class="h4">
-                        <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
-                    </h4>
-                `,
-                showConfirmButton: false,
-                showCancelButton: false,
-                allowOutsideClick: false
+    
+        document.querySelectorAll('[id^="btnReject"]').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.id.replace('btnReject', '');
+                swal.fire({
+                    icon: 'info',
+                    title: 'Proses Reject',
+                    html: `
+                        <center>
+                            <lottie-player src="https://lottie.host/04412762-9109-48c0-b6f6-c57c9ff72cdc/rgc7wXYfLY.json"
+                                background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
+                            </lottie-player>
+                        </center>
+                        <br>
+                        <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
+                        <h4 class="h4">
+                            <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
+                        </h4>
+                    `,
+                    showConfirmButton: false,
+                    showCancelButton: false,
+                    allowOutsideClick: false
+                });
+    
+                setTimeout(function() {
+                    document.getElementById('formReject' + id).submit();
+                }, 6000);
             });
-
-            setTimeout(function() {
-                document.getElementById('formReject').submit();
-            }, 6000);
         });
     </script>
+    
 @endsection

@@ -27,25 +27,6 @@ class OfficeVerifController extends Controller
         ]);
     }
 
-    // public function approve($id)
-    // {
-    //     $jamaah = JamaahModel::find($id);
-    //     if ($jamaah) {
-    //         $jamaah->verifikasi = 'approved';
-    //         $jamaah->save();
-    //     }
-    //     return redirect()->back()->with('success', 'Jamaah approved successfully');
-    // }
-
-    // public function reject($id)
-    // {
-    //     $jamaah = JamaahModel::find($id);
-    //     if ($jamaah) {
-    //         $jamaah->verifikasi = 'rejected';
-    //         $jamaah->save();
-    //     }
-    //     return redirect()->back()->with('success', 'Jamaah rejected successfully');
-    // }
 
     public function verif(Request $request, $id)
     {
@@ -154,6 +135,7 @@ class OfficeVerifController extends Controller
         $log->json = json_encode(['target' => $jamaah->no_hp, 'message' => $message, 'response' => $response]);
         $log->status = $response ? 'success' : 'failed';
         $log->action = 'Whatsapp Verifikasi ' . strtoupper($verif_act);
+        $log->id_jamaah = $jamaah->id_jamaah;
         $log->save();
 
         return redirect()->back()->with('success', 'Data Verifikasi ' . strtoupper($verif_act) . ' Berhasil Di ' . strtoupper($type) . '.');
