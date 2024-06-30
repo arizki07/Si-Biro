@@ -67,7 +67,8 @@
                                     <tr class="text-center">
                                         <th>No</th>
                                         <th>Opsi</th>
-                                        <th>Nomor Jadwal</th>
+                                        <th>No Layanan</th>
+                                        <th>No Jadwal</th>
                                         <th>Judul Jadwal</th>
                                         <th>Tipe Jadwal</th>
                                         {{-- <th>Jangka Waktu</th> --}}
@@ -82,6 +83,7 @@
                                             <tr class="text-center">
                                                 <td>{{ $i++ }}</td>
                                                 <td>
+                                                    <a type="button" class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#whatsapp{{ $jad->id_jadwal }}"><i class="ri-whatsapp-line"></i></a>
                                                     <a type="button"
                                                         class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
                                                         data-bs-toggle="modal" data-bs-target="#detail{{ $jad->id_jadwal }}">
@@ -90,6 +92,7 @@
                                                         class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $jad->id_jadwal }}"><i
                                                             class="ri-delete-bin-2-fill"></i></a>
                                                 </td>
+                                                <td>LA-{{ $jad->id_layanan }}</td>
                                                 <td>MCU-{{ $jad->nomor_jadwal }}</td>
                                                 <td>{{ $jad->judul_jadwal }}</td>
                                                 <td>Jadwal {{ $jad->tipe_jadwal }}</td>
@@ -100,6 +103,7 @@
                                             <tr class="text-center">
                                                 <td>{{ $i++ }}</td>
                                                 <td>
+                                                    <a type="button" class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#whatsapp{{ $jad->id_jadwal }}"><i class="ri-whatsapp-line"></i></a>
                                                     <a type="button"
                                                         class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
                                                         data-bs-toggle="modal" data-bs-target="#detail{{ $jad->id_jadwal }}">
@@ -109,6 +113,7 @@
                                                         class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $jad->id_jadwal }}"><i
                                                             class="ri-delete-bin-2-fill"></i></a>
                                                 </td>
+                                                <td>LA-{{ $jad->id_layanan }}</td>
                                                 <td>PA-{{ $jad->nomor_jadwal }}</td>
                                                 <td>{{ $jad->judul_jadwal }}</td>
                                                 <td>Jadwal {{ $jad->tipe_jadwal }}</td>
@@ -119,6 +124,7 @@
                                             <tr class="text-center">
                                                 <td>{{ $i++ }}</td>
                                                 <td>
+                                                    <a type="button" class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#whatsapp{{ $jad->id_jadwal }}"><i class="ri-whatsapp-line"></i></a>
                                                     <a type="button"
                                                         class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
                                                         data-bs-toggle="modal" data-bs-target="#detail{{ $jad->id_jadwal }}">
@@ -128,6 +134,7 @@
                                                         class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $jad->id_jadwal }}"><i
                                                             class="ri-delete-bin-2-fill"></i></a>
                                                 </td>
+                                                <td>LA-{{ $jad->id_layanan }}</td>
                                                 <td>BM-{{ $jad->nomor_jadwal }}</td>
                                                 <td>{{ $jad->judul_jadwal }}</td>
                                                 <td>Jadwal {{ $jad->tipe_jadwal }}</td>
@@ -138,6 +145,7 @@
                                             <tr class="text-center">
                                                 <td>{{ $i++ }}</td>
                                                 <td>
+                                                    <a type="button" class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#whatsapp{{ $jad->id_jadwal }}"><i class="ri-whatsapp-line"></i></a>
                                                     <a type="button"
                                                         class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
                                                         data-bs-toggle="modal" data-bs-target="#detail{{ $jad->id_jadwal }}">
@@ -147,7 +155,8 @@
                                                         class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{ $jad->id_jadwal }}"><i
                                                             class="ri-delete-bin-2-fill"></i></a>
                                                 </td>
-                                                <td>BM-{{ $jad->nomor_jadwal }}</td>
+                                                <td>LA-{{ $jad->id_layanan }}</td>
+                                                <td>MA-{{ $jad->nomor_jadwal }}</td>
                                                 <td>{{ $jad->judul_jadwal }}</td>
                                                 <td>Jadwal {{ $jad->tipe_jadwal }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($jad->tgl_mulai)->format('d M Y') }}</td>
@@ -336,6 +345,70 @@
             </div>
             {{-- END MODAL DELETE URAIAN JADWAL --}}
             @endforeach
+            <div class="modal fade" id="whatsapp{{ $jad->id_jadwal }}" tabindex="-1" aria-labelledby="exampleModalgridLabel">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalgridLabel">Proses Kirim Jadwal</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body bg-marketplace d-flex">
+                            <form action="{{ route('send.whatsapp.jadwal', $jad->id_jadwal) }}" method="POST">
+                                @csrf
+                                <input value="{{ $jad->id_layanan }}" type="hidden" name="id_layanan">
+                                <input value="{{ $jad->nomor_jadwal }}" type="hidden" name="nomor_jadwal">
+                                @if ($jad->tipe_jadwal == "MCU")
+                                    <input value="MCU" type="hidden" name="tipe_jadwal">
+                                @elseif ($jad->tipe_jadwal == "BIMBINGAN")
+                                    <input value="BIMBINGAN" type="hidden" name="tipe_jadwal">
+                                @elseif ($jad->tipe_jadwal == "PASSPORT")
+                                    <input value="PASSPORT" type="hidden" name="tipe_jadwal">
+                                @else
+                                    <input value="MANASIK" type="hidden" name="tipe_jadwal">
+                                @endif
+                                <div class="row g-3">
+                                    <div class="col-6">
+                                        <div>
+                                            <label for="nama_role" class="form-label">Pilih Grup</label>
+                                            <select name="kode_grup" class="form-select border border-dark">
+                                                <option selected disabled>-- Pilih Grup --</option>
+                                                @foreach ($grup as $g)
+                                                    @if ($g->id_layanan == $jad->id_layanan)
+                                                        <option value="{{ $g->kode_grup }}">
+                                                            {{ $g->kode_grup }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div>
+                                            <label for="nama_role" class="form-label">Pilih Tahap</label>
+                                            <select name="tahap" class="form-select border border-dark">
+                                                <option selected disabled>-- Pilih Tahap --</option>
+                                                @foreach ($urJadwal as $u)
+                                                @if ($u->nomor_jadwal == $jad->nomor_jadwal)
+                                                    <option value="{{ $u->tahap }}">
+                                                        {{ $u->tahap }}
+                                                    </option>
+                                                @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="hstack gap-2 justify-content-end">
+                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endforeach
     @endsection
 

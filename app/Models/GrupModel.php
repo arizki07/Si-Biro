@@ -13,6 +13,7 @@ class GrupModel extends Model
     protected $table = 't_grup';
     protected $fillable = [
         'id_jamaah',
+        'id_layanan',
         'kode_grup',
         'no_hp',
     ];

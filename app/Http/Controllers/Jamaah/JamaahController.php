@@ -90,7 +90,7 @@ class JamaahController extends Controller
         $filenamePassport = $request->hasFile('foto_passport') ? $this->storeFile($request->file('foto_passport'), 'biodata/foto-passport') : null;
         // Simpan pas foto
         $filenamePasFoto = $this->storeFile($request->file('pas_foto'), 'biodata/pas-foto');
-
+      
         $layanan = LayananModel::findOrFail($request->input('id_layanan'));
 
         // Periksa apakah kuota tersedia
@@ -140,6 +140,7 @@ class JamaahController extends Controller
             // Simpan data GrupModel terkait
             $grup = GrupModel::create([
                 'id_jamaah' => $jamaah->id_jamaah,
+                'id_layanan' => $jamaah->id_layanan,
                 'kode_grup' => $request->input('kode_grup'),
                 'no_hp' => $jamaah->no_hp,
             ]);

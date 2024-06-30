@@ -20,11 +20,13 @@ class WhatsappController extends Controller
         // echo "MASOK"; die;
         // dd($request);
         $curl = curl_init();  
-        
-        $message = "*TESTING*\n\n";
-        $message .= "No tujuan : *" . $request->input('wa') . "*\n";
-        $message .= "Pesan : *" . $request->input('pesan') . "*\n";
-        $message .= "Pesan : Oke Berhasil Masook\n";
+    
+    $numbers = $request->input('wa'); // Nomor WhatsApp dalam format string dipisahkan oleh koma (,)
+    $numbersArray = explode(',', $numbers); // Memisahkan nomor menjadi array
+    
+    $message = "*TESTING*\n\n";
+    $message .= "Pesan : *" . $request->input('pesan') . "*\n";
+    $message .= "Pesan : Oke Berhasil Masook\n";
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://api.fonnte.com/send',
