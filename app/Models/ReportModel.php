@@ -23,25 +23,78 @@ class ReportModel extends Model
         'file_opsional'
     ];
 
+    // >>>>>>>>>>>>>>>>>>>>>>>>> PENTING! JANGAN DIHAPUS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    // public function QueryReport()
+    // {
+    //     $Q = DB::table('t_report as a')
+    //         ->join('t_jamaah as b', 'a.id_jamaah', '=', 'b.id_jamaah')
+    //         ->join('t_layanan as c', 'a.id_layanan', '=', 'c.id_layanan')
+    //         ->join('t_jadwal as d', 'a.id_jadwal', '=', 'd.id_jadwal')
+    //         // ->join('t_uraian_jadwal as e', 'd.nomor_jadwal', '=', 'e.nomor_jadwal')
+    //         ->join('t_uraian_jadwal as e', function($join) {
+    //             $join->on('d.nomor_jadwal', '=', 'e.nomor_jadwal')
+    //                  ->on('a.tahap', '=', 'e.tahap');
+    //         })
+    //         ->select('a.*', 'c.*', 'b.*', 'd.*', 'a.tahap as tahap_report', 'e.*')
+    //         ->orderBy('a.tipe_report', 'ASC')
+    //         ->orderBy('a.tahap', 'ASC')
+    //         // ->groupBy('e.id_uraian_jadwal')
+    //         // ->first();
+    //         ->get();
+
+    //     return $Q;
+    // }
+
     public function QueryReport()
     {
         $Q = DB::table('t_report as a')
             ->join('t_jamaah as b', 'a.id_jamaah', '=', 'b.id_jamaah')
             ->join('t_layanan as c', 'a.id_layanan', '=', 'c.id_layanan')
             ->join('t_jadwal as d', 'a.id_jadwal', '=', 'd.id_jadwal')
-            // ->join('t_uraian_jadwal as e', 'd.nomor_jadwal', '=', 'e.nomor_jadwal')
+            ->join('t_uraian_jadwal as e', function($join) {
+                $join->on('d.nomor_jadwal', '=', 'e.nomor_jadwal')
+                    ->on('a.tahap', '=', 'e.tahap');
+            })
+            ->select('a.*', 'c.*', 'b.*', 'd.*', 'a.tahap as tahap_report', 'e.*')
+            ->whereIn('a.id_report', function ($query) {
+                $query->select(DB::raw('MIN(a.id_report)'))
+                    ->from('t_report as a')
+                    ->groupBy('a.id_jamaah');
+            })
+            ->orderBy('a.tipe_report', 'ASC')
+            ->orderBy('a.tahap', 'ASC')
+            ->get();
+
+        return $Q;
+    }
+
+
+    public function QueryReportByID($id)
+    {
+        $Query = DB::table('t_report as a')
+            ->join('t_jamaah as b', 'a.id_jamaah', '=', 'b.id_jamaah')
+            ->join('users as f', 'f.id_user', '=', 'b.id_user')
+            ->join('t_layanan as c', 'a.id_layanan', '=', 'c.id_layanan')
+            ->join('t_jadwal as d', 'a.id_jadwal', '=', 'd.id_jadwal')
+            ->join('t_transaksi as g', 'g.id_jamaah', '=', 'b.id_jamaah')
             ->join('t_uraian_jadwal as e', function($join) {
                 $join->on('d.nomor_jadwal', '=', 'e.nomor_jadwal')
                      ->on('a.tahap', '=', 'e.tahap');
             })
-            ->select('a.*', 'c.*', 'b.*', 'd.*', 'a.tahap as tahap_report', 'e.*')
-            ->orderBy('a.tipe_report', 'ASC')
-            ->orderBy('a.tahap', 'ASC')
-            // ->groupBy('e.id_uraian_jadwal')
-            // ->first();
-            ->get();
+            ->select('a.*', 'c.*', 'b.*', 'd.*', 'e.*', 'f.*', 'g.*',
+             'a.tahap as tahap_report',
+             'e.tahap as tahap_uraian_jadwal',
+             'b.created_at as created_jamaah',
+             'b.verifikasi as verif_jamaah',
+             'g.verifikasi as verif_transaksi',
+             'c.id_layanan as nomor_layanan',
+             'b.id_jamaah as nomor_jamaah',
+             'e.created_at as tanggal_report'
+             )
+            ->where('a.id_report', '=', $id)
+            ->first();
 
-        return $Q;
+        return $Query;
     }
 
     protected static function boot()

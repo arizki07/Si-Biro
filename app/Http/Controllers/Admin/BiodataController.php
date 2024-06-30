@@ -127,9 +127,9 @@ class BiodataController extends Controller
             $jamaah->pendidikan = $request->input('pendidikan');
             $jamaah->pernah_haji_umroh = $request->input('pernah_haji_umroh');
             $jamaah->kelurahan = $request->input('kelurahan');
-            $jamaah->kecamatan = $request->input('kecamatan');
-            $jamaah->kota_kabupaten = $request->input('kota_kabupaten');
-            $jamaah->provinsi = $request->input('provinsi');
+            $jamaah->kecamatan = ucwords(strtolower($request->input('kecamatan')));
+            $jamaah->kota_kabupaten = ucwords(strtolower($request->input('kota_kabupaten')));
+            $jamaah->provinsi = ucwords(strtolower($request->input('provinsi')));
             $jamaah->kode_pos = $request->input('kode_pos');
             $jamaah->alamat_lengkap = $request->input('alamat_lengkap');
             $jamaah->warga_negara = $request->input('warga_negara');

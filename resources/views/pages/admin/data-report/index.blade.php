@@ -96,16 +96,25 @@
                                         <tr class="text-center">
                                             <td>{{ $i++ }}</td>
                                             <td>
-                                                <a type="button"
-                                                    class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#detail{{ $rep->id_report }}"><i
-                                                        class="ri-eye-fill"></i></a>
-                                                <a type="button"
+                                                <a type="button" href="{{ route('detail.report', $rep->id_report) }}" class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"><i class="ri-eye-fill"></i></a>
+                                                {{-- <a type="button"
                                                     class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#delete{{ $rep->id_report }}"><i
-                                                        class="ri-delete-bin-2-fill"></i></a>
+                                                        class="ri-delete-bin-2-fill"></i></a> --}}
+                                                <form id="deleteForm{{ $rep->id_report }}"
+                                                    action="{{ route('delete.report', $rep->id_report) }}" method="POST"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <a href="#" type="button"
+                                                        class="btn btn-danger icon waves-effect waves-light btn-sm"
+                                                        data-toggle="tooltip"
+                                                        onclick="confirmDelete(event, {{ $rep->id_report }})"
+                                                        data-original-title="Delete">
+                                                        <i class="ri-delete-bin-2-fill"></i>
+                                                    </a>
+                                                </form>
                                             </td>
                                             <td>{{ $rep->nama_lengkap }}</td>
                                             <td>{{ $rep->tahap_report }}</td>

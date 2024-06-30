@@ -168,7 +168,8 @@ class TransaksiController extends Controller
 
         $trans->delete();;
 
-        return redirect()->back()->with('success', 'Data Budaya Berhasil Dihapus!');
+        // return redirect()->back()->with('success', 'Data Budaya Berhasil Dihapus!');
+        return redirect()->back()->with('success', 'Data Transaksi Berhasil Dihapus!');
     }
 
     public function generatePdf($transId, $data)

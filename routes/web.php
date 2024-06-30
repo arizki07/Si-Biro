@@ -117,7 +117,8 @@ Route::middleware('auth')->group(function () {
 
         Route::controller(ReportController::class)->group(function () {
             Route::get('/data-report', 'index');
-            Route::get('/view', 'view');
+            Route::delete('/data-report/{id}', 'destroy')->name('delete.report');
+            Route::get('/data-report/view/{id}', 'view')->name('detail.report');
         });
 
         //arsip

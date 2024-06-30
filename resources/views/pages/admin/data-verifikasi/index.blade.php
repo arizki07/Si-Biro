@@ -578,7 +578,7 @@
 
             setTimeout(function() {
                 document.getElementById('formApprove').submit();
-            }, 15000);
+            }, 5000);
         });
 
         //reject
@@ -605,7 +605,7 @@
 
             setTimeout(function() {
                 document.getElementById('formReject').submit();
-            }, 15000);
+            }, 5000);
         });
 
         //TRANSAKSI
@@ -632,7 +632,7 @@
 
             setTimeout(function() {
                 document.getElementById('formApproveTr').submit();
-            }, 15000);
+            }, 5000);
         });
 
         //reject
@@ -659,7 +659,7 @@
 
             setTimeout(function() {
                 document.getElementById('formRejecttr').submit();
-            }, 15000);
+            }, 5000);
         });
     </script>
 @endsection

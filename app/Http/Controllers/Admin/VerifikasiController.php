@@ -110,6 +110,8 @@ class VerifikasiController extends Controller
 
                 $response = curl_exec($curl);
                 curl_close($curl);
+                $log->id_jamaah = $jamaah->id_jamaah;
+                $log->json = json_encode(['target' => $jamaah->no_hp, 'message' => $message, 'response' => $response]);
 
                 if (!$response) {
                     return redirect()->back()->with('error', 'Gagal mengirim pesan WhatsApp.');
@@ -162,6 +164,8 @@ class VerifikasiController extends Controller
 
                 $response = curl_exec($curl);
                 curl_close($curl);
+                $log->id_jamaah = $Q_transaksi->id_jamaah;
+                $log->json = json_encode(['target' => $Q_transaksi->no_hp, 'message' => $message, 'response' => $response]);
 
                 if (!$response) {
                     return redirect()->back()->with('error', 'Gagal mengirim pesan WhatsApp.');
@@ -170,9 +174,8 @@ class VerifikasiController extends Controller
         }
 
         $log->ip = $request->ip();
-        $log->json = json_encode(['target' => $jamaah->no_hp, 'message' => $message, 'response' => $response]);
         $log->status = $response ? 'success' : 'failed';
-        $log->action = 'Whatsapp Verifikasi '. strtoupper($verif_act);
+        $log->action = 'Whatsapp Verifikasi '. ucwords(strtolower($verif_act));
         $log->save();
 
         return redirect()->back()->with('success', 'Data Verifikasi '. strtoupper($verif_act) .' Berhasil Di '. strtoupper($type) .'.');
