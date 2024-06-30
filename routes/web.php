@@ -113,7 +113,10 @@ Route::middleware('auth')->group(function () {
 
         // Verif
         Route::post('/verif/{id}', [VerifikasiController::class, 'verif'])->name('verif');
-        // Route::post('/verif/{id}', [VerifikasiController::class, 'verif_transaksi'])->name('verif.transaksi');
+
+        // JANGAN DIHAPUS, BUAT TESTING
+        Route::get('/whatsapp', [WhatsappController::class, 'index']);
+        Route::post('/whatsapp', [WhatsappController::class, 'testing'])->name('wa.testing');
 
         Route::controller(ReportController::class)->group(function () {
             Route::get('/data-report', 'index');
@@ -126,6 +129,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/export/excel', [ArsipController::class, 'exportToExcel'])->name('export.excel');
         Route::get('/export/pdf', [ArsipController::class, 'exportToPDF'])->name('export.pdf');
         // Route::get('/export-pdf/{id_jamaah}', [ArsipController::class, 'exportToPDFId'])->name('export.id.jamaah');
+
+        // SEND JADWAL WHATSAPP GRUP
+        Route::post('/send-request/whatsapp/jadwal/{id}', [JadwalController::class, 'send_whatsapp'])->name('send.whatsapp.jadwal');
     });
 
     Route::middleware('role:jamaah')->group(function () {

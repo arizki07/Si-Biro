@@ -256,6 +256,7 @@ class JamaahController extends Controller
         // Simpan data GrupModel terkait
         $grup = GrupModel::create([
             'id_jamaah' => $jamaah->id_jamaah,
+            'id_layanan' => $jamaah->id_layanan,
             'kode_grup' => $request->input('kode_grup'),
             'no_hp' => $jamaah->no_hp,
         ]);
