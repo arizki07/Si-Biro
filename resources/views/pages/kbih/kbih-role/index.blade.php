@@ -46,7 +46,7 @@
                                     @foreach ($role as $key => $item)
                                         <tr class="text-center">
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $item['nama_role'] }}</td>
+                                            <td>{{ $item['role'] }}</td>
                                             <td>
                                                 <button type="button"
                                                     class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm"

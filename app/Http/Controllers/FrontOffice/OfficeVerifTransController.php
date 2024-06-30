@@ -15,12 +15,6 @@ class OfficeVerifTransController extends Controller
 {
     public function index()
     {
-        $jamaahId = Auth::user()->jamaah->id_jamaah;
-
-        $isTransactionApproved = TransaksiModel::where('id_jamaah', $jamaahId)
-            ->where('verifikasi', 'approved')
-            ->exists();
-
         $jamaah = JamaahModel::all();
         $layanan = LayananModel::all();
         $transaksi = TransaksiModel::all();
@@ -30,31 +24,10 @@ class OfficeVerifTransController extends Controller
             'transaksi' => $transaksi,
             'jamaah' => $jamaah,
             'layanan' => $layanan,
-            'isTransactionApproved' => $isTransactionApproved,
         ]);
     }
 
-    // public function approve($id)
-    // {
-    //     $transaksi = TransaksiModel::find($id);
-    //     if ($transaksi) {
-    //         $transaksi->verifikasi = 'approved';
-    //         $transaksi->save();
-    //     }
-    //     return redirect()->back()->with('success', 'Jamaah approved successfully');
-    // }
-
-    // public function reject($id)
-    // {
-    //     $transaksi = TransaksiModel::find($id);
-    //     if ($transaksi) {
-    //         $transaksi->verifikasi = 'rejected';
-    //         $transaksi->save();
-    //     }
-    //     return redirect()->back()->with('success', 'Jamaah rejected successfully');
-    // }
-
-    public function verif(Request $request, $id)
+    public function verifTransaksi(Request $request, $id)
     {
         date_default_timezone_set('Asia/Jakarta');
         $type = $request->get('type');

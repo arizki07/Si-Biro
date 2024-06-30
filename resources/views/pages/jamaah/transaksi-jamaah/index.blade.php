@@ -112,14 +112,12 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Nama Jamaah</label>
-                                <select name="id_jamaah" id="id_jamaah" class="form-select border border-dark">
-                                    <option value="" hidden>-- Pilih Jamaah --</option>
-                                    @foreach ($jamaahs as $jamaah)
-                                        <option value="{{ $jamaah->id_jamaah }}"
-                                            {{ old('id_jamaah') == $jamaah->id_jamaah ? 'selected' : '' }}>
-                                            {{ $jamaah->nama_lengkap }}</option>
-                                    @endforeach
-                                </select>
+                                @foreach ($jamaahs as $jamaah)
+                                    <input type="text" id="id_jamaah_{{ $jamaah->id_jamaah }}"
+                                        class="form-control border border-dark bg-secondary-lt" name="id_jamaah"
+                                        value="{{ old('id_jamaah', $jamaah->nama_lengkap) }}" disabled>
+                                    <input type="hidden" name="id_jamaah" value="{{ $jamaah->id_jamaah }}">
+                                @endforeach
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Layanan</label>

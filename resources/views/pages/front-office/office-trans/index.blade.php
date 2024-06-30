@@ -212,7 +212,7 @@
 
             setTimeout(function() {
                 document.getElementById('formApprove').submit();
-            }, 15000);
+            }, 5000);
         });
 
         //reject
@@ -239,7 +239,7 @@
 
             setTimeout(function() {
                 document.getElementById('formReject').submit();
-            }, 15000);
+            }, 5000);
         });
     </script>
 @endsection

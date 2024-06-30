@@ -27,17 +27,21 @@ use App\Http\Controllers\FrontOffice\OfficeTransakController;
 use App\Http\Controllers\FrontOffice\OfficeTransController;
 use App\Http\Controllers\FrontOffice\OfficeVerifController;
 use App\Http\Controllers\FrontOffice\OfficeVerifTransController;
+use App\Http\Controllers\Jamaah\JadwalJamaahController;
 use App\Http\Controllers\Jamaah\JamaahController;
 use App\Http\Controllers\Jamaah\JamaahTransController;
 use App\Http\Controllers\Jamaah\KeuanganJamaahController;
 use App\Http\Controllers\Jamaah\LayananJamaahController;
+use App\Http\Controllers\KBIH\KBArsipController;
 use App\Http\Controllers\KBIH\KBBioController;
+use App\Http\Controllers\KBIH\KBJadwalController;
 use App\Http\Controllers\KBIH\KBKeuanganController;
 use App\Http\Controllers\KBIH\KBLayananController;
 use App\Http\Controllers\KBIH\KBReportController;
 use App\Http\Controllers\KBIH\KBRoleController;
 use App\Http\Controllers\KBIH\KBTransaksiController;
 use App\Http\Controllers\KBIH\KBUserController;
+use App\Http\Controllers\KBIH\KBVerifController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -141,6 +145,10 @@ Route::middleware('auth')->group(function () {
         Route::controller(KeuanganJamaahController::class)->group(function () {
             Route::get('/jamaah-keuangan', 'index');
         });
+
+        Route::controller(JadwalJamaahController::class)->group(function () {
+            Route::get('/jamaah-jadwal', 'index');
+        });
     });
     Route::middleware('role:finance')->group(function () {
         Route::controller(FKeuanganController::class)->group(function () {
@@ -171,7 +179,7 @@ Route::middleware('auth')->group(function () {
 
         Route::controller(OfficeVerifTransController::class)->group(function () {
             Route::get('/Office-transaksi', 'index');
-            Route::post('/verif/transaksi{id}', 'verif');
+            Route::post('/verif/transaksi{id}', 'verifTransaksi');
 
             // Route::post('/office-trans/approve/{id}', 'approve')->name('office-trans.approve');
             // Route::post('/office-trans/reject/{id}', 'reject')->name('office-trans.reject');
@@ -204,12 +212,20 @@ Route::middleware('auth')->group(function () {
             Route::get('/kb-biodata', 'index');
         });
 
+        Route::controller(KBVerifController::class)->group(function () {
+            Route::get('/kb-verif', 'index');
+        });
+
         Route::controller(KBLayananController::class)->group(function () {
             Route::get('/kb-layanan', 'index');
         });
 
         Route::controller(KBTransaksiController::class)->group(function () {
             Route::get('/kb-transaksi', 'index');
+        });
+
+        Route::controller(KBJadwalController::class)->group(function () {
+            Route::get('/kb-jadwal', 'index');
         });
 
         Route::controller(KBKeuanganController::class)->group(function () {
@@ -219,6 +235,11 @@ Route::middleware('auth')->group(function () {
         Route::controller(KBReportController::class)->group(function () {
             Route::get('/kb-report', 'index');
             Route::get('/kb-view', 'view');
+        });
+
+        Route::controller(KBArsipController::class)->group(function () {
+            Route::get('/kb-arsip', 'index');
+            Route::get('/export/pdf/kbih', 'exportToPDF')->name('export.pdf.kbih');
         });
     });
 });
