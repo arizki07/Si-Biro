@@ -8,145 +8,256 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Datatables</h4>
+                        <h4 class="mb-sm-0">{{ $title }}</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-                                <li class="breadcrumb-item active">Datatables</li>
+                                <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+                                <li class="breadcrumb-item active">{{ $title }}</li>
                             </ol>
                         </div>
 
                     </div>
                 </div>
             </div>
+            <!-- end page title -->
+
             <div class="row">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Basic Datatables</h5>
-                </div>
-                <div class="col-xxl-12">
+                <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs mb-3" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-bs-toggle="tab" href="#home" role="tab"
-                                        aria-selected="false">
-                                        Layanan
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#product1" role="tab"
-                                        aria-selected="false">
-                                        Uraian Layanan
-                                    </a>
-                                </li>
-                            </ul>
-                            <!-- Tab panes -->
-                            <div class="tab-content  text-muted">
-                                <div class="tab-pane active" id="home" role="tabpanel">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="card">
-
-
-                                                <div class="card-body">
-                                                    <style>
-                                                        #scroll-horizontal thead th {
-                                                            border-bottom: 1px solid #ddd;
-                                                            /* Garis bawah untuk header */
-                                                        }
-
-                                                        #scroll-horizontal tbody td {
-                                                            border-right: 1px solid #ddd;
-                                                            /* Garis kanan untuk sel dalam tabel */
-                                                        }
-
-                                                        #scroll-horizontal tbody tr:last-child td {
-                                                            border-bottom: 1px solid #ddd;
-                                                            /* Garis bawah untuk baris terakhir */
-                                                        }
-                                                    </style>
-                                                    <table id="scroll-horizontal"
-                                                        class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap"
-                                                        style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
-                                                        <thead>
-                                                            <tr class="text-center">
-                                                                <th>No</th>
-                                                                <th>Opsi</th>
-                                                                <th>ID Layanan</th>
-                                                                <th>Judul Layanan</th>
-                                                                <th>Kuota</th>
-                                                                <th>Tahun Pemberangkatan</th>
-                                                                <th>Bulan Pemberangkatan</th>
-                                                                <th>Paket</th>
-                                                                <th>Status Paket</th>
-                                                                <th>Deskripsi</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @php($no = 1)
-                                                            @foreach ($layanan as $item)
-                                                                <tr class="text-center">
-                                                                    <td>{{ $no++ }}</td>
-                                                                    <td>
-                                                                        <button type="button"
-                                                                            class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#detailModal{{ $item->id_layanan }}">
-                                                                            <i class="ri-eye-fill"></i>
-                                                                        </button>
-                                                                    </td>
-                                                                    <td>LA-{{ $item->id_layanan }}</td>
-                                                                    <td>{{ $item->judul_layanan }}</td>
-                                                                    <td>{{ $item->kuota }}</td>
-                                                                    <td>{{ $item->tahun_pemberangkatan }}</td>
-                                                                    <td>{{ $item->bulan_pemberangkatan }}</td>
-                                                                    <td>{{ $item->paket }}</td>
-                                                                    <td>{{ $item->status_paket }}</td>
-                                                                    <td>{{ $item->deskripsi }}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="product1" role="tabpanel">
-                                    <form action="">
-                                        <div class="col-xxl-6">
-                                            <label for="">Nama Layanan</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                        <div class="col-xxl-6 ">
-                                            <div>
-                                                <label for="exampleFormControlTextarea5" class="form-label">Uraian</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea5" rows="3"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-xxl-6 ">
-                                            <div>
-                                                <label for="exampleFormControlTextarea5"
-                                                    class="form-label">Keterangan</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea5" rows="3"></textarea>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">{{ $title }}</h5>
+                            <div style="float: right;">
+                                <button type="button" class="btn btn-primary mr-2" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModalgrid">
+                                    <i class="ri-phone-fill"></i> Tambah Data Layanan
+                                </button>
+                                {{-- <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                    data-bs-target="#importExcel">
+                                    <i class=" ri-file-excel-fill"></i> Upload Excel
+                                </button> --}}
                             </div>
-                        </div><!-- end card-body -->
-                    </div><!-- end card -->
-                </div>
+                        </div>
 
+                        <div class="card-body">
+                            <style>
+                                #scroll-horizontal thead th {
+                                    border-bottom: 1px solid #ddd;
+                                    /* Garis bawah untuk header */
+                                }
+
+                                #scroll-horizontal tbody td {
+                                    border-right: 1px solid #ddd;
+                                    /* Garis kanan untuk sel dalam tabel */
+                                }
+
+                                #scroll-horizontal tbody tr:last-child td {
+                                    border-bottom: 1px solid #ddd;
+                                    /* Garis bawah untuk baris terakhir */
+                                }
+                            </style>
+                            <table id="scroll-horizontal"
+                                class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap"
+                                style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>No</th>
+                                        <th>Opsi</th>
+                                        <th>ID Layanan</th>
+                                        <th>Judul Layanan</th>
+                                        <th>Kuota</th>
+                                        <th>Tahun Pemberangkatan</th>
+                                        <th>Bulan Pemberangkatan</th>
+                                        <th>Paket</th>
+                                        <th>Status Paket</th>
+                                        <th>Deskripsi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php($no = 1)
+                                    @foreach ($layanan as $item)
+                                        <tr class="text-center">
+                                            <td>{{ $no++ }}</td>
+                                            <td>
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#detailModal{{ $item->id_layanan }}">
+                                                    <i class="ri-eye-fill"></i>
+                                                </button>
+                                                <button type="button"
+                                                    class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#editModal{{ $item->id_layanan }}"><i
+                                                        class=" ri-edit-2-fill"></i></button>
+                                                <form id="deleteForm{{ $item->id_layanan }}"
+                                                    action="{{ route('Odestroy', $item->id_layanan) }}" method="POST"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <a href="#" type="button"
+                                                        class="btn btn-danger icon waves-effect waves-light btn-sm deletePengguna"
+                                                        data-toggle="tooltip"
+                                                        onclick="confirmDelete(event, {{ $item->id_layanan }})"
+                                                        data-original-title="Delete">
+                                                        <i class="ri-delete-bin-2-fill"></i>
+                                                    </a>
+                                                </form>
+                                            </td>
+                                            <td>LA-{{ $item->id_layanan }}</td>
+                                            <td>{{ $item->judul_layanan }}</td>
+                                            <td>{{ $item->kuota }}</td>
+                                            <td>{{ $item->tahun_pemberangkatan }}</td>
+                                            <td>{{ $item->bulan_pemberangkatan }}</td>
+                                            <td>{{ $item->paket }}</td>
+                                            <td>{{ $item->status_paket }}</td>
+                                            <td>{{ $item->deskripsi }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    {{-- Modal Tambah --}}
+    <div class="modal fade" id="exampleModalgrid" tabindex="-1" aria-labelledby="exampleModalgridLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalgridLabel"><i class="ri-phone-fill"></i>Add Layanan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body bg-marketplace d-flex">
+                    <form action="{{ route('Olayanan.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row g-3">
+                            <div class="col-xxl-6">
+                                <div>
+                                    <label for="firstName" class="form-label">Judul Layanan</label>
+                                    <input type="text" class="form-control" id="firstName" placeholder="Enter Layanan"
+                                        name="judul_layanan">
+                                </div>
+                            </div>
+                            <!--end col-->
+                            <div class="col-xxl-6">
+                                <div>
+                                    <label for="lastName" class="form-label">Kuota</label>
+                                    <input type="text" class="form-control" id="lastName" placeholder="Enter Kuota"
+                                        name="kuota">
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-6">
+                                <label for="emailInput" class="form-label">Tahun Pemberangkatan</label>
+                                <input type="text" class="form-control" id="emailInput"
+                                    placeholder="Enter Tahum Pemberangkatan" name="tahun_pemberangkatan">
+                            </div>
+                            <!--end col-->
+                            <div class="col-xxl-6">
+                                <label for="passwordInput" class="form-label">Bulan Pemberangkatan</label>
+                                <input type="text" class="form-control" id="passwordInput" value=""
+                                    placeholder="Enter Bulan Pemberangkatan" name="bulan_pemberangkatan">
+                            </div>
+                            <!--end col-->
+                            <!--end col-->
+                            <div class="col-xxl-6">
+                                <label for="passwordInput" class="form-label">Paket</label>
+                                <input type="text" class="form-control" id="passwordInput" value=""
+                                    placeholder="Enter Paket" name="paket">
+                            </div>
+                            <!--end col-->
+                            <!--end col-->
+                            <div class="col-xxl-6">
+                                <label for="passwordInput" class="form-label">Status Paket</label>
+                                <input type="text" class="form-control" id="passwordInput" value=""
+                                    placeholder="Enter Status Paket" name="status_paket">
+                            </div>
+                            <!--end col-->
+                            <div class="mb-3">
+                                <label class="form-label">Deksripsi</label>
+                                <textarea id="" cols="30" rows="3" class="form-control border border-dark"
+                                    placeholder="Masukkan Deskripsi" name="deskripsi"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Foto Background</label>
+                                <input type="file" class="form-control border border-dark" name="foto_bg"
+                                    id="foto_bg">
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                            <!--end col-->
+                        </div>
+                        <!--end row-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- End Modal Tambah --}}
+
+    {{-- Modal Import Excel --}}
+    <div class="modal modal-blur fade" id="importExcel" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form method="post" action="/testkapas/import_excel" enctype="multipart/form-data">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Upload Excel</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Add
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault2" checked>
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Update
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Pilih file excel (xlsx)</label>
+                            <input type="file" name="file" required="required"
+                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="" class="btn btn-link link-secondary">Download Contoh Excel</a>
+                        <button type="submit" class="btn btn-primary ms-auto"><i class="ri-upload-cloud-line"
+                                style="margin-right:5px"></i> Import</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {{-- End Modal IMport Excel --}}
+
     {{-- Modal Detail --}}
     @foreach ($layanan as $item)
-        <div class="modal fade" id="detailModal{{ $item->id_layanan }}" tabindex="-1" aria-labelledby="detailModalLabel">
+        <div class="modal fade" id="detailModal{{ $item->id_layanan }}" tabindex="-1"
+            aria-labelledby="detailModalLabel">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -240,4 +351,92 @@
         </div>
     @endforeach
     {{-- end modal detail --}}
+
+    {{-- modal edit --}}
+    @foreach ($layanan as $item)
+        <div class="modal fade" id="editModal{{ $item->id_layanan }}" tabindex="-1" aria-labelledby="editModalLabel">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel"><i class="ri-phone-fill"></i>Detail Layanan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body bg-marketplace d-flex">
+                        <form action="{{ route('Olayanan.update', $item->id_layanan) }}" method="post"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <div class="row g-3">
+                                <div class="col-xxl-6">
+                                    <div>
+                                        <label for="firstName" class="form-label">Judul Layanan</label>
+                                        <input type="text" class="form-control" id="firstName"
+                                            placeholder="Enter Layanan" name="judul_layanan"
+                                            value="{{ $item->judul_layanan }}">
+                                    </div>
+                                </div>
+                                <!--end col-->
+                                <div class="col-xxl-6">
+                                    <div>
+                                        <label for="lastName" class="form-label">Kuota</label>
+                                        <input type="text" class="form-control" id="lastName"
+                                            placeholder="Enter Kuota" name="kuota" value="{{ $item->kuota }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-xxl-6">
+                                    <label for="emailInput" class="form-label">Tahun Pemberangkatan</label>
+                                    <input type="text" class="form-control" id="emailInput"
+                                        placeholder="Enter Tahum Pemberangkatan" name="tahun_pemberangkatan"
+                                        value="{{ $item->tahun_pemberangkatan }}" readonly>
+                                </div>
+                                <!--end col-->
+                                <div class="col-xxl-6">
+                                    <label for="passwordInput" class="form-label">Bulan Pemberangkatan</label>
+                                    <input type="text" class="form-control" id="passwordInput"
+                                        placeholder="Enter Bulan Pemberangkatan" name="bulan_pemberangkatan"
+                                        value="{{ $item->bulan_pemberangkatan }}">
+                                </div>
+                                <!--end col-->
+                                <div class="col-xxl-6">
+                                    <label for="passwordInput" class="form-label">Paket</label>
+                                    <input type="text" class="form-control" id="passwordInput"
+                                        placeholder="Enter Paket" name="paket" value="{{ $item->paket }}">
+                                </div>
+                                <!--end col-->
+                                <!--end col-->
+                                <div class="col-xxl-6">
+                                    <label for="passwordInput" class="form-label">Status Paket</label>
+                                    <input type="text" class="form-control" id="passwordInput"
+                                        placeholder="Enter Status Paket" name="status_paket"
+                                        value="{{ $item->status_paket }}">
+                                </div>
+                                <!--end col-->
+                                <div class="mb-3">
+                                    <label class="form-label">Deksripsi</label>
+                                    <textarea id="" cols="30" rows="3" class="form-control border border-dark"
+                                        placeholder="Masukkan Deskripsi" name="deskripsi">{{ $item->deskripsi }} </textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Foto Background</label>
+                                    <input type="file" class="form-control border border-dark" name="foto_bg"
+                                        id="foto_bg" value="{{ $item->foto_bg }}">
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="hstack gap-2 justify-content-end">
+                                        <button type="button" class="btn btn-light"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                                <!--end col-->
+                            </div>
+                            <!--end row-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+    {{-- end modal edit --}}
 @endsection

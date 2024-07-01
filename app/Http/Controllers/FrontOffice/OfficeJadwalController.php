@@ -12,6 +12,8 @@ use App\Models\WhatsappModel;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\Jadwal\Add\HeaderImport;
+use App\Imports\Jadwal\Update\HeaderUpdateImport;
+use App\Imports\Report\HeaderReport;
 use DateTime;
 
 class OfficeJadwalController extends Controller
@@ -56,7 +58,7 @@ class OfficeJadwalController extends Controller
         $grup = GrupModel::select('kode_grup', \DB::raw('MIN(id_grup) as id_grup'), \DB::raw('MIN(id_jamaah) as id_jamaah'), \DB::raw('MIN(id_layanan) as id_layanan'), \DB::raw('MIN(no_hp) as no_hp'))
             ->groupBy('kode_grup')
             ->get();
-      
+
         return view('pages.front-office.office-jadwal.index', $data, [
             'urJadwal' => UraianJadwalModel::all(),
             'grup' => $grup,
@@ -204,27 +206,27 @@ class OfficeJadwalController extends Controller
                     ->where('kode_grup', $kode_grup)
                     ->where('id_layanan', $id_layanan)
                     ->get();
-                
-                    foreach ($wee as $item) {
-                        $log = new WhatsappModel();
-                    
-                        $log->ip = $request->ip();
-                        $log->id_jamaah = $item->id_jamaah; 
-                        $log->status = $response ? 'success' : 'failed';
-                        $log->json = json_encode(['target' => $nomor_hp, 'message' => $message, 'response' => $response]);
-                        $log->action = 'Whatsapp Jadwal '.ucwords(strtolower($tipe_jadwal)).' Tahap ' . $tahap . ' Grup ' . $item->kode_grup;
-                    
-                        $existingLog = WhatsappModel::where([
-                            'ip' => $log->ip,
-                            'id_jamaah' => $log->id_jamaah,
-                            'status' => $log->status,
-                            'action' => $log->action,
-                        ])->exists();
-                    
-                        if (!$existingLog) {
-                            $log->save();
-                        }
+
+                foreach ($wee as $item) {
+                    $log = new WhatsappModel();
+
+                    $log->ip = $request->ip();
+                    $log->id_jamaah = $item->id_jamaah;
+                    $log->status = $response ? 'success' : 'failed';
+                    $log->json = json_encode(['target' => $nomor_hp, 'message' => $message, 'response' => $response]);
+                    $log->action = 'Whatsapp Jadwal ' . ucwords(strtolower($tipe_jadwal)) . ' Tahap ' . $tahap . ' Grup ' . $item->kode_grup;
+
+                    $existingLog = WhatsappModel::where([
+                        'ip' => $log->ip,
+                        'id_jamaah' => $log->id_jamaah,
+                        'status' => $log->status,
+                        'action' => $log->action,
+                    ])->exists();
+
+                    if (!$existingLog) {
+                        $log->save();
                     }
+                }
             }
         }
     }

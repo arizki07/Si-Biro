@@ -29,7 +29,6 @@ use App\Http\Controllers\FrontOffice\OfficeTransakController;
 use App\Http\Controllers\FrontOffice\OfficeTransController;
 use App\Http\Controllers\FrontOffice\OfficeVerifController;
 use App\Http\Controllers\FrontOffice\OfficeVerifTransController;
-use App\Http\Controllers\FrontOffice\OfficeJadwalController;
 use App\Http\Controllers\Jamaah\JadwalJamaahController;
 use App\Http\Controllers\Jamaah\JamaahController;
 use App\Http\Controllers\Jamaah\JamaahTransController;
@@ -183,9 +182,6 @@ Route::middleware('auth')->group(function () {
         Route::controller(OfficeVerifController::class)->group(function () {
             Route::get('/Office-verif', 'index');
             Route::post('/verif/jamaah/{id}', 'verif')->name('verif.office');
-
-            // Route::post('/office-verif/approve/{id}', 'approve')->name('office-verif.approve');
-            // Route::post('/office-verif/reject/{id}', 'reject')->name('office-verif.reject');
         });
 
         Route::controller(OfficeVerifTransController::class)->group(function () {
@@ -195,17 +191,15 @@ Route::middleware('auth')->group(function () {
 
 
         Route::controller(OfficeLayananController::class)->group(function () {
-            Route::get('/office-layanan', 'index');
+            Route::get('/office-layanan', 'index')->name('office.index');
+            Route::post('/office-store', 'store')->name('Olayanan.store');
+            Route::put('/office-update/{id}', 'update')->name('Olayanan.update');
+            Route::delete('/office-destroy/{id}', 'destroy')->name('Odestroy');
         });
 
         Route::controller(OfficeTransakController::class)->group(function () {
             Route::get('/front-transaksi', 'index');
         });
-
-        // Route::get('/office/data-jadwal', [OfficeJadwalController::class, 'index'])->name('office.data.jadwal');
-        // Route::get('/office/data-jadwal/delete/{id}', [OfficeJadwalController::class, 'destroy'])->name('office.delete.data.jadwal');
-        // Route::get('/office/data-uraian-jadwal/delete/{id}', [OfficeJadwalController::class, 'destroyUraian'])->name('office.delete.data.uraian.jadwal');
-        // Route::post('/send-request/whatsapp/jadwal/{id}', [JadwalController::class, 'send_whatsapp'])->name('office.send.whatsapp.jadwal');
 
         Route::controller(OfficeReportController::class)->group(function () {
             Route::get('/office-report', 'index');
