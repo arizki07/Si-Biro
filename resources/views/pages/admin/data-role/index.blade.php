@@ -95,10 +95,15 @@
                         @csrf
                         <div class="row g-3">
                             <div class="col-12">
-                                <div>
-                                    <label for="nama_role" class="form-label">Nama Role</label>
-                                    <input type="text" class="form-control" id="nama_role" name="nama_role"
-                                        placeholder="Enter Nama Role">
+                                <div class="mb-3">
+                                    <label for="role" class="form-label">Nama Role</label>
+                                    <select class="form-control" name="role">
+                                        <option value="admin">Admin</option>
+                                        <option value="jamaah">Jamaah</option>
+                                        <option value="finance">Finance</option>
+                                        <option value="front office">Front Office</option>
+                                        <option value="kbih">KBIH</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -130,11 +135,18 @@
                             @csrf
                             <div class="row g-3">
                                 <div class="col-xxl-12">
-                                    <div>
-                                        <label for="nama_role" class="form-label">Nama Role</label>
-                                        <input type="text" class="form-control" id="nama_role" name="nama_role"
-                                            value="{{ old('nama_role', $item->nama_role) }}">
+                                    <div class="mb-3">
+                                        <label for="role" class="form-label">Nama Role</label>
+                                        <select class="form-control" name="role">
+                                            <option disabled>--Pilih Role--</option>
+                                            @foreach ($role as $item)
+                                                <option value="{{ $item->role }}" {{ old('role', $item->role) == $item->role ? 'selected' : '' }}>
+                                                    {{ $item->role }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
+
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="hstack gap-2 justify-content-end">

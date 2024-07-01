@@ -22,16 +22,12 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'nama_role' => 'required|string|max:15',
+        $request->validate([
+            'role' => 'required|in:admin,jamaah,finance,front office,kbih',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput()->with('error', $validator->errors()->first());
-        }
-
         $role = new RoleModel();
-        $role->nama_role = $request->input('nama_role');
+        $role->role = $request->input('role');
         $role->save();
 
         return redirect()->route('data.role')->with('success', 'Data Role Berhasil Di Tambahkan');
@@ -40,11 +36,11 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama_role' => 'required|string',
+            'role' => 'required|in:admin,jamaah,finance,front office,kbih',
         ]);
 
         $role = RoleModel::findOrFail($id);
-        $role->nama_role = $request->input('nama_role');
+        $role->role = $request->input('role');
         $role->save();
 
         return redirect()->route('data.role')->with('success', 'Data Role Berhasil Di Update');

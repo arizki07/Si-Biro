@@ -22,14 +22,14 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('Super.123'),
                 'status' => 1
             ],
-            [
-                'nama' => 'Jamaah',
-                'email' => 'jamaah@gmail.com',
-                'id_role' => 2,
-                'otp_register' => 'BB6f',
-                'password' => bcrypt('Jamaah.123'),
-                'status' => 1
-            ],
+            // [
+            //     'nama' => 'Jamaah',
+            //     'email' => 'jamaah@gmail.com',
+            //     'id_role' => 2,
+            //     'otp_register' => 'BB6f',
+            //     'password' => bcrypt('Jamaah.123'),
+            //     'status' => 1
+            // ],
             [
                 'nama' => 'Finance',
                 'email' => 'finance@gmail.com',

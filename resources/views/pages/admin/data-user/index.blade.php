@@ -8,8 +8,9 @@
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0">{{ $title }}</h4>
                         <div class="page-title-right">
-                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#adduser"><i class="ri-user-add-fill"></i> Add Users</button>
+                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#adduser">
+                                <i class="ri-user-add-fill"></i> Add Users
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -109,6 +110,70 @@
             </div>
         </div>
     </div>
+
+    {{-- modal add --}}
+ {{-- Modal Add --}}
+ <div id="adduser" class="modal fade" tabindex="-1" aria-labelledby="adduserLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="adduserLabel">Add Data Users</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-marketplace d-flex">
+                <form action="{{ route('users.add') }}" method="post">
+                    @csrf
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label for="nama" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="nama" name="nama"
+                                placeholder="Enter Username" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="Enter your email" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="id_role" class="form-label">Role</label>
+                            <select class="form-select" id="id_role" name="id_role" required>
+                                <option selected disabled>-- Select Role --</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id_role }}">{{ $role->role }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" name="status" required>
+                                <option selected disabled>-- Select Status --</option>
+                                <option value="1">Active</option>
+                                <option value="2">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Enter password" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="password_confirmation" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="password_confirmation"
+                                name="password_confirmation" placeholder="Confirm password" required>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    {{-- end modal --}}
+    
     {{-- Modal View --}}
     @foreach ($users as $user)
         <div class="modal fade" id="viewUser{{ $user->id_user }}" tabindex="-1" aria-labelledby="viewUserLabel">
@@ -269,67 +334,5 @@
     @endforeach
     {{-- End Modal edit --}}
 
-    {{-- Modal Add --}}
-    <div id="adduser" class="modal fade fadeInLeft" tabindex="-1" aria-labelledby="adduserLabel" aria-hidden="true"
-        style="display: none;">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="adduserLabel">Add Data Users</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body bg-marketplace d-flex">
-                    <form action="{{ route('users.add') }}" method="post">
-                        @csrf
-                        <div class="row g-3">
-                            <div class="col-md-12">
-                                <label for="nama" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="nama" name="nama"
-                                    placeholder="Enter Username" required>
-                            </div>
-                            <div class="col-md-12">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email"
-                                    placeholder="Enter your email" required>
-                            </div>
-                            <div class="col-md-12">
-                                <label for="id_role" class="form-label">Role</label>
-                                <select class="form-select" id="id_role" name="id_role" required>
-                                    <option selected disabled>-- Select Role --</option>
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role->id_role }}">{{ $role->role }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-12">
-                                <label for="status" class="form-label">Status</label>
-                                <select class="form-select" name="status" required>
-                                    <option selected disabled>-- Select Status --</option>
-                                    <option value="1">Active</option>
-                                    <option value="2">Inactive</option>
-                                </select>
-                            </div>
-                            <div class="col-md-12">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password"
-                                    placeholder="Enter password" required>
-                            </div>
-                            <div class="col-md-12">
-                                <label for="password_confirmation" class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control" id="password_confirmation"
-                                    name="password_confirmation" placeholder="Confirm password" required>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
+   
 @endsection

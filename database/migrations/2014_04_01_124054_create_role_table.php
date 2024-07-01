@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('t_role', function (Blueprint $table) {
-            $table->id('id_role');
+            $table->id('id_role', 50);
             $table->enum('role', ['admin', 'jamaah', 'finance', 'front office', 'kbih'])->default('jamaah');
             $table->timestamps();
         });
