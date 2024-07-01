@@ -17,7 +17,6 @@ use App\Http\Controllers\Admin\WhatsappController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotController;
 use App\Http\Controllers\DashboardController;
-// use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\finance\FinanceUserController;
 use App\Http\Controllers\Finance\FKeuanganController;
 use App\Http\Controllers\Finance\FTransaksiController;

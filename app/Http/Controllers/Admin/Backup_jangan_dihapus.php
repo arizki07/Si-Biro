@@ -109,27 +109,26 @@ class VerifikasiController extends Controller
 
                 // area whatsapp
                 $curl = curl_init();  
-                $message = $jamaah->pesanVerifBiodata($type, $tanggalUpdate, $tanggalApp);
-                // if ($type == 'approved') {
-                //     $message = "*Whatsapp KBIH Wadi Fatimah*\n\n";
-                //     $message .= "Verifikasi biodata anda sudah _*BERHASIL*_ di verifikasi pada ". $tanggalUpdate .", dengan data sebagai berikut:\n\n";
-                //     $message .= "Nama : *" . $jamaah->nama_lengkap . "*\n";
-                //     $message .= "Tgl Lahir : *" . $jamaah->tempat_lahir . ", " . date('d-m-Y', strtotime($jamaah->tgl_lahir)) . "*\n";
-                //     $message .= "No Ktp : *" . $jamaah->no_ktp . "*\n";
-                //     $message .= "Umur : *" . $jamaah->umur . " Tahun*\n";
-                //     $message .= "Alamat : *" . $jamaah->kecamatan . ", " . $jamaah->kota_kabupaten . ", " . $jamaah->provinsi . " " . $jamaah->kode_pos . "*\n";
-                //     $message .= "\n_**Pesan ini dikirim secara otomatis pada $tanggalApp. Mohon tidak membalas pesan ini.*_";
-                // } else {
-                //     $message = "*Whatsapp KBIH Wadi Fatimah*\n\n";
-                //     $message .= "Verifikasi biodata anda _*DITOLAK/GAGAL*_ di verifikasi pada ". $tanggalUpdate .", dengan data sebagai berikut:\n\n";
-                //     $message .= "Nama : *" . $jamaah->nama_lengkap . "*\n";
-                //     $message .= "Tgl Lahir : *" . $jamaah->tempat_lahir . ", " . date('d-m-Y', strtotime($jamaah->tgl_lahir)) . "*\n";
-                //     $message .= "No Ktp : *" . $jamaah->no_ktp . "*\n";
-                //     $message .= "Umur : *" . $jamaah->umur . " Tahun*\n";
-                //     $message .= "Alamat : *" . $jamaah->kecamatan . ", " . $jamaah->kota_kabupaten . ", " . $jamaah->provinsi . " " . $jamaah->kode_pos . "*\n";
-                //     $message .= "\nSilahkan kunjungi kantor KBIH Wadi Fatimah untuk informasi lebih lanjut.\n\n";
-                //     $message .= "\n_**Pesan ini dikirim secara otomatis pada $tanggalApp. Mohon tidak membalas pesan ini.*_";
-                // }
+                if ($type == 'approved') {
+                    $message = "*Whatsapp KBIH Wadi Fatimah*\n\n";
+                    $message .= "Verifikasi biodata anda sudah _*BERHASIL*_ di verifikasi pada ". $tanggalUpdate .", dengan data sebagai berikut:\n\n";
+                    $message .= "Nama : *" . $jamaah->nama_lengkap . "*\n";
+                    $message .= "Tgl Lahir : *" . $jamaah->tempat_lahir . ", " . date('d-m-Y', strtotime($jamaah->tgl_lahir)) . "*\n";
+                    $message .= "No Ktp : *" . $jamaah->no_ktp . "*\n";
+                    $message .= "Umur : *" . $jamaah->umur . " Tahun*\n";
+                    $message .= "Alamat : *" . $jamaah->kecamatan . ", " . $jamaah->kota_kabupaten . ", " . $jamaah->provinsi . " " . $jamaah->kode_pos . "*\n";
+                    $message .= "\n_**Pesan ini dikirim secara otomatis pada $tanggalApp. Mohon tidak membalas pesan ini.*_";
+                } else {
+                    $message = "*Whatsapp KBIH Wadi Fatimah*\n\n";
+                    $message .= "Verifikasi biodata anda _*DITOLAK/GAGAL*_ di verifikasi pada ". $tanggalUpdate .", dengan data sebagai berikut:\n\n";
+                    $message .= "Nama : *" . $jamaah->nama_lengkap . "*\n";
+                    $message .= "Tgl Lahir : *" . $jamaah->tempat_lahir . ", " . date('d-m-Y', strtotime($jamaah->tgl_lahir)) . "*\n";
+                    $message .= "No Ktp : *" . $jamaah->no_ktp . "*\n";
+                    $message .= "Umur : *" . $jamaah->umur . " Tahun*\n";
+                    $message .= "Alamat : *" . $jamaah->kecamatan . ", " . $jamaah->kota_kabupaten . ", " . $jamaah->provinsi . " " . $jamaah->kode_pos . "*\n";
+                    $message .= "\nSilahkan kunjungi kantor KBIH Wadi Fatimah untuk informasi lebih lanjut.\n\n";
+                    $message .= "\n_**Pesan ini dikirim secara otomatis pada $tanggalApp. Mohon tidak membalas pesan ini.*_";
+                }
                 // dd($message);
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => 'https://api.fonnte.com/send',
@@ -164,7 +163,7 @@ class VerifikasiController extends Controller
             }
         } elseif ($verif_act == 'transaksi') {
             // echo "Masuk Ke Else"; die;
-
+            
         }
     }
 
