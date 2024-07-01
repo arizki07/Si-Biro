@@ -62,7 +62,7 @@
             <div class="text-center">
                 <div class="mb-3">
                     <a href="." class="navbar-brand navbar-brand-autodark">
-                        <img src="assets/images/ka'bah.png" alt="Logo">
+                        <img src="assets/images/kabah.png" alt="Logo">
                     </a>
                 </div>
                 <div class="text-secondary mb-3">
