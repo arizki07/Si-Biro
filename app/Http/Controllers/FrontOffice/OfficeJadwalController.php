@@ -56,7 +56,7 @@ class OfficeJadwalController extends Controller
         $grup = GrupModel::select('kode_grup', \DB::raw('MIN(id_grup) as id_grup'), \DB::raw('MIN(id_jamaah) as id_jamaah'), \DB::raw('MIN(id_layanan) as id_layanan'), \DB::raw('MIN(no_hp) as no_hp'))
             ->groupBy('kode_grup')
             ->get();
-
+      
         return view('pages.front-office.office-jadwal.index', $data, [
             'urJadwal' => UraianJadwalModel::all(),
             'grup' => $grup,
@@ -227,8 +227,6 @@ class OfficeJadwalController extends Controller
                     }
             }
         }
-
-        return redirect()->back()->with('success', 'Berhasil Memproses Whatsapp Jadwal '.ucwords(strtolower($tipe_jadwal)).' Tahap ' . $tahap . ' Grup ' . $kode_grup);
     }
 
     private function tanggalIDN($date)

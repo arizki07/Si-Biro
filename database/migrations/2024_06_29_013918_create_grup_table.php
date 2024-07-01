@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('t_grup', function (Blueprint $table) {
             $table->id('id_grup');
             $table->unsignedBigInteger('id_jamaah');
+            $table->unsignedBigInteger('id_layanan');
             $table->string('kode_grup');
             $table->string('no_hp');
             $table->timestamps();
 
             $table->foreign('id_jamaah')->references('id_jamaah')->on('t_jamaah');
+            $table->foreign('id_layanan')->references('id_layanan')->on('t_layanan');
         });
     }
 
