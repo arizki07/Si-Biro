@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\FrontOffice;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\GrupModel;
+use Illuminate\Http\Request;
 use App\Models\JadwalModel;
 use App\Models\UraianJadwalModel;
+use App\Models\GrupModel;
 use App\Models\WhatsappModel;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\Jadwal\Add\HeaderImport;
+use DateTime;
 
 class OfficeJadwalController extends Controller
 {
@@ -19,32 +23,32 @@ class OfficeJadwalController extends Controller
         if ($action == 'mcu') {
             $data = [
                 'title' => 'Data Jadwal MCU',
-                'act' => 'jadwal-mcu-office',
+                'act' => 'jadwal-mcu',
                 'jadwal' => JadwalModel::where('tipe_jadwal', 'MCU')->get()
             ];
             // dd($data);
         } elseif ($action == 'passport') {
             $data = [
                 'title' => 'Data Jadwal Passport',
-                'act' => 'jadwal-passport-office',
+                'act' => 'jadwal-passport',
                 'jadwal' => JadwalModel::where('tipe_jadwal', 'PASSPORT')->get()
             ];
         } elseif ($action == 'bimbingan') {
             $data = [
                 'title' => 'Data Jadwal Bimbingan',
-                'act' => 'jadwal-bimbingan-office',
+                'act' => 'jadwal-bimbingan',
                 'jadwal' => JadwalModel::where('tipe_jadwal', 'BIMBINGAN')->get()
             ];
         } elseif ($action == 'manasik') {
             $data = [
                 'title' => 'Data Jadwal Manasik',
-                'act' => 'jadwal-manasik-office',
+                'act' => 'jadwal-manasik',
                 'jadwal' => JadwalModel::where('tipe_jadwal', 'MANASIK')->get()
             ];
         } else {
             $data = [
                 'title' => 'Data Jadwal MCU',
-                'act' => 'jadwal-mcu-office',
+                'act' => 'jadwal-mcu',
                 'jadwal' => JadwalModel::where('tipe_jadwal', 'MCU')->get()
             ];
         }
@@ -52,8 +56,8 @@ class OfficeJadwalController extends Controller
         $grup = GrupModel::select('kode_grup', \DB::raw('MIN(id_grup) as id_grup'), \DB::raw('MIN(id_jamaah) as id_jamaah'), \DB::raw('MIN(id_layanan) as id_layanan'), \DB::raw('MIN(no_hp) as no_hp'))
             ->groupBy('kode_grup')
             ->get();
-
-        return view('pages.front-office.data-jadwal.index', $data, [
+      
+        return view('pages.front-office.office-jadwal.index', $data, [
             'urJadwal' => UraianJadwalModel::all(),
             'grup' => $grup,
         ]);
@@ -61,7 +65,7 @@ class OfficeJadwalController extends Controller
 
     public function view($id)
     {
-        return view('pages.admin.data-jadwal.view', [
+        return view('pages.front-office.office-jadwal.view', [
             'jadwals' => JadwalModel::findOrFail($id),
             'URjadwals' => UraianJadwalModel::all(),
             'act' => 'layanan',
@@ -200,31 +204,29 @@ class OfficeJadwalController extends Controller
                     ->where('kode_grup', $kode_grup)
                     ->where('id_layanan', $id_layanan)
                     ->get();
-
-                foreach ($wee as $item) {
-                    $log = new WhatsappModel();
-
-                    $log->ip = $request->ip();
-                    $log->id_jamaah = $item->id_jamaah;
-                    $log->status = $response ? 'success' : 'failed';
-                    $log->json = json_encode(['target' => $nomor_hp, 'message' => $message, 'response' => $response]);
-                    $log->action = 'Whatsapp Jadwal ' . ucwords(strtolower($tipe_jadwal)) . ' Tahap ' . $tahap . ' Grup ' . $item->kode_grup;
-
-                    $existingLog = WhatsappModel::where([
-                        'ip' => $log->ip,
-                        'id_jamaah' => $log->id_jamaah,
-                        'status' => $log->status,
-                        'action' => $log->action,
-                    ])->exists();
-
-                    if (!$existingLog) {
-                        $log->save();
+                
+                    foreach ($wee as $item) {
+                        $log = new WhatsappModel();
+                    
+                        $log->ip = $request->ip();
+                        $log->id_jamaah = $item->id_jamaah; 
+                        $log->status = $response ? 'success' : 'failed';
+                        $log->json = json_encode(['target' => $nomor_hp, 'message' => $message, 'response' => $response]);
+                        $log->action = 'Whatsapp Jadwal '.ucwords(strtolower($tipe_jadwal)).' Tahap ' . $tahap . ' Grup ' . $item->kode_grup;
+                    
+                        $existingLog = WhatsappModel::where([
+                            'ip' => $log->ip,
+                            'id_jamaah' => $log->id_jamaah,
+                            'status' => $log->status,
+                            'action' => $log->action,
+                        ])->exists();
+                    
+                        if (!$existingLog) {
+                            $log->save();
+                        }
                     }
-                }
             }
         }
-
-        return redirect()->back()->with('success', 'Berhasil Memproses Whatsapp Jadwal ' . ucwords(strtolower($tipe_jadwal)) . ' Tahap ' . $tahap . ' Grup ' . $kode_grup);
     }
 
     private function tanggalIDN($date)
@@ -254,5 +256,95 @@ class OfficeJadwalController extends Controller
         ];
 
         return strtr($date, array_merge($hariIDN, $bulanIDN));
+    }
+
+    public function import(Request $request)
+    {
+        $act = $request->get('proses');
+        $type = $request->input('type');
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
+
+        date_default_timezone_set('Asia/Jakarta');
+        $ayeuna = new DateTime();
+        $formatted_datetime = $ayeuna->format('dmYHis');
+
+        if ($type == 'add') {
+            if ($act == 'upload_jadwal') {
+                $file_name = 'Jadwal_' . $formatted_datetime . '.xlsx';
+                $destination_folder = 'doc/jadwal';
+
+                $this->create_folder($destination_folder);
+
+                try {
+                    Excel::import(new HeaderImport(), $request->file('file'), $destination_folder . '/' . $file_name);
+                } catch (\Exception $e) {
+                    return redirect()->to('data-jadwal')->with('error', $e->getMessage());
+                }
+            } elseif ($act == 'upload_layanan') {
+                $file_name = 'Layanan_' . $formatted_datetime . '.xlsx';
+                $destination_folder = 'doc/layanan';
+
+                $this->create_folder($destination_folder);
+
+                try {
+                    Excel::import(new HeaderImport(), $request->file('file'), $destination_folder . '/' . $file_name);
+                } catch (\Exception $e) {
+                    return redirect()->to('data-layanan')->with('error', $e->getMessage());
+                }
+            } elseif ($act == 'upload_report') {
+                // echo "MASOK"; die;
+                $file_name = 'Report_' . $formatted_datetime . '.xlsx';
+                $destination_folder = 'doc/jadwal';
+
+                $this->create_folder($destination_folder);
+
+                try {
+                    Excel::import(new HeaderReport(), $request->file('file'), $destination_folder . '/' . $file_name);
+                } catch (\Exception $e) {
+                    return redirect()->to('data-report')->with('error', $e->getMessage());
+                }
+            } else {
+                return redirect()->back()->with('error', 'Type tidak dikenali.');
+            }
+            return redirect()->back()->with('success', 'Data berhasil diimport.');
+        } else if ($type == 'update') {
+            if ($act == 'upload_jadwal') {
+                $file_name = 'Jadwal_' . $formatted_datetime . '.xlsx';
+                $destination_folder = 'doc/jadwal';
+
+                $this->create_folder($destination_folder);
+
+                try {
+                    Excel::import(new HeaderUpdateImport(), $request->file('file'), $destination_folder . '/' . $file_name);
+                } catch (\Exception $e) {
+                    return redirect()->to('/')->with('error', $e->getMessage());
+                }
+            } elseif ($act == 'upload_layanan') {
+                $file_name = 'Layanan_' . $formatted_datetime . '.xlsx';
+                $destination_folder = 'doc/layanan';
+
+                $this->create_folder($destination_folder);
+
+                try {
+                    Excel::import(new HeaderUpdateImport(), $request->file('file'), $destination_folder . '/' . $file_name);
+                } catch (\Exception $e) {
+                    return redirect()->to('data-layanan')->with('error', $e->getMessage());
+                }
+            } else {
+                return redirect()->back()->with('error', 'Type tidak dikenali.');
+            }
+            return redirect()->back()->with('success', 'Data berhasil diupdate.');
+        } else {
+            return redirect()->back()->with('error', 'Anda belum memilih tipe proses Add/Update.');
+        }
+    }
+
+    private function create_folder($folder_path)
+    {
+        if (!file_exists($folder_path)) {
+            mkdir($folder_path, 0777, true);
+        }
     }
 }

@@ -28,6 +28,7 @@ use App\Http\Controllers\FrontOffice\OfficeTransakController;
 use App\Http\Controllers\FrontOffice\OfficeTransController;
 use App\Http\Controllers\FrontOffice\OfficeVerifController;
 use App\Http\Controllers\FrontOffice\OfficeVerifTransController;
+use App\Http\Controllers\FrontOffice\OfficeJadwalController;
 use App\Http\Controllers\Jamaah\JadwalJamaahController;
 use App\Http\Controllers\Jamaah\JamaahController;
 use App\Http\Controllers\Jamaah\JamaahTransController;
@@ -208,6 +209,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/office-report', 'index');
             Route::get('/office-report-view', 'view');
         });
+
+        // JADWAL
+        Route::post('/import', [OfficeJadwalController::class, 'import'])->name('import');
+        Route::get('/data-jadwal-office', [OfficeJadwalController::class, 'index'])->name('data.jadwal');
+        Route::get('/data-jadwal-office/delete/{id}', [OfficeJadwalController::class, 'destroy'])->name('delete.data.jadwal.office');
+        Route::get('/data-uraian-jadwal-office/delete/{id}', [OfficeJadwalController::class, 'destroyUraian'])->name('delete.data.uraian.jadwal.office');
+        Route::post('/send-request/whatsapp/jadwal/{id}', [OfficeJadwalController::class, 'send_whatsapp'])->name('send.whatsapp.jadwal');
     });
     Route::middleware('role:kbih')->group(function () {
 

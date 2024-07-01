@@ -15,6 +15,7 @@ class OfficeLayananController extends Controller
         $jamaah = JamaahModel::all();
         return view('pages.front-office.office-layanan.index', [
             'act' => 'LayananO',
+            'title' => 'Data Layanan Office',
             'layanan' => $layanan,
             'jamaah' => $jamaah
         ]);
