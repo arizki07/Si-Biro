@@ -21,6 +21,7 @@ use App\Http\Controllers\finance\FinanceUserController;
 use App\Http\Controllers\Finance\FKeuanganController;
 use App\Http\Controllers\Finance\FTransaksiController;
 use App\Http\Controllers\Finance\ReportFinanceController;
+use App\Http\Controllers\FrontOffice\OfficeJadwalController;
 use App\Http\Controllers\FrontOffice\OfficeLayananController;
 use App\Http\Controllers\FrontOffice\OfficeReportController;
 use App\Http\Controllers\FrontOffice\OfficeTransakController;
@@ -197,6 +198,11 @@ Route::middleware('auth')->group(function () {
         Route::controller(OfficeTransakController::class)->group(function () {
             Route::get('/front-transaksi', 'index');
         });
+
+        // Route::get('/office/data-jadwal', [OfficeJadwalController::class, 'index'])->name('office.data.jadwal');
+        // Route::get('/office/data-jadwal/delete/{id}', [OfficeJadwalController::class, 'destroy'])->name('office.delete.data.jadwal');
+        // Route::get('/office/data-uraian-jadwal/delete/{id}', [OfficeJadwalController::class, 'destroyUraian'])->name('office.delete.data.uraian.jadwal');
+        // Route::post('/send-request/whatsapp/jadwal/{id}', [JadwalController::class, 'send_whatsapp'])->name('office.send.whatsapp.jadwal');
 
         Route::controller(OfficeReportController::class)->group(function () {
             Route::get('/office-report', 'index');

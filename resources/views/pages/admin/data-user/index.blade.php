@@ -66,18 +66,6 @@
                                                         data-bs-target="#delete{{ $user->id_user }}"><i
                                                             class=" ri-delete-bin-2-fill"></i></a>
 
-                                                    {{-- <form method="POST"
-                                                        action="{{ route('users.destroy', $user->id_user) }}"
-                                                        id="delete-form" class="d-inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button"
-                                                            class="btn btn-danger btn-icon waves-effect waves-light btn-sm"
-                                                            onclick="btnDelete()">
-                                                            <i class="ri-delete-bin-2-fill"></i>
-                                                        </button>
-                                                    </form> --}}
-
                                                 </div>
                                             </div>
                                         </div>
