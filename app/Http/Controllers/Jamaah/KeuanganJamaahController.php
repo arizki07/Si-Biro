@@ -13,6 +13,7 @@ class KeuanganJamaahController extends Controller
 {
     public function index()
     {
+        // Ambil data Jamaah berdasarkan id_user yang sedang login
         $userJamaah = JamaahModel::where('id_user', Auth::id())->first();
 
         // Default status biodata
@@ -25,16 +26,18 @@ class KeuanganJamaahController extends Controller
             } else {
                 $biodataStatus = 'pending'; // Jika belum disetujui, ubah status ke pending
             }
+
+            // Ambil data keuangan berdasarkan id_jamaah dari pengguna yang sedang login
+            $keuangan = Keuangan::where('id_jamaah', $userJamaah->id_jamaah)->get();
+        } else {
+            // Handle jika tidak ditemukan data Jamaah untuk user yang sedang login
+            $keuangan = collect(); // Atau berikan array kosong jika perlu
         }
-        $keuangan = Keuangan::where('id_jamaah', Auth::id())->get();
-        $jamaah = JamaahModel::all();
-        $transaksi = TransaksiModel::all();
+
         return view('pages.jamaah.keuangan-jamaah.index', [
             'act' => 'KeuanganJam',
             'title' => 'Data Keuangan Jamaah',
-            'jamaah' => $jamaah,
             'keuangan' => $keuangan,
-            'transaksi' => $transaksi,
             'biodataStatus' => $biodataStatus,
         ]);
     }

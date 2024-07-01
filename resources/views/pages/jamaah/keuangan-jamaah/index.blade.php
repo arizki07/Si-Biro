@@ -53,7 +53,6 @@
                                     <tr class="text-center">
                                         <th>No</th>
                                         <th>Nama Jamaah</th>
-                                        {{-- <th>Nomor Transaksi</th> --}}
                                         <th>Pembayaran</th>
                                         <th>Keuangan</th>
                                         <th>Opsi</th>
@@ -65,26 +64,13 @@
                                         <tr class="text-center">
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $keu->jamaah->nama_lengkap }}</td>
-                                            {{-- <td>{{ $keu->id_transaksi }}</td> --}}
                                             <td>{{ $keu->pembayaran }}</td>
-                                            <td>{{ $keu->tipe_keuangan }} </td>
+                                            <td>{{ $keu->tipe_keuangan }}</td>
                                             <td>
                                                 <button type="button"
                                                     class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
                                                     data-bs-toggle="modal" data-bs-target="#viewVer{{ $keu->id_jamaah }}">
                                                     <i class="ri-eye-fill"></i>
-                                                </button>
-                                                <button type="button"
-                                                    class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#editModal{{ $keu->id_keuangan }}">
-                                                    <i class="ri-edit-2-fill"></i>
-                                                </button>
-                                                <button type="button"
-                                                    class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#confirmDelete{{ $keu->id_keuangan }}">
-                                                    <i class="ri-delete-bin-7-fill"></i>
                                                 </button>
                                             </td>
                                         </tr>
@@ -97,4 +83,63 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal --}}
+    @foreach ($keuangan as $keu)
+        <div class="modal fade" id="viewVer{{ $keu->id_jamaah }}" tabindex="-1" aria-labelledby="exampleModalgridLabel">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalgridLabel">Grid Modals</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="javascript:void(0);">
+                            <div class="row g-3">
+                                <div class="col-xxl-6">
+                                    <div>
+                                        <label for="firstName" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="firstName"
+                                            placeholder="Enter firstname"
+                                            value="{{ old('id_jamaah', $keu->jamaah->nama_lengkap) }}" disabled>
+                                    </div>
+                                </div>
+                                <!--end col-->
+                                <div class="col-xxl-6">
+                                    <div>
+                                        <label for="lastName" class="form-label">Id Transaksi</label>
+                                        <input type="text" class="form-control" id="lastName"
+                                            placeholder="Enter lastname"
+                                            value="{{ old('id_transaksi', $keu->id_transaksi) }}" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-6">
+                                    <label for="emailInput" class="form-label">Pembayaran</label>
+                                    <input type="email" class="form-control" id="emailInput"
+                                        placeholder="Enter your email" value="{{ old('pembayaran', $keu->pembayaran) }}"
+                                        disabled>
+                                </div>
+                                <!--end col-->
+                                <div class="col-xxl-6">
+                                    <label for="passwordInput" class="form-label">Tipe Pembayaran</label>
+                                    <input type="text" class="form-control" id="passwordInput"
+                                        value="{{ old('tipe_keuangan', $keu->tipe_keuangan) }}" disabled>
+                                </div>
+                                <!--end col-->
+                                <div class="col-lg-12">
+                                    <div class="hstack gap-2 justify-content-end">
+                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                                <!--end col-->
+                            </div>
+                            <!--end row-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+    {{-- end modal --}}
 @endsection
