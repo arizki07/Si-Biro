@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\Admin\VerifikasiController;
 use App\Http\Controllers\Admin\WhatsappController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\ForgotController;
 use App\Http\Controllers\DashboardController;
 // use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\finance\FinanceUserController;
@@ -56,6 +57,7 @@ Route::post('register', [AuthController::class, 'registerPost']);
 Route::get('/otp-verification', [AuthController::class, 'otpVerification'])->name('otpVerification');
 Route::get('/generate-new-otp', [AuthController::class, 'generateNewOTP'])->name('generateNewOTP');
 Route::post('/otp-verification', [AuthController::class, 'otpVerificationPost']);
+Route::get('/forgot', [ForgotController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
 
