@@ -79,7 +79,7 @@
     <script>
         setTimeout(function() {
             window.location.href = "{{ route('dashboard') }}";
-        }, 5000);
+        }, 3000);
     </script>
 </body>
 

@@ -89,11 +89,11 @@ class ReportModel extends Model
              'g.verifikasi as verif_transaksi',
              'c.id_layanan as nomor_layanan',
              'b.id_jamaah as nomor_jamaah',
-             'e.created_at as tanggal_report'
+             'e.created_at as tanggal_report',
              )
             ->where('a.id_report', '=', $id)
             ->first();
-
+        // dd ($Query);
         return $Query;
     }
 

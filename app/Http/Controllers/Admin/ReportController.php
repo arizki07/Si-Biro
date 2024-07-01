@@ -42,9 +42,14 @@ class ReportController extends Controller
     {
         $report = ReportModel::findOrFail($id);
         $keterangan = json_decode($report->keterangan, true);
-
+        
         $reportModel = new ReportModel();
         $QreportByID = $reportModel->QueryReportByID($id);
+
+        if (!$QreportByID) {
+            return redirect()->back()->with('error', 'Data gagal dibuka. Cek apakah sudah melakukan transaksi?');
+        }
+        // dd($QreportByID);
 
         // MCU
         $mcu = ReportModel::where('id_jamaah', $QreportByID->id_jamaah)
@@ -114,13 +119,4 @@ class ReportController extends Controller
             'manasik' => $keteranganManasik,
         ]);
     }
-
-    // <form>
-    //     @foreach ($keterangan as $key => $value)
-    //         <div>
-    //             <label for="{{ $key }}">{{ ucfirst(str_replace('_', ' ', $key)) }}:</label>
-    //             <input type="text" id="{{ $key }}" name="{{ $key }}" value="{{ $value }}" readonly>
-    //         </div>
-    //     @endforeach
-    // </form>
 }

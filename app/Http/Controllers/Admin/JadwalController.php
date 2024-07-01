@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\JadwalModel;
 use App\Models\UraianJadwalModel;
 use App\Models\GrupModel;
+use App\Models\WhatsappModel;
 use Carbon\Carbon;
 
 class JadwalController extends Controller
@@ -98,6 +99,7 @@ class JadwalController extends Controller
 
     public function send_whatsapp(Request $request, $id)
     {
+        $log = new WhatsappModel();
         date_default_timezone_set('Asia/Jakarta');
         $kode_grup = $request->input('kode_grup');
         $tahap = $request->input('tahap');
@@ -184,10 +186,11 @@ class JadwalController extends Controller
     
             $response = curl_exec($curl);
             curl_close($curl);
+                
     
             if (!$response) {
                 return redirect()->back()->with('error', 'Gagal mengirim pesan WhatsApp.');
-            }
+            } 
         }
 
         // $log->ip = $request->ip();

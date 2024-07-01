@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('log_app', function (Blueprint $table) {
             $table->id();
-            $table->string('action');
-            $table->string('id_jamaah');
-            $table->string('ip');
-            $table->TEXT('json');
-            $table->string('status');
+            $table->string('action')->nullable();
+            $table->string('id_jamaah')->nullable();
+            $table->string('ip')->nullable();
+            $table->TEXT('json')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

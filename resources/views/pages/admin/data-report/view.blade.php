@@ -116,7 +116,7 @@
                                                     <table class="table table-borderless mb-0">
                                                         <tbody>
                                                             <tr>
-                                                                <th class="ps-0" scope="row">Nama Lengkap :</th>
+                                                                <th class="ps-0" scope="row">Nama :</th>
                                                                 <td class="text-muted">{{ $qr->nama_lengkap }}</td>
                                                             </tr>
                                                             <tr>
@@ -144,7 +144,7 @@
                                                                 <td class="text-muted">{{ $qr->status }}</td>
                                                             </tr>
                                                             <tr>
-                                                                <th class="ps-0" scope="row">Bank Rekening :</th>
+                                                                <th class="ps-0" scope="row">Bank :</th>
                                                                 <td class="text-muted">{{ $qr->bank }}</td>
                                                             </tr>
                                                             <tr>

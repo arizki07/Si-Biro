@@ -82,12 +82,10 @@
                                         <th>No</th>
                                         <th>Opsi</th>
                                         <th>Nama Jamaah</th>
-                                        <th>Tahap</th>
-                                        <th>Nama Tahap</th>
-                                        <th>Layanan</th>
-                                        <th>Tipe Jadwal</th>
-                                        <th>Status</th>
-                                        <th>File Opsional</th>
+                                        <th>No KTP</th>
+                                        <th>No Layanan</th>
+                                        <th>Nama Layanan</th>
+                                        {{-- <th>File Opsional</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -102,7 +100,7 @@
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#delete{{ $rep->id_report }}"><i
                                                         class="ri-delete-bin-2-fill"></i></a> --}}
-                                                <form id="deleteForm{{ $rep->id_report }}"
+                                                {{-- <form id="deleteForm{{ $rep->id_report }}"
                                                     action="{{ route('delete.report', $rep->id_report) }}" method="POST"
                                                     class="d-inline">
                                                     @csrf
@@ -114,34 +112,12 @@
                                                         data-original-title="Delete">
                                                         <i class="ri-delete-bin-2-fill"></i>
                                                     </a>
-                                                </form>
+                                                </form> --}}
                                             </td>
                                             <td>{{ $rep->nama_lengkap }}</td>
-                                            <td>{{ $rep->tahap_report }}</td>
-                                            <td>
-                                                @if ($rep->tipe_report == 'MCU')
-                                                {{ $rep->judul_mcu }}
-                                                @elseif ($rep->tipe_report == 'BIMBINGAN')
-                                                {{ $rep->judul_bimbingan }} 
-                                                @elseif ($rep->tipe_report == 'PASSPORT')
-                                                {{ $rep->judul_passport }}
-                                                @else
-                                                {{ $rep->judul_manasik }}
-                                                @endif
-                                            </td>
+                                            <td>{{ $rep->no_ktp }}</td>
                                             <td>LA-{{ $rep->id_layanan }}</td>
-                                            <td>{{ $rep->tipe_report }}</td>
-                                            {{-- <td>{{ \Carbon\Carbon::parse($rep->created_at)->format('d M Y') }}</td> --}}
-                                            <td>{{ $rep->status_report }}</td>
-                                            <td>
-                                                @if ($rep->file_opsional == NULL || $rep->file_opsional == '')
-                                                <a type="button" class="btn btn-outline-secondary waves-effect waves-light btn-sm" data-bs-toggle="modal" data-bs-target="#">Add File
-                                                </a>
-                                                @else
-                                                {{-- Sementara --}}
-                                                {{ $rep->file_opsional }}
-                                                @endif
-                                            </td>
+                                            <td>{{ $rep->judul_layanan }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
