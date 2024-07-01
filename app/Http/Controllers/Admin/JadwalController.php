@@ -99,13 +99,17 @@ class JadwalController extends Controller
 
     public function send_whatsapp(Request $request, $id)
     {
-        $log = new WhatsappModel();
         date_default_timezone_set('Asia/Jakarta');
         $kode_grup = $request->input('kode_grup');
         $tahap = $request->input('tahap');
         $id_layanan = $request->input('id_layanan');
         $nomor_jadwal = $request->input('nomor_jadwal');
         $tipe_jadwal = $request->input('tipe_jadwal');
+
+        if ($tahap == NULL || $kode_grup == NULL) {
+            return redirect()->back()->with('error', 'Wajib memilih Grup dan Tahap.');
+        }
+
         // echo "$kode_grup" . "$tahap";die;
         $Qgrup = DB::table('t_grup')
                 ->select('no_hp')
@@ -129,6 +133,7 @@ class JadwalController extends Controller
 
         // area whatsapp
         foreach ($Qgrup as $nomor_hp) {
+            // print_r($nomor_hp); die;
             // area whatsapp
             $curl = curl_init();
             $message = "*Whatsapp KBIH Wadi Fatimah*\n\n";
@@ -190,15 +195,38 @@ class JadwalController extends Controller
     
             if (!$response) {
                 return redirect()->back()->with('error', 'Gagal mengirim pesan WhatsApp.');
-            } 
+            } else {
+                $wee = DB::table('t_grup')
+                    ->select('*')
+                    ->where('kode_grup', $kode_grup)
+                    ->where('id_layanan', $id_layanan)
+                    ->get();
+                
+                    foreach ($wee as $item) {
+                        $log = new WhatsappModel();
+                    
+                        $log->ip = $request->ip();
+                        $log->id_jamaah = $item->id_jamaah; 
+                        $log->status = $response ? 'success' : 'failed';
+                        $log->json = json_encode(['target' => $nomor_hp, 'message' => $message, 'response' => $response]);
+                        $log->action = 'Whatsapp Jadwal '.ucwords(strtolower($tipe_jadwal)).' Tahap ' . $tahap . ' Grup ' . $item->kode_grup;
+                    
+                        $existingLog = WhatsappModel::where([
+                            'ip' => $log->ip,
+                            'id_jamaah' => $log->id_jamaah,
+                            'status' => $log->status,
+                            'action' => $log->action,
+                        ])->exists();
+                    
+                        if (!$existingLog) {
+                            $log->save();
+                        }
+                    }
+                    
+            }
         }
 
-        // $log->ip = $request->ip();
-        // $log->status = $response ? 'success' : 'failed';
-        // $log->action = 'Whatsapp Verifikasi '. ucwords(strtolower($verif_act));
-        // $log->save();
-
-        return redirect()->back()->with('success', 'Data.');
+        return redirect()->back()->with('success', 'Berhasil Memproses Whatsapp Jadwal '.ucwords(strtolower($tipe_jadwal)).' Tahap ' . $tahap . ' Grup ' . $kode_grup);
     }
 
     private function tanggalIDN($date)

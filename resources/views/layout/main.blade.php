@@ -6,9 +6,8 @@
 
     @include('layout.partials.header')
     <!-- ========== App Menu ========== -->
-    <div class="app-menu navbar-menu">
-        <div class="page" id="focusArea" onmousemove="getPos(event)"
-            onmouseout="startTimerWhenStopped(60 * 15, $('#timer'))" onmouseover="stopTimerWhenMoving()">
+    <div class="page" id="focusArea" onmousemove="getPos(event)" onmouseout="startTimerWhenStopped(60 * 15, $('#timer'))" onmouseover="stopTimerWhenMoving()">
+        <div class="app-menu navbar-menu">
             <!-- LOGO -->
             @include('layout.partials.navbar')
 
