@@ -65,7 +65,7 @@
                                     <?php $i = 1; ?>
                                     @foreach ($data as $item)
                                         <tr class="text-center">
-                                            <td><?= $i++ ?></td>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->jamaah->nama_lengkap }}</td>
                                             <td>LA-{{ $item->layanan->judul_layanan }}</td>
                                             <td>{{ $item->tipe_pembayaran }}</td>
@@ -82,6 +82,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
+
                                 </tbody>
                             </table>
                         </div>
@@ -112,7 +113,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Nama Jamaah</label>
-                                @if($jamaahs->isNotEmpty())
+                                @if ($jamaahs->isNotEmpty())
                                     @foreach ($jamaahs as $jamaah)
                                         <input type="text" id="id_jamaah_{{ $jamaah->id_jamaah }}"
                                             class="form-control border border-dark bg-secondary-lt" name="id_jamaah"
@@ -120,10 +121,11 @@
                                         <input type="hidden" name="id_jamaah" value="{{ $jamaah->id_jamaah }}">
                                     @endforeach
                                 @else
-                                    <input type="text" class="form-control border border-dark bg-secondary-lt" name="id_jamaah" value="Nama Jamaah tidak ditemukan" disabled>
+                                    <input type="text" class="form-control border border-dark bg-secondary-lt"
+                                        name="id_jamaah" value="Nama Jamaah tidak ditemukan" disabled>
                                 @endif
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label class="form-label">Layanan</label>
                                 <select name="id_layanan" id="id_layanan" class="form-select border border-dark">
@@ -156,8 +158,8 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Bukti Pembayaran</label>
-                                <input type="file" class="form-control border border-dark" name="foto_bukti_pembayaran"
-                                    id="foto_passport">
+                                <input type="file" class="form-control border border-dark"
+                                    name="foto_bukti_pembayaran" id="foto_passport">
                             </div>
 
 
@@ -292,10 +294,10 @@
         }
 
         // Event listener untuk format input saat engetik
-        document.getElementById("jumlah_pembayaran").addEventListener("input", function() {
-            let formattedValue = formatRupiah(this.value);
-            this.value = formattedValue;
-        });
+        // document.getElementById("jumlah_pembayaran").addEventListener("input", function() {
+        //     let formattedValue = formatRupiah(this.value);
+        //     this.value = formattedValue;
+        // });
 
         function logFormData(event) {
             event.preventDefault(); // Prevent the form from submitting immediately

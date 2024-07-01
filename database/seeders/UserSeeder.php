@@ -15,11 +15,11 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'nama' => 'Administrator',
-                'email' => 'admin@gmail.com',
+                'nama' => 'Super Administrator',
+                'email' => 'superadmin@gmail.com',
                 'id_role' => 1,
                 'otp_register' => 'AA6f',
-                'password' => bcrypt('Admin.123'),
+                'password' => bcrypt('Super.123'),
                 'status' => 1
             ],
             [
@@ -39,11 +39,11 @@ class UserSeeder extends Seeder
                 'status' => 1
             ],
             [
-                'nama' => 'Front Office',
-                'email' => 'frontoffice@gmail.com',
+                'nama' => 'Administrator',
+                'email' => 'admin@gmail.com',
                 'id_role' => 4,
                 'otp_register' => 'DD6f',
-                'password' => bcrypt('Office.123'),
+                'password' => bcrypt('Admin.123'),
                 'status' => 1
             ],
             [

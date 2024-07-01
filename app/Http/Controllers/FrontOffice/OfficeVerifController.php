@@ -10,6 +10,7 @@ use App\Models\TransaksiModel;
 use App\Models\User;
 use App\Models\WhatsappModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OfficeVerifController extends Controller
 {
@@ -135,7 +136,7 @@ class OfficeVerifController extends Controller
         $log->json = json_encode(['target' => $jamaah->no_hp, 'message' => $message, 'response' => $response]);
         $log->status = $response ? 'success' : 'failed';
         $log->action = 'Whatsapp Verifikasi ' . strtoupper($verif_act);
-        $log->id_jamaah = $jamaah->id_jamaah;
+        // $log->id_jamaah = $jamaah->id_jamaah;
         $log->save();
 
         return redirect()->back()->with('success', 'Data Verifikasi ' . strtoupper($verif_act) . ' Berhasil Di ' . strtoupper($type) . '.');

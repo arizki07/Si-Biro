@@ -51,8 +51,8 @@ class JadwalController extends Controller
         }
 
         $grup = GrupModel::select('kode_grup', \DB::raw('MIN(id_grup) as id_grup'), \DB::raw('MIN(id_jamaah) as id_jamaah'), \DB::raw('MIN(id_layanan) as id_layanan'), \DB::raw('MIN(no_hp) as no_hp'))
-        ->groupBy('kode_grup')
-        ->get();
+            ->groupBy('kode_grup')
+            ->get();
 
         return view('pages.admin.data-jadwal.index', $data, [
             'urJadwal' => UraianJadwalModel::all(),
@@ -79,7 +79,7 @@ class JadwalController extends Controller
                 $uraian->delete();
             }
             $jadwal->delete();
-            
+
             return redirect()->back()->with('success', 'Data jadwal beserta uraiannya berhasil dihapus.');
         } catch (QueryException $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus data jadwal. Silakan coba lagi.');
@@ -112,21 +112,21 @@ class JadwalController extends Controller
 
         // echo "$kode_grup" . "$tahap";die;
         $Qgrup = DB::table('t_grup')
-                ->select('no_hp')
-                ->where('kode_grup', $kode_grup)
-                ->where('id_layanan', $id_layanan)
-                // ->get();
-                ->pluck('no_hp');
-                // echo "<pre>";
-                // echo($Qgrup) . "<br><br><br>";
-                // echo "</pre>";die;
+            ->select('no_hp')
+            ->where('kode_grup', $kode_grup)
+            ->where('id_layanan', $id_layanan)
+            // ->get();
+            ->pluck('no_hp');
+        // echo "<pre>";
+        // echo($Qgrup) . "<br><br><br>";
+        // echo "</pre>";die;
         $wa = explode(',', $Qgrup);
-        
+
         $Qjadwal = DB::table('t_uraian_jadwal')
-                ->select('*')
-                ->where('tahap', $tahap)
-                ->where('nomor_jadwal', $nomor_jadwal)
-                ->first();
+            ->select('*')
+            ->where('tahap', $tahap)
+            ->where('nomor_jadwal', $nomor_jadwal)
+            ->first();
 
         $tanggal = date('l, d F Y H:i') . ' WIB';
         $tanggalApp = $this->tanggalIDN($tanggal);
@@ -138,7 +138,7 @@ class JadwalController extends Controller
             $curl = curl_init();
             $message = "*Whatsapp KBIH Wadi Fatimah*\n\n";
             $message .= "*Assalmualaikum Warahmatullah Wabarakatuh*\n\n";
-            $message .= "Informasi untuk jamaah KBIH Wadi Fatimah, Bahwasannya kami ingin mengingatkan sesuai dengan jadwal ".$tipe_jadwal." yang sudah ada, maka akan ada jadwal yang dilaksanakan pada :\n\n";
+            $message .= "Informasi untuk jamaah KBIH Wadi Fatimah, Bahwasannya kami ingin mengingatkan sesuai dengan jadwal " . $tipe_jadwal . " yang sudah ada, maka akan ada jadwal yang dilaksanakan pada :\n\n";
 
             if ($tipe_jadwal == 'MCU') {
                 $message .= "Tanggal : *" . date('d M Y', strtotime($Qjadwal->tgl_mulai_mcu)) . "*\n";
@@ -188,11 +188,11 @@ class JadwalController extends Controller
                     'Authorization: ZQFA!45KMw+YfkBK-CJj'
                 ),
             ));
-    
+
             $response = curl_exec($curl);
             curl_close($curl);
-                
-    
+
+
             if (!$response) {
                 return redirect()->back()->with('error', 'Gagal mengirim pesan WhatsApp.');
             } else {
@@ -222,7 +222,6 @@ class JadwalController extends Controller
                             $log->save();
                         }
                     }
-                    
             }
         }
 
@@ -257,5 +256,4 @@ class JadwalController extends Controller
 
         return strtr($date, array_merge($hariIDN, $bulanIDN));
     }
-
 }
