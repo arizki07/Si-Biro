@@ -304,23 +304,6 @@
                                             <div data-simplebar style="height: 390px;">
                                                 <div class="p-3">
                                                     @foreach ($jamaahs as $item)
-                                                        <h6 id="current-date"
-                                                            class="text-muted text-uppercase mb-3 fs-11">19
-                                                            May 2024</h6>
-
-                                                        <script>
-                                                            document.addEventListener("DOMContentLoaded", function() {
-                                                                var dateElement = document.getElementById('current-date');
-                                                                var options = {
-                                                                    year: 'numeric',
-                                                                    month: 'short',
-                                                                    day: 'numeric'
-                                                                };
-                                                                var today = new Date().toLocaleDateString('en-US', options);
-                                                                dateElement.textContent = today;
-                                                            });
-                                                        </script>
-
                                                         <div class="d-flex align-items-center">
                                                             <div class="avatar-xs flex-shrink-0">
                                                                 <span class="avatar-title bg-light rounded-circle">
@@ -370,23 +353,6 @@
                                             <div data-simplebar style="height: 390px;">
                                                 <div class="p-3">
                                                     @foreach ($transaksis as $item)
-                                                        <h6 id="current-date"
-                                                            class="text-muted text-uppercase mb-3 fs-11">19
-                                                            May 2024</h6>
-
-                                                        <script>
-                                                            document.addEventListener("DOMContentLoaded", function() {
-                                                                var dateElement = document.getElementById('current-date');
-                                                                var options = {
-                                                                    year: 'numeric',
-                                                                    month: 'short',
-                                                                    day: 'numeric'
-                                                                };
-                                                                var today = new Date().toLocaleDateString('en-US', options);
-                                                                dateElement.textContent = today;
-                                                            });
-                                                        </script>
-
                                                         <div class="d-flex align-items-center">
                                                             <div class="avatar-xs flex-shrink-0">
                                                                 <span class="avatar-title bg-light rounded-circle">

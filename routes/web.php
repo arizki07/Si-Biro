@@ -186,11 +186,9 @@ Route::middleware('auth')->group(function () {
 
         Route::controller(OfficeVerifTransController::class)->group(function () {
             Route::get('/Office-transaksi', 'index');
-            Route::post('/verif/transaksi{id}', 'verifTransaksi');
-
-            // Route::post('/office-trans/approve/{id}', 'approve')->name('office-trans.approve');
-            // Route::post('/office-trans/reject/{id}', 'reject')->name('office-trans.reject');
+            Route::post('/verif/transaksi/{id}', 'verifTransaksi')->name('verif.transaksi');
         });
+
 
         Route::controller(OfficeLayananController::class)->group(function () {
             Route::get('/office-layanan', 'index');

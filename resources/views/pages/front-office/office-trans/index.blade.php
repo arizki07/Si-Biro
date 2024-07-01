@@ -65,22 +65,33 @@
                                                     data-bs-target="#detailTransaksi{{ $item->id_transaksi }}">
                                                     <i class="ri-eye-fill"></i>
                                                 </button>
-                                                <form action="{{ url('/verif/transaksi', $item->id_transaksi) }}"
-                                                    method="POST" style="display:inline;" id="formApprove">
+                                                <form action="{{ route('verif.transaksi', $item->id_transaksi) }}"
+                                                    method="POST" class="formApprove" style="display:inline;">
                                                     @csrf
-                                                    <button type="button" id="btnApprove"
-                                                        class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm">
+                                                    <input type="hidden" name="type" value="approved">
+                                                    <!-- or 'rejected' as needed -->
+                                                    <input type="hidden" name="verif" value="transaksi">
+                                                    <!-- specify the verification action -->
+                                                    <button type="button"
+                                                        class="btnApprove btn btn-outline-success btn-icon waves-effect waves-light btn-sm">
                                                         <i class="ri-lock-unlock-fill"></i>
                                                     </button>
                                                 </form>
-                                                <form action="{{ url('/verif/transaksi', $item->id_transaksi) }}"
-                                                    method="POST" style="display:inline;" id="formReject">
+
+                                                <form action="{{ route('verif.transaksi', $item->id_transaksi) }}"
+                                                    method="POST" class="formReject" style="display:inline;">
                                                     @csrf
-                                                    <button type="button" id="btnReject"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm">
+                                                    <input type="hidden" name="type" value="rejected">
+                                                    <!-- or 'approved' as needed -->
+                                                    <input type="hidden" name="verif" value="transaksi">
+                                                    <!-- specify the verification action -->
+                                                    <button type="button"
+                                                        class="btnReject btn btn-outline-danger btn-icon waves-effect waves-light btn-sm">
                                                         <i class="ri-lock-password-fill"></i>
                                                     </button>
                                                 </form>
+
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -189,57 +200,60 @@
     <script src="assets/js/pages/sweetalerts.init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
     <script>
-        document.getElementById('btnApprove').addEventListener('click', function() {
-            swal.fire({
-                icon: 'info',
-                title: 'Proses Approve',
-                html: `
-                    <center>
-                        <lottie-player src="https://lottie.host/1ae8263e-7260-48e6-89c7-282ab5ce909a/FhOMekG3Tf.json"  
-                            background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
-                        </lottie-player>
-                    </center>
-                    <br>
-                    <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
-                    <h4 class="h4">
-                        <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
-                    </h4>
-                `,
-                showConfirmButton: false,
-                showCancelButton: false,
-                allowOutsideClick: false
-            });
+        document.querySelectorAll('.btnApprove').forEach((button, index) => {
+            button.addEventListener('click', function() {
+                swal.fire({
+                    icon: 'info',
+                    title: 'Proses Approve',
+                    html: `
+                <center>
+                    <lottie-player src="https://lottie.host/1ae8263e-7260-48e6-89c7-282ab5ce909a/FhOMekG3Tf.json"  
+                        background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
+                    </lottie-player>
+                </center>
+                <br>
+                <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
+                <h4 class="h4">
+                    <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
+                </h4>
+            `,
+                    showConfirmButton: false,
+                    showCancelButton: false,
+                    allowOutsideClick: false
+                });
 
-            setTimeout(function() {
-                document.getElementById('formApprove').submit();
-            }, 5000);
+                setTimeout(function() {
+                    document.querySelectorAll('.formApprove')[index].submit();
+                }, 5000);
+            });
         });
 
-        //reject
-        document.getElementById('btnReject').addEventListener('click', function() {
-            swal.fire({
-                icon: 'info',
-                title: 'Proses Reject',
-                html: `
-                    <center>
-                        <lottie-player src="https://lottie.host/04412762-9109-48c0-b6f6-c57c9ff72cdc/rgc7wXYfLY.json"  
-                            background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
-                        </lottie-player>
-                    </center>
-                    <br>
-                    <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
-                    <h4 class="h4">
-                        <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
-                    </h4>
-                `,
-                showConfirmButton: false,
-                showCancelButton: false,
-                allowOutsideClick: false
-            });
+        document.querySelectorAll('.btnReject').forEach((button, index) => {
+            button.addEventListener('click', function() {
+                swal.fire({
+                    icon: 'info',
+                    title: 'Proses Reject',
+                    html: `
+                <center>
+                    <lottie-player src="https://lottie.host/04412762-9109-48c0-b6f6-c57c9ff72cdc/rgc7wXYfLY.json"  
+                        background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
+                    </lottie-player>
+                </center>
+                <br>
+                <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
+                <h4 class="h4">
+                    <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
+                </h4>
+            `,
+                    showConfirmButton: false,
+                    showCancelButton: false,
+                    allowOutsideClick: false
+                });
 
-            setTimeout(function() {
-                document.getElementById('formReject').submit();
-            }, 5000);
+                setTimeout(function() {
+                    document.querySelectorAll('.formReject')[index].submit();
+                }, 5000);
+            });
         });
     </script>
 @endsection

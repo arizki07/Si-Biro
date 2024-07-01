@@ -79,9 +79,7 @@ class OfficeVerifTransController extends Controller
                 }
             }
         } elseif ($verif_act == 'transaksi') {
-            // echo "Masuk Ke Else"; die;
             $transaksi = TransaksiModel::findOrFail($id);
-            $jamaah = new JamaahModel();
             $log = new WhatsappModel();
 
             if ($transaksi->verifikasi == $type) {
@@ -94,7 +92,7 @@ class OfficeVerifTransController extends Controller
                 $tanggalUpdate = date('d-m-Y H:i T', strtotime($transaksi->updated_at));
                 $tanggalApp = $this->tanggalIDN($tanggal);
 
-                // area whatsapp
+                // WhatsApp notification
                 $curl = curl_init();
                 $message = $transaksi->pesanVerifTransaksi($type, $tanggalUpdate, $tanggalApp, $id);
                 $Q_transaksi = DB::table('t_transaksi as a')
@@ -103,7 +101,6 @@ class OfficeVerifTransController extends Controller
                     ->select('a.*', 'c.*', 'b.no_hp')
                     ->where('a.id_transaksi', '=', $id)
                     ->first();
-                // dd($message);
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => 'https://api.fonnte.com/send',
                     CURLOPT_RETURNTRANSFER => true,
@@ -129,14 +126,15 @@ class OfficeVerifTransController extends Controller
                 if (!$response) {
                     return redirect()->back()->with('error', 'Gagal mengirim pesan WhatsApp.');
                 }
+
+                // Logging
+                $log->ip = $request->ip();
+                $log->json = json_encode(['target' => $Q_transaksi->no_hp, 'message' => $message, 'response' => $response]);
+                $log->status = $response ? 'success' : 'failed';
+                $log->action = 'Whatsapp Verifikasi TRANSAKSI';
+                $log->save();
             }
         }
-
-        $log->ip = $request->ip();
-        $log->json = json_encode(['target' => $jamaah->no_hp, 'message' => $message, 'response' => $response]);
-        $log->status = $response ? 'success' : 'failed';
-        $log->action = 'Whatsapp Verifikasi ' . strtoupper($verif_act);
-        $log->save();
 
         return redirect()->back()->with('success', 'Data Verifikasi ' . strtoupper($verif_act) . ' Berhasil Di ' . strtoupper($type) . '.');
     }
