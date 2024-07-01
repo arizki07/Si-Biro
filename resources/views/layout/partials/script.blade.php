@@ -15,7 +15,7 @@
 
 <!--Swiper slider js-->
 <script src="{{ asset('assets/libs/swiper/swiper-bundle.min.js') }}"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
 <!-- Dashboard init -->
 <script src="{{ asset('assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
 
