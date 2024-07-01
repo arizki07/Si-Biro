@@ -143,7 +143,7 @@
                                         @foreach ($transaksi as $tran)
                                             <option value="{{ $tran->id_transaksi }}"
                                                 {{ old('id_transaksi') == $tran->id_transaksi ? 'selected' : '' }}>
-                                                {{ $tran->id_transaksi }}</option>
+                                                {{ $tran->id_transaksi }}-{{ $tran->jamaah->nama_lengkap }}</option>
                                         @endforeach
                                     </select>
                                 </div>
