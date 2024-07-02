@@ -40,9 +40,9 @@
 
                                 </ul>
                                 <!-- Button untuk tambah data biodata -->
-                                <button type="button" class="btn btn-primary waves-effect waves-light ms-3"
+                                <button type="button" class="btn btn-success waves-effect waves-light ms-3"
                                     data-bs-toggle="modal" data-bs-target="#import">
-                                    <i class="ri-file-pdf-fill me-1"></i> Tambah Biodata
+                                    <i class="ri-file-excel-line"></i> IMPORT JADWAL
                                 </button>
                             </div>
                         </div>

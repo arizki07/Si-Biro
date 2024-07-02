@@ -129,7 +129,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Layanan</label>
                                 <select name="id_layanan" id="id_layanan" class="form-select border border-dark">
-                                    <option value="" hidden>-- Pilih Layanan --</option>
+                                    <option selected disabled>-- Pilih Layanan --</option>
                                     @foreach ($layanans as $layanan)
                                         <option value="{{ $layanan->id_layanan }}">{{ $layanan->judul_layanan }}</option>
                                     @endforeach
@@ -138,9 +138,9 @@
                             <div class="mb-3">
                                 <label class="form-label">Tipe Pembayaran</label>
                                 <select name="tipe_pembayaran" id="tipe_pembayaran" class="form-select border border-dark">
-                                    <option value="" hidden>-- Pilih Pembayaran --</option>
+                                    <option selected disabled>-- Pilih Pembayaran --</option>
                                     <option value="cash">Cash</option>
-                                    <option value="tranfer">Tranfer</option>
+                                    <option value="Transfer">Transfer</option>
                                     <option value="agen">Agen</option>
                                 </select>
                             </div>

@@ -70,7 +70,7 @@ class OfficeJadwalController extends Controller
         // Fetch all jadwals
         $jadwal = JadwalModel::whereIn('tipe_jadwal', ['MCU', 'BIMBINGAN', 'PASSPORT', 'MANASIK'])->get();
 
-        return view('pages.front-office.data-jadwal.import-jadwal', [
+        return view('pages.front-office.office-jadwal.import-jadwal', [
             'judul' => 'Halaman Import Jadwal',
             'jadwal' => $jadwal,
             'act' => 'OfficeImport',
@@ -241,6 +241,7 @@ class OfficeJadwalController extends Controller
                     }
                 }
             }
+            return redirect()->back()->with('success', 'Berhasil mengirim ke Whatsapp');
         }
     }
 
