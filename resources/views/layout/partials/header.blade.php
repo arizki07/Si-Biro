@@ -67,7 +67,7 @@
                     </div>
                 </div>
 
-                {{-- <span style="font-size: 15px;color:rgb(0, 0, 0); margin-top: 14px;"id="timer">15:00</span> --}}
+              
 
 
                 <div class="ms-1 header-item d-none d-sm-flex">

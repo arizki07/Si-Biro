@@ -1,7 +1,7 @@
 @php
     $userRole = Auth::user()->id_role;
 @endphp
-
+@include('layout.partials.modal-import')
 @if ($userRole === 1)
     {{-- Admin --}}
     <div id="scrollbar">
@@ -253,11 +253,6 @@
                                         class="nav-link {{ $act == 'jadwal-manasik' ? 'active' : '' }}"> MANASIK HAJI
                                     </a>
                                 </li>
-                                {{-- <li class="nav-item">
-                                    <a href="#" class="nav-link" data-bs-toggle="modal"
-                                        data-bs-target="#importExcel">
-                                        UPLOAD JADWAL </a>
-                                </li> --}}
                             </ul>
                         </div>
                     </li>
@@ -459,11 +454,6 @@
                                 <a href="/kb-jadwal?action=manasik"
                                     class="nav-link {{ $act == 'jadwal-manasik' ? 'active' : '' }}"> MANASIK HAJI </a>
                             </li>
-                            {{-- <li class="nav-item">
-                                <a href="#" class="nav-link" data-bs-toggle="modal"
-                                    data-bs-target="#importExcel">
-                                    UPLOAD JADWAL </a>
-                            </li> --}}
                         </ul>
                     </div>
                 </li>

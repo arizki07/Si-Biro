@@ -6,7 +6,7 @@
 
     @include('layout.partials.header')
     <!-- ========== App Menu ========== -->
-    <div class="page" id="focusArea" onmousemove="getPos(event)" onmouseout="startTimerWhenStopped(60 * 15, $('#timer'))" onmouseover="stopTimerWhenMoving()">
+   
         <div class="app-menu navbar-menu">
             <!-- LOGO -->
             @include('layout.partials.navbar')
@@ -15,7 +15,6 @@
 
             <div class="sidebar-background"></div>
         </div>
-    </div>
     <!-- Left Sidebar End -->
     <!-- Vertical Overlay-->
     <div class="vertical-overlay"></div>
