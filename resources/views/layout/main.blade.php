@@ -6,15 +6,15 @@
 
     @include('layout.partials.header')
     <!-- ========== App Menu ========== -->
-   
-        <div class="app-menu navbar-menu">
-            <!-- LOGO -->
-            @include('layout.partials.navbar')
 
-            @include('layout.partials.sidebar')
+    <div class="app-menu navbar-menu">
+        <!-- LOGO -->
+        @include('layout.partials.navbar')
 
-            <div class="sidebar-background"></div>
-        </div>
+        @include('layout.partials.sidebar')
+
+        <div class="sidebar-background"></div>
+    </div>
     <!-- Left Sidebar End -->
     <!-- Vertical Overlay-->
     <div class="vertical-overlay"></div>
@@ -36,7 +36,6 @@
 
 @yield('scripting')
 
-@include('layout.partials.modal-import')
 
 @include('layout.partials.themes_setting')
 

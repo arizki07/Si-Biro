@@ -65,6 +65,19 @@ class OfficeJadwalController extends Controller
         ]);
     }
 
+    public function Excel()
+    {
+        // Fetch all jadwals
+        $jadwal = JadwalModel::whereIn('tipe_jadwal', ['MCU', 'BIMBINGAN', 'PASSPORT', 'MANASIK'])->get();
+
+        return view('pages.front-office.data-jadwal.import-jadwal', [
+            'judul' => 'Halaman Import Jadwal',
+            'jadwal' => $jadwal,
+            'act' => 'OfficeImport',
+        ]);
+    }
+
+
     public function view($id)
     {
         return view('pages.front-office.office-jadwal.view', [

@@ -206,7 +206,8 @@ Route::middleware('auth')->group(function () {
         });
 
         // JADWAL
-        Route::post('/import', [OfficeJadwalController::class, 'import'])->name('import');
+        Route::get('/office-jadwal-import', [OfficeJadwalController::class, 'excel']);
+        Route::post('/import/office', [OfficeJadwalController::class, 'import'])->name('import.office');
         Route::get('/data-jadwal-office', [OfficeJadwalController::class, 'index'])->name('data.jadwal');
         Route::get('/data-jadwal-office/delete/{id}', [OfficeJadwalController::class, 'destroy'])->name('delete.data.jadwal.office');
         Route::get('/data-uraian-jadwal-office/delete/{id}', [OfficeJadwalController::class, 'destroyUraian'])->name('delete.data.uraian.jadwal.office');
