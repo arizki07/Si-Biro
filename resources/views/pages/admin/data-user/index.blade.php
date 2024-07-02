@@ -8,7 +8,7 @@
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0">{{ $title }}</h4>
                         <div class="page-title-right">
-                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#adduser">
+                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addUser">
                                 <i class="ri-user-add-fill"></i> Add Users
                             </button>
                         </div>
@@ -17,7 +17,7 @@
             </div>
             <div class="row">
                 @if (!$users->isEmpty())
-                    @foreach ($users as $user)
+                    @foreach ($users as $item)
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-body bg-marketplace d-flex">
@@ -30,13 +30,13 @@
                                         </div>
                                         <div class="col">
                                             <div class="p-2">
-                                                <h3 class="mb-1">{{ $user->nama }}</h3>
-                                                <p class="text-muted">{{ $user->email }}</p>
+                                                <h3 class="mb-1">{{ $item->nama }}</h3>
+                                                <p class="text-muted">{{ $item->email }}</p>
                                                 <div class="d-flex align-items-center text-muted">
                                                     <i class="ri-map-pin-user-line me-1 fs-16"></i>
                                                     <span>
                                                         @foreach ($roles as $role)
-                                                            @if ($user->id_role == $role->id_role)
+                                                            @if ($item->id_role == $role->id_role)
                                                                 {{ $role->nama_role }}
                                                             @endif
                                                         @endforeach
@@ -45,9 +45,9 @@
                                                 <div class="d-flex align-items-center text-muted">
                                                     <i class="ri-building-line me-1 fs-16"></i>
                                                     <span>
-                                                        @if ($user->status == 1)
+                                                        @if ($item->status == 1)
                                                             Akun Aktif
-                                                        @elseif ($user->status == 2)
+                                                        @elseif ($item->status == 2)
                                                             Akun Nonaktif
                                                         @else
                                                             Akun Ter-Blokir
@@ -57,15 +57,22 @@
                                                 <div class="mt-3">
                                                     <button type="button" class="btn btn-secondary btn-sm"
                                                         data-bs-toggle="modal"
-                                                        data-bs-target="#viewUser{{ $user->id_user }}"><i
+                                                        data-bs-target="#viewUser{{ $item->id_user }}"><i
                                                             class="ri-eye-fill"></i></button>
-                                                    <button type="button" class="btn btn-success btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#editUser{{ $user->id_user }}"><i
+                                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editUser{{$item->id_user}}"><i
                                                             class=" ri-edit-2-fill"></i></button>
-                                                    <a type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                                        data-bs-target="#delete{{ $user->id_user }}"><i
-                                                            class=" ri-delete-bin-2-fill"></i></a>
+                                                            <form id="deleteForm{{ $item->id_user }}"
+                                                                action="{{ route('users.destroy', $item->id_user) }}" method="POST"
+                                                                class="d-inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <a href="#" type="button"
+                                                                    class="btn btn-danger btn-sm deletePengguna" data-toggle="tooltip"
+                                                                    onclick="confirmDelete(event, {{ $item->id_user }})"
+                                                                    data-original-title="Delete">
+                                                                    <i class="ri-delete-bin-2-fill"></i>
+                                                                </a>
+                                                            </form>
 
                                                 </div>
                                             </div>
@@ -113,14 +120,14 @@
 
     {{-- modal add --}}
  {{-- Modal Add --}}
- <div id="adduser" class="modal fade" tabindex="-1" aria-labelledby="adduserLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+ <div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="exampleModalgridLabel">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="adduserLabel">Add Data Users</h5>
+                <h5 class="modal-title" id="exampleModalgridLabel">Grid Modals</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body bg-marketplace d-flex">
+            <div class="modal-body">
                 <form action="{{ route('users.add') }}" method="post">
                     @csrf
                     <div class="row g-3">
@@ -172,6 +179,7 @@
         </div>
     </div>
 </div>
+
     {{-- end modal --}}
     
     {{-- Modal View --}}
@@ -238,101 +246,62 @@
     @endforeach
     {{-- end modal view --}}
 
-    {{-- Modal Edit --}}
-    @foreach ($users as $user)
-        <div id="editUser{{ $user->id_user }}" class="modal fade fadeInLeft" tabindex="-1"
-            aria-labelledby="editUserLabel" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editUserLabel">Edit Data Users</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body bg-marketplace d-flex">
-                        <form action="{{ route('users.update', ['user' => $user->id_user]) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="row g-3">
-                                <div class="col-md-12">
-                                    <div>
-                                        <label for="editNama" class="form-label">Nama</label>
-                                        <input type="text" class="form-control" id="editNama" name="nama"
-                                            value="{{ $user->nama }}" placeholder="Masukkan nama">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div>
-                                        <label for="editEmail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="editEmail" name="email"
-                                            value="{{ $user->email }}" placeholder="Masukkan email">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div>
-                                        <label for="editIdRole" class="form-label">Role</label>
-                                        <select class="form-select" id="editIdRole" name="id_role">
-                                            @foreach ($roles as $role)
-                                                <option value="{{ $role->id_role }}"
-                                                    {{ $user->id_role == $role->id_role ? 'selected' : '' }}>
-                                                    {{ $role->role }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div>
-                                        <label for="editStatus" class="form-label">Status</label>
-                                        <select class="form-select" id="editStatus" name="status">
-                                            <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Active
-                                            </option>
-                                            <option value="2" {{ $user->status == 2 ? 'selected' : '' }}>Inactive
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--end row--><br>
-                            <div class="col-lg-12">
-                                <div class="hstack gap-2 justify-content-end">
-                                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Tutup</button>
-                                </div>
-                            </div>
-                        </form>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="delete{{ $user->id_user }}" class="modal fade fadeInLeft" tabindex="-1"
-            aria-labelledby="editUserLabel" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editUserLabel">Hapus Data Users</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body bg-marketplace d-flex">
-                        <div class="row g-3">
-                            <p>Yakin ingin mneghapus data ini?</p>
-                            <!--end row--><br>
-                            <div class="col-lg-12">
-                                <div class="hstack gap-2 justify-content-end">
-                                    <a type="button" href="/data-users/delete/{{ $user['id_user'] }}"
-                                        class="btn btn-primary">Hapus</a>
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Tutup</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    @endforeach
-    {{-- End Modal edit --}}
-
+   {{-- modal edit --}}
+   @foreach ($users as $user)
+   <div class="modal fade" id="editUser{{$user->id_user}}" tabindex="-1" aria-labelledby="editUserLabel{{$user->id_user}}" aria-hidden="true">
+       <div class="modal-dialog">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="editUserLabel{{$user->id_user}}">Edit User</h5>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                   <form action="{{ route('users.update', ['user' => $user->id_user]) }}" method="POST">
+                       @csrf
+                       @method('PUT')
+                       <div class="row g-3">
+                           <div class="col-md-12">
+                               <label for="editNama{{$user->id_user}}" class="form-label">Nama</label>
+                               <input type="text" class="form-control" id="editNama{{$user->id_user}}" name="nama"
+                                      value="{{ $user->nama }}" placeholder="Masukkan nama">
+                           </div>
+                           <div class="col-md-12">
+                               <label for="editEmail{{$user->id_user}}" class="form-label">Email</label>
+                               <input type="email" class="form-control" id="editEmail{{$user->id_user}}" name="email"
+                                      value="{{ $user->email }}" placeholder="Masukkan email">
+                           </div>
+                           <div class="col-md-12">
+                               <label for="editIdRole{{$user->id_user}}" class="form-label">Role</label>
+                               <select class="form-select" id="editIdRole{{$user->id_user}}" name="id_role">
+                                   @foreach ($roles as $role)
+                                       <option value="{{ $role->id_role }}" {{ $user->id_role == $role->id_role ? 'selected' : '' }}>
+                                           {{ $role->role }}
+                                       </option>
+                                   @endforeach
+                               </select>
+                           </div>
+                           <div class="col-md-12">
+                               <label for="editStatus{{$user->id_user}}" class="form-label">Status</label>
+                               <select class="form-select" id="editStatus{{$user->id_user}}" name="status">
+                                   <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Active</option>
+                                   <option value="2" {{ $user->status == 2 ? 'selected' : '' }}>Inactive</option>
+                               </select>
+                           </div>
+                       </div>
+                       <br>
+                       <div class="col-lg-12">
+                           <div class="hstack gap-2 justify-content-end">
+                               <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                           </div>
+                       </div>
+                   </form>
+               </div>
+           </div>
+       </div>
+   </div>
+   @endforeach
    
+{{-- end moda edit --}}
 @endsection
