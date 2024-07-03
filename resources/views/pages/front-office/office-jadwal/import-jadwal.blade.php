@@ -88,12 +88,6 @@
                                                                     <td>{{ $i++ }}</td>
                                                                     <td>
                                                                         <a type="button"
-                                                                            class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#whatsapp{{ $jad->id_jadwal }}">
-                                                                            <i class="ri-whatsapp-line"></i>
-                                                                        </a>
-                                                                        <a type="button"
                                                                             class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
                                                                             data-bs-toggle="modal"
                                                                             data-bs-target="#detail{{ $jad->id_jadwal }}">
@@ -150,7 +144,8 @@
     <div class="modal modal-blur fade" id="import" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form method="post" action="{{ route('import.office') }}?proses=upload_jadwal" enctype="multipart/form-data">
+            <form method="post" id="formImport" action="{{ route('import.office') }}?proses=upload_jadwal"
+                enctype="multipart/form-data">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -159,31 +154,6 @@
                     </div>
                     <div class="modal-body">
                         <input class="form-check-input" type="hidden" name="type" id="type1" value="add">
-                        {{-- <div class="mb-3">
-                    <label class="form-label">Pilih Type Proses</label>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="type" id="type1"
-                                        value="add">
-                                    <label class="form-check-label" for="type1">
-                                        Add
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="type" id="type2"
-                                        value="update">
-                                    <label class="form-check-label" for="type2">
-                                        Update
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
                         <div class="mb-3">
                             <label class="form-label">Pilih file excel (xlsx)</label>
                             <input type="file" name="file" required="required" accept=".xlsx" class="form-control">
@@ -192,12 +162,60 @@
                     <div class="modal-footer">
                         <a href="{{ asset('doc/jadwal/TEMPLATE-JADWAL.xlsx') }}" class="btn btn-link link-secondary"
                             download>Download Contoh Excel</a>
-                        <button type="submit" class="btn btn-primary ms-auto"><i class="ri-upload-cloud-line"
-                                style="margin-right:5px"></i> Import</button>
+                        <button type="submit" id="btn-import" class="btn btn-primary ms-auto"><i
+                                class="ri-upload-cloud-line" style="margin-right:5px"></i> Import</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     {{-- End Modal IMport Excel --}}
+
+    <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="assets/js/pages/sweetalerts.init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+    <script>
+        document.getElementById('btn-import').addEventListener('click', function(e) {
+            e.preventDefault();
+            swal.fire({
+                icon: 'info',
+                html: `
+                <center>
+                    <lottie-player src="https://lottie.host/21d80ff7-b90a-4369-92df-57e25f70f139/sjHvF8uMTg.json"
+                        background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay>
+                    </lottie-player>
+                </center>
+                <br>
+                <h4 class="h4 text-danger">Sedang melakukan import data, mohon menunggu.</h4>
+            `,
+                showConfirmButton: false,
+                showCancelButton: false,
+                allowOutsideClick: false
+            });
+
+            // Simulate form submission after showing the loading animation
+            setTimeout(function() {
+                document.getElementById('formImport').submit(); // Submit the form using POST method
+            }, 3000); // Adjust the timeout duration as needed
+
+            setTimeout(function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Import jadwal berhasil di import',
+                    text: "{{ session()->get('success') }}",
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000, // corrected time to timer
+                    timerProgressBar: true, // corrected timeProgressBar to timerProgressBar
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal
+                            .resumeTimer); // corrected second mouseenter to mouseleave
+                    }
+                });
+            }, 6000);
+        });
+    </script>
 @endsection

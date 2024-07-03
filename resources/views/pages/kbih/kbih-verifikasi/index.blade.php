@@ -38,7 +38,6 @@
                                         <th>Nama</th>
                                         <th>Layanan</th>
                                         <th>Keterangan</th>
-                                        <th>Verif</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -56,26 +55,6 @@
                                                 @else
                                                     <span class="badge text-bg-secondary">Pending</span>
                                                 @endif
-                                            </td>
-                                            <td>
-                                                <form
-                                                    action="{{ route('verif', $item->id_jamaah) }}?type=approved&verif=biodata"
-                                                    method="POST" style="display:inline;" id="formApprove">
-                                                    @csrf
-                                                    <button type="button" id="btnApprove"
-                                                        class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm">
-                                                        <i class="ri-lock-unlock-fill"></i>
-                                                    </button>
-                                                </form>
-                                                <form
-                                                    action="{{ route('verif', $item->id_jamaah) }}?type=rejected&verif=biodata"
-                                                    method="POST" style="display:inline;" id="formReject">
-                                                    @csrf
-                                                    <button type="button" id="btnReject"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm">
-                                                        <i class="ri-lock-password-fill"></i>
-                                                    </button>
-                                                </form>
                                             </td>
                                             <td>
                                                 <button type="button"
@@ -107,7 +86,6 @@
                                         <th>Nama</th>
                                         <th>Layanan</th>
                                         <th>Keterangan</th>
-                                        <th>Verif</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -125,26 +103,6 @@
                                                 @else
                                                     <span class="badge text-bg-secondary">Pending</span>
                                                 @endif
-                                            </td>
-                                            <td>
-                                                <form
-                                                    action="{{ route('verif', $item->id_transaksi) }}?type=approved&verif=transaksi"
-                                                    method="POST" style="display:inline;" id="formApproveTr">
-                                                    @csrf
-                                                    <button type="button" id="btnApproveTr"
-                                                        class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm">
-                                                        <i class="ri-lock-unlock-fill"></i>
-                                                    </button>
-                                                </form>
-                                                <form
-                                                    action="{{ route('verif', $item->id_transaksi) }}?type=rejected&verif=transaksi"
-                                                    method="POST" style="display:inline;" id="formRejecttr">
-                                                    @csrf
-                                                    <button type="button" id="btnRejecttr"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm">
-                                                        <i class="ri-lock-password-fill"></i>
-                                                    </button>
-                                                </form>
                                             </td>
                                             <td>
                                                 <button type="button"
@@ -210,8 +168,8 @@
                                         <div class="mb-3">
                                             <label class="form-label">Nama Lengkap</label>
                                             <input type="text" class="form-control border border-dark bg-secondary-lt"
-                                                name="nama_lengkap"
-                                                value="{{ old('nama_lengkap', $item->nama_lengkap) }}" readonly>
+                                                name="nama_lengkap" value="{{ old('nama_lengkap', $item->nama_lengkap) }}"
+                                                readonly>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Umur</label>

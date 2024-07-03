@@ -408,24 +408,16 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body bg-marketplace d-flex">
-                        <form action="{{ route('office.whatsapp', $jad->id_jadwal) }}" method="POST">
+                        <form action="{{ route('office.whatsapp', $jad->id_jadwal) }}" id="formWhatsapp" method="POST">
                             @csrf
                             <input value="{{ $jad->id_layanan }}" type="hidden" name="id_layanan">
                             <input value="{{ $jad->nomor_jadwal }}" type="hidden" name="nomor_jadwal">
-                            @if ($jad->tipe_jadwal == 'MCU')
-                                <input value="MCU" type="hidden" name="tipe_jadwal">
-                            @elseif ($jad->tipe_jadwal == 'BIMBINGAN')
-                                <input value="BIMBINGAN" type="hidden" name="tipe_jadwal">
-                            @elseif ($jad->tipe_jadwal == 'PASSPORT')
-                                <input value="PASSPORT" type="hidden" name="tipe_jadwal">
-                            @else
-                                <input value="MANASIK" type="hidden" name="tipe_jadwal">
-                            @endif
+                            <input value="{{ $jad->tipe_jadwal }}" type="hidden" name="tipe_jadwal">
                             <div class="row g-3">
                                 <div class="col-6">
                                     <div>
                                         <label for="nama_role" class="form-label">Pilih Grup</label>
-                                        <select name="kode_grup" class="form-select border border-dark">
+                                        <select name="kode_grup" class="form-select border border-dark" required>
                                             <option selected disabled>-- Pilih Grup --</option>
                                             @foreach ($grup as $g)
                                                 @if ($g->id_layanan == $jad->id_layanan)
@@ -440,7 +432,7 @@
                                 <div class="col-6">
                                     <div>
                                         <label for="nama_role" class="form-label">Pilih Tahap</label>
-                                        <select name="tahap" class="form-select border border-dark">
+                                        <select name="tahap" class="form-select border border-dark" required>
                                             <option selected disabled>-- Pilih Tahap --</option>
                                             @foreach ($urJadwal as $u)
                                                 @if ($u->nomor_jadwal == $jad->nomor_jadwal)
@@ -456,15 +448,71 @@
                                     <div class="hstack gap-2 justify-content-end">
                                         <button type="button" class="btn btn-light"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="button" id="btn-whatsapp-{{ $jad->id_jadwal }}"
+                                            class="btn btn-primary">Kirim Whatsapp</button>
                                     </div>
                                 </div>
                             </div>
                         </form>
+
+
                     </div>
                 </div>
             </div>
         </div>
     @endforeach
 @endsection
+
+<link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+<script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
+<script src="assets/js/pages/sweetalerts.init.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('btn-whatsapp-{{ $jad->id_jadwal }}').addEventListener('click', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'info',
+                html: `
+                 <center>
+                    <lottie-player src="https://lottie.host/c68dc8b2-2eee-461c-9191-e760770816c1/CH1teS0p92.json"
+                        background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay>
+                    </lottie-player>
+                </center>
+            <br>
+            <h4 class="h4 text-danger">Sedang menghubungkan ke WhatsApp, mohon menunggu.</h4>
+            `,
+                showConfirmButton: false,
+                showCancelButton: false,
+                allowOutsideClick: false
+            });
+
+            // Simulate form submission after showing the loading animation
+            setTimeout(function() {
+                document.getElementById('formWhatsapp')
+                    .submit(); // Submit the form using POST method
+            }, 3000); // Adjust the timeout duration as needed
+
+            setTimeout(function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pesan telah berhasil terkirim ke WhatsApp',
+                    text: "{{ session()->get('success') }}",
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    }
+                });
+            }, 6000);
+        });
+    });
+</script>
+
+
 @endsection

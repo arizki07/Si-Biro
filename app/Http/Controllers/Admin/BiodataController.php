@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\GrupModel;
 use App\Models\JamaahModel;
 use App\Models\LayananModel;
 use App\Models\RoleModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class BiodataController extends Controller
 {
@@ -282,43 +285,57 @@ class BiodataController extends Controller
 
     public function delete($id)
     {
-
         // Temukan data biodata berdasarkan ID
         $jamaah = JamaahModel::findOrFail($id);
 
         // Hapus foto-foto terkait jika ada
         if ($jamaah->foto_ktp) {
-            // Hapus foto KTP dari direktori
-            if (file_exists(public_path('path_ke_folder_foto_ktp') . '/' . $jamaah->foto_ktp)) {
-                unlink(public_path('path_ke_folder_foto_ktp') . '/' . $jamaah->foto_ktp);
+            $path_ktp = public_path('path_ke_folder_foto_ktp') . '/' . $jamaah->foto_ktp;
+            if (File::exists($path_ktp)) {
+                File::delete($path_ktp);
             }
         }
 
         if ($jamaah->foto_kk) {
-            // Hapus foto KK dari direktori
-            if (file_exists(public_path('path_ke_folder_foto_kk') . '/' . $jamaah->foto_kk)) {
-                unlink(public_path('path_ke_folder_foto_kk') . '/' . $jamaah->foto_kk);
+            $path_kk = public_path('path_ke_folder_foto_kk') . '/' . $jamaah->foto_kk;
+            if (File::exists($path_kk)) {
+                File::delete($path_kk);
             }
         }
 
         if ($jamaah->foto_passport) {
-            // Hapus foto Passport dari direktori
-            if (file_exists(public_path('path_ke_folder_foto_passport') . '/' . $jamaah->foto_passport)) {
-                unlink(public_path('path_ke_folder_foto_passport') . '/' . $jamaah->foto_passport);
+            $path_passport = public_path('path_ke_folder_foto_passport') . '/' . $jamaah->foto_passport;
+            if (File::exists($path_passport)) {
+                File::delete($path_passport);
             }
         }
 
         if ($jamaah->pas_foto) {
-            // Hapus pas foto dari direktori
-            if (file_exists(public_path('path_ke_folder_pas_foto') . '/' . $jamaah->pas_foto)) {
-                unlink(public_path('path_ke_folder_pas_foto') . '/' . $jamaah->pas_foto);
+            $path_pas_foto = public_path('path_ke_folder_pas_foto') . '/' . $jamaah->pas_foto;
+            if (File::exists($path_pas_foto)) {
+                File::delete($path_pas_foto);
             }
         }
 
-        // Hapus data jamaah
-        $jamaah->delete();
+        // Menggunakan transaction untuk menangani penghapusan yang terkait
+        DB::beginTransaction();
 
-        // Redirect atau response sesuai kebutuhan
-        return redirect()->route('data.biodata')->with('success', 'Biodata berhasil dihapus.');
+        try {
+            // Hapus data dari tabel terkait (misalnya: t_grup)
+            GrupModel::where('id_jamaah', $jamaah->id_jamaah)->delete();
+
+            // Hapus data jamaah
+            $jamaah->delete();
+
+            DB::commit();
+
+            // Redirect atau response sesuai kebutuhan
+            return redirect()->route('data.biodata')->with('success', 'Biodata berhasil dihapus.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            // Handle jika terjadi error
+            return redirect()->back()->with('error', 'Gagal menghapus biodata: ' . $e->getMessage());
+        }
     }
 }
