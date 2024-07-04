@@ -90,7 +90,7 @@
                     <h5 class="modal-title" id="exampleModalgridLabel">Add Role</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body bg-marketplace d-flex">
+                <div class="modal-body bg-marketplace">
                     <form action="{{ route('store.role') }}" method="POST">
                         @csrf
                         <div class="row g-3">
@@ -122,7 +122,7 @@
     {{-- End Modal Tambah --}}
 
     {{-- modal edit --}}
-    @foreach ($role as $item)
+    @foreach ($role as $key => $item)
         <div class="modal fade" id="editmodal{{ $item->id_role }}" tabindex="-1" aria-labelledby="editmodalLabel">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -130,23 +130,21 @@
                         <h5 class="modal-title" id="editmodalLabel">Add Role</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body bg-marketplace d-flex">
+                    <div class="modal-body bg-marketplace">
                         <form action="{{ route('update.role', $item->id_role) }}" method="POST">
                             @csrf
                             <div class="row g-3">
-                                <div class="col-xxl-12">
+                                <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label for="role" class="form-label">Nama Role</label>
-                                        <select class="form-control" name="role">
-                                            <option disabled>--Pilih Role--</option>
-                                            @foreach ($role as $item)
-                                                <option value="{{ $item->role }}" {{ old('role', $item->role) == $item->role ? 'selected' : '' }}>
-                                                    {{ $item->role }}
+                                        <select class="form-select" name="role">
+                                            @foreach ($role as $o)
+                                                <option value="{{ $o->role }}" {{ ($item->role == $o->role) ? 'selected' : '' }}>
+                                                    {{ $o->role }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
-
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="hstack gap-2 justify-content-end">

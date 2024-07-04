@@ -134,11 +134,10 @@
                             <div class="mb-3">
                                 <label class="form-label">Role</label>
                                 <select name="id_role" id="id_role" class="form-select border border-dark">
-                                    <option value="" hidden>-- Pilih Role --</option>
+                                    <option value="" selected disabled>-- Pilih Role --</option>
                                     @foreach ($roles as $role)
-                                        <option value="{{ $role->id_role }}"
-                                            {{ $role->id_role == $role->id_role ? 'selected' : '' }}>
-                                            {{ $role->role }}
+                                        <option value="{{ $role->id_role }}">
+                                            {{ ucwords(strtolower($role->role)) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -152,9 +151,6 @@
                                     @endforeach
                                 </select>
                             </div>
-
-
-
                             <div class="mb-3">
                                 <label class="form-label">Nama Lengkap</label>
                                 <input type="text" class="form-control border border-dark bg-secondary-lt"
@@ -181,8 +177,12 @@
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Status</label>
-                                        <input type="text" class="form-control border border-dark" name="status"
-                                            placeholder="Masukkan Status" value="{{ old('status') }}">
+                                        <select name="status" class="form-select border-dark">
+                                            <option selected disabled>-- Pilih Status --</option>
+                                            <option>Belum Menikah</option>
+                                            <option>Sudah Menikah</option>
+                                            <option>Janda/Duda</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -305,9 +305,17 @@
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Pendidikan</label>
-                                        <input type="text" class="form-control border border-dark" name="pendidikan"
-                                            id="pendidikan" placeholder="Masukkan Pendidikan"
-                                            value="{{ old('pendidikan') }}">
+                                        <select name="pendidikan" class="form-select border-dark">
+                                            <option selected disabled>-- Pilih Pendidikan --</option>
+                                            <option value="Tidak Ada" {{ ($item->pendidikan == 'Tidak Ada') ? 'selected' : '' }}>Tidak Ada</option>
+                                            <option value="SD" {{ ($item->pendidikan == 'SD') ? 'selected' : '' }}>SD</option>
+                                            <option value="SMP Sederajat" {{ ($item->pendidikan == 'SMP Sederajat') ? 'selected' : '' }}>SMP Sederajat</option>
+                                            <option value="SMA Sederajat" {{ ($item->pendidikan == 'SMA Sederajat') ? 'selected' : '' }}>SMA Sederajat</option>
+                                            <option value="Diploma" {{ ($item->pendidikan == 'Diploma') ? 'selected' : '' }}>Diploma</option>
+                                            <option value="Sarjana S1" {{ ($item->pendidikan == 'Sarjana S1') ? 'selected' : '' }}>Sarjana S1</option>
+                                            <option value="Magister S2" {{ ($item->pendidikan == 'Magister S2') ? 'selected' : '' }}>Magister S2</option>
+                                            <option value="Doktor S3" {{ ($item->pendidikan == 'Doktor S3') ? 'selected' : '' }}>Doktor S3</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -315,10 +323,11 @@
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Pernah Haji/Umroh</label>
-                                        <input type="text" class="form-control border border-dark"
-                                            name="pernah_haji_umroh" id="pernah_haji_umroh"
-                                            placeholder="Masukkan Pernah Haji/Umroh"
-                                            value="{{ old('pernah_haji_umroh') }}">
+                                        <select name="pernah_haji_umroh" class="form-select border-dark">
+                                            <option value="" hidden>-- Pilih Keterangan --</option>
+                                            <option>Sudah</option>
+                                            <option>Belum</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -530,9 +539,12 @@
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Status</label>
-                                                    <input type="text" class="form-control border border-dark"
-                                                        name="status" placeholder="Masukkan Status"
-                                                        value="{{ old('status', $item->status) }}" readonly>
+                                                    <select name="status" class="form-select border-dark">
+                                                        <option selected disabled>-- Pilih Status --</option>
+                                                        <option value="Belum Menikah" {{ ($item->status == 'Belum Menikah') ? 'selected' : '' }}>Belum Menikah</option>
+                                                        <option value="Sudah Menikah" {{ ($item->status == 'Sudah Menikah') ? 'selected' : '' }}>Sudah Menikah</option>
+                                                        <option value="Janda/Duda" {{ ($item->status == 'Janda/Duda') ? 'selected' : '' }}>Janda/Juda</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -656,20 +668,26 @@
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Pendidikan</label>
-                                                    <input type="text" class="form-control border border-dark"
-                                                        name="pendidikan" id="pendidikan"
-                                                        placeholder="Masukkan Pendidikan"
-                                                        value="{{ old('pendidikan', $item->pendidikan) }}" readonly>
+                                                    <select name="pendidikan" class="form-select border-dark">
+                                                        <option selected disabled>-- Pilih Pendidikan --</option>
+                                                        <option value="Tidak Ada" {{ ($item->pendidikan == 'Tidak Ada') ? 'selected' : '' }}></option>
+                                                        <option value="SD" {{ ($item->pendidikan == 'SD') ? 'selected' : '' }}></option>
+                                                        <option value="SMP Sederajat" {{ ($item->pendidikan == 'SMP Sederajat') ? 'selected' : '' }}></option>
+                                                        <option value="SMA Sederajat" {{ ($item->pendidikan == 'SMA Sederajat') ? 'selected' : '' }}></option>
+                                                        <option value="Diploma" {{ ($item->pendidikan == 'Diploma') ? 'selected' : '' }}></option>
+                                                        <option value="Sarjana S1" {{ ($item->pendidikan == 'Sarjana S1') ? 'selected' : '' }}></option>
+                                                        <option value="Magister S2" {{ ($item->pendidikan == 'Magister S2') ? 'selected' : '' }}></option>
+                                                        <option value="Doktor S3" {{ ($item->pendidikan == 'Doktor S3') ? 'selected' : '' }}></option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Pernah Haji/Umroh</label>
-                                                    <input type="text" class="form-control border border-dark"
-                                                        name="pernah_haji_umroh" id="pernah_haji_umroh"
-                                                        placeholder="Masukkan Pernah Haji/Umroh"
-                                                        value="{{ old('pernah_haji_umroh', $item->pernah_haji_umroh) }}"
-                                                        readonly>
+                                                    <select name="pernah_haji_umroh" class="form-select border-dark">
+                                                        <option value="Sudah" {{ ($item->status == 'Sudah') ? 'selected' : '' }}>Sudah</option>
+                                                        <option value="Belum" {{ ($item->status == 'Belum') ? 'selected' : '' }}>Belum</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -758,12 +776,11 @@
                 </div>
             </div>
         </div>
-    @endforeach
     {{-- end modal Detail --}}
 
+    {{-- CRASH Kalau jadiin foreach 2 as variable beda beda, jadiin satu ajah --}}
     {{-- Modal edit --}}
-    @foreach ($jamaah as $jam)
-        <div class="modal fade" id="editModal{{ $jam->id_jamaah }}" tabindex="-1" aria-labelledby="editModalLabel">
+        <div class="modal fade" id="editModal{{ $item->id_jamaah }}" tabindex="-1" aria-labelledby="editModalLabel">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -772,7 +789,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="{{ route('update.biodata', $jam->id_jamaah) }}"
+                        <form method="post" action="{{ route('update.biodata', $item->id_jamaah) }}"
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
@@ -789,12 +806,11 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Role</label>
-                                    <select name="id_role" id="id_role" class="form-select border border-dark">
+                                    <select name="id_role" id="id_role" class="form-select border border-dark" disabled>
                                         <option value="" hidden>-- Pilih Role --</option>
                                         @foreach ($roles as $role)
-                                            <option value="{{ $role->id_role }}"
-                                                {{ $role->id_role == $role->id_role ? 'selected' : '' }}>
-                                                {{ $role->nama_role }}
+                                            <option value="{{ $role->id_role }}" {{ ($item->id_role == $role->id_role) ? 'selected' : '' }} disabled>
+                                                {{ ucwords(strtolower($role->role)) }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -805,7 +821,7 @@
                                         <option value="" hidden>-- Pilih Layanan --</option>
                                         @foreach ($layanans as $layanan)
                                             <option value="{{ $layanan->id_layanan }}"
-                                                @if ($layanan->id_layanan == $layanan->id_layanan) selected @endif>
+                                                @if ($item->id_layanan == $layanan->id_layanan) selected @endif>
                                                 {{ $layanan->judul_layanan }}</option>
                                         @endforeach
                                     </select>
@@ -815,12 +831,12 @@
                                 <div class="mb-3">
                                     <label class="form-label">Nama Lengkap</label>
                                     <input type="text" class="form-control border border-dark bg-secondary-lt"
-                                        name="nama_lengkap" value="{{ $jam->nama_lengkap }}">
+                                        name="nama_lengkap" value="{{ $item->nama_lengkap }}">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Umur</label>
                                     <input type="text" class="form-control border border-dark" name="umur"
-                                        id="umur" placeholder="Masukkan Umur" value="{{ $jam->umur }}">
+                                        id="umur" placeholder="Masukkan Umur" value="{{ $item->umur }}">
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -828,9 +844,9 @@
                                             <label class="form-label">Jenis Kelamin</label>
                                             <select name="jk" id="gender" class="form-select border-dark">
                                                 <option value="" hidden>-- Pilih Jenis Kelamin --</option>
-                                                <option value="Pria" {{ $jam->jk == 'Pria' ? 'selected' : '' }}>Pria
+                                                <option value="Pria" {{ $item->jk == 'Pria' ? 'selected' : '' }}>Pria
                                                 </option>
-                                                <option value="Wanita" {{ $jam->jk == 'Wanita' ? 'selected' : '' }}>
+                                                <option value="Wanita" {{ $item->jk == 'Wanita' ? 'selected' : '' }}>
                                                     Wanita
                                                 </option>
                                             </select>
@@ -839,8 +855,12 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label">Status</label>
-                                            <input type="text" class="form-control border border-dark" name="status"
-                                                placeholder="Masukkan Status" value="{{ $jam->status }}">
+                                            <select name="status" class="form-select border-dark">
+                                                <option selected disabled>-- Pilih Status --</option>
+                                                <option value="Belum Menikah" {{ ($item->status == 'Belum Menikah') ? 'selected' : '' }}>Belum Menikah</option>
+                                                <option value="Sudah Menikah" {{ ($item->status == 'Sudah Menikah') ? 'selected' : '' }}>Sudah Menikah</option>
+                                                <option value="Janda/Duda" {{ ($item->status == 'Janda/Duda') ? 'selected' : '' }}>Janda/Juda</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -850,7 +870,7 @@
                                             <label class="form-label">Tempat Lahir</label>
                                             <input type="text" class="form-control border border-dark"
                                                 name="tempat_lahir" id="tempat_lahir" placeholder="Masukkan Tempat Lahir"
-                                                value="{{ $jam->tempat_lahir }}">
+                                                value="{{ $item->tempat_lahir }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -858,7 +878,7 @@
                                             <label class="form-label">Tanggal Lahir</label>
                                             <input name="tgl_lahir" type="date"
                                                 class="form-control border border-dark" placeholder="YYYY-MM-DD"
-                                                value="{{ $jam->tgl_lahir }}" />
+                                                value="{{ $item->tgl_lahir }}" />
                                         </div>
                                     </div>
                                 </div>
@@ -868,7 +888,7 @@
                                             <label class="form-label">Nomor HP</label>
                                             <input type="text" class="form-control border border-dark" name="no_hp"
                                                 id="no_hp" placeholder="Masukkan Nomor HP"
-                                                value="{{ $jam->no_hp }}">
+                                                value="{{ $item->no_hp }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -876,7 +896,7 @@
                                             <label class="form-label">Nomor HP Wali</label>
                                             <input type="text" class="form-control border border-dark"
                                                 name="no_hp_wali" id="no_hp_wali" placeholder="Masukkan Nomor HP Wali"
-                                                value="{{ $jam->no_hp_wali }}">
+                                                value="{{ $item->no_hp_wali }}">
                                         </div>
                                     </div>
                                 </div>
@@ -886,7 +906,7 @@
                                             <label class="form-label">Nomor Rekening</label>
                                             <input type="text" class="form-control border border-dark"
                                                 name="no_rekening" id="no_rekening" placeholder="Masukkan Nomor Rekening"
-                                                value="{{ $jam->no_rekening }}">
+                                                value="{{ $item->no_rekening }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -894,7 +914,7 @@
                                             <label class="form-label">Nomor KTP</label>
                                             <input type="text" class="form-control border border-dark" name="no_ktp"
                                                 id="no_ktp" placeholder="Masukkan Nomor KTP"
-                                                value="{{ $jam->no_ktp }}">
+                                                value="{{ $item->no_ktp }}">
                                         </div>
                                     </div>
                                 </div>
@@ -904,7 +924,7 @@
                                             <label class="form-label">Nomor KK</label>
                                             <input type="text" class="form-control border border-dark" name="no_kk"
                                                 id="no_kk" placeholder="Masukkan Nomor KK"
-                                                value="{{ $jam->no_kk }}">
+                                                value="{{ $item->no_kk }}">
                                         </div>
                                     </div>
                                 </div>
@@ -917,7 +937,7 @@
                                                 <option selected disabled>-- Pilih Bank --</option>
                                                 @foreach ($json_bank as $bank)
                                                     <option value="{{ $bank['code'] }}-{{ $bank['name'] }}"
-                                                        {{ $jam->bank == $bank['code'] . '-' . $bank['name'] ? 'selected' : '' }}>
+                                                        {{ $item->bank == $bank['code'] . '-' . $bank['name'] ? 'selected' : '' }}>
                                                         {{ $bank['name'] }}</option>
                                                 @endforeach
                                             </select>
@@ -928,7 +948,7 @@
                                             <label class="form-label">Berat Badan</label>
                                             <input type="text" class="form-control border border-dark"
                                                 name="berat_badan" id="berat_badan" placeholder="Masukkan Berat Badan"
-                                                value="{{ $jam->berat_badan }}">
+                                                value="{{ $item->berat_badan }}">
                                         </div>
                                     </div>
                                 </div>
@@ -938,7 +958,7 @@
                                             <label class="form-label">Tinggi Badan</label>
                                             <input type="text" class="form-control border border-dark"
                                                 name="tinggi_badan" id="tinggi_badan" placeholder="Masukkan Tinggi Badan"
-                                                value="{{ $jam->tinggi_badan }}">
+                                                value="{{ $item->tinggi_badan }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -946,7 +966,7 @@
                                             <label class="form-label">Warna Kulit</label>
                                             <input type="text" class="form-control border border-dark"
                                                 name="warna_kulit" id="warna_kulit" placeholder="Masukkan Warna Kulit"
-                                                value="{{ $jam->warna_kulit }}">
+                                                value="{{ $item->warna_kulit }}">
                                         </div>
                                     </div>
                                 </div>
@@ -956,15 +976,23 @@
                                             <label class="form-label">Pekerjaan</label>
                                             <input type="text" class="form-control border border-dark"
                                                 name="pekerjaan" id="pekerjaan" placeholder="Masukkan Pekerjaan"
-                                                value="{{ $jam->pekerjaan }}">
+                                                value="{{ $item->pekerjaan }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label">Pendidikan</label>
-                                            <input type="text" class="form-control border border-dark"
-                                                name="pendidikan" id="pendidikan" placeholder="Masukkan Pendidikan"
-                                                value="{{ $jam->pendidikan }}">
+                                                <select name="pendidikan" class="form-select border-dark" disabled>
+                                                    <option selected disabled>-- Pilih Pendidikan --</option>
+                                                    <option value="Tidak Ada" {{ ($item->pendidikan == 'Tidak Ada') ? 'selected' : '' }}>Tidak Ada</option>
+                                                    <option value="SD" {{ ($item->pendidikan == 'SD') ? 'selected' : '' }}>SD</option>
+                                                    <option value="SMP Sederajat" {{ ($item->pendidikan == 'SMP Sederajat') ? 'selected' : '' }}>SMP Sederajat</option>
+                                                    <option value="SMA Sederajat" {{ ($item->pendidikan == 'SMA Sederajat') ? 'selected' : '' }}>SMA Sederajat</option>
+                                                    <option value="Diploma" {{ ($item->pendidikan == 'Diploma') ? 'selected' : '' }}>Diploma</option>
+                                                    <option value="Sarjana S1" {{ ($item->pendidikan == 'Sarjana S1') ? 'selected' : '' }}>Sarjana S1</option>
+                                                    <option value="Magister S2" {{ ($item->pendidikan == 'Magister S2') ? 'selected' : '' }}>Magister S2</option>
+                                                    <option value="Doktor S3" {{ ($item->pendidikan == 'Doktor S3') ? 'selected' : '' }}>Doktor S3</option>
+                                                </select>
                                         </div>
                                     </div>
                                 </div>
@@ -972,10 +1000,10 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label">Pernah Haji/Umroh</label>
-                                            <input type="text" class="form-control border border-dark"
-                                                name="pernah_haji_umroh" id="pernah_haji_umroh"
-                                                placeholder="Masukkan Pernah Haji/Umroh"
-                                                value="{{ $jam->pernah_haji_umroh }}">
+                                                <select name="pernah_haji_umroh" class="form-select border-dark" disabled>
+                                                    <option value="Sudah" {{ ($item->status == 'Sudah') ? 'selected' : '' }}>Sudah</option>
+                                                    <option value="Belum" {{ ($item->status == 'Belum') ? 'selected' : '' }}>Belum</option>
+                                                </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -983,7 +1011,7 @@
                                             <label class="form-label">Kelurahan</label>
                                             <input type="text" class="form-control border border-dark"
                                                 name="kelurahan" id="kelurahan" placeholder="Masukkan Kelurahan"
-                                                value="{{ $jam->kelurahan }}">
+                                                value="{{ $item->kelurahan }}">
                                         </div>
                                     </div>
                                 </div>
@@ -996,7 +1024,7 @@
                                                 <option selected disabled>-- Pilih Kecamatan --</option>
                                                 @foreach ($json_kecamatan as $kecamatan)
                                                     <option value="{{ $kecamatan['kecamatan'] }}"
-                                                        {{ $jam->kecamatan == $kecamatan['kecamatan'] ? 'selected' : '' }}>
+                                                        {{ $item->kecamatan == $kecamatan['kecamatan'] ? 'selected' : '' }}>
                                                         {{ $kecamatan['kecamatan'] }}</option>
                                                 @endforeach
                                             </select>
@@ -1010,7 +1038,7 @@
                                                 <option selected disabled>-- Pilih Kota/Kabupaten --</option>
                                                 @foreach ($json_kota as $kota)
                                                     <option value="{{ $kota['kota'] }}"
-                                                        {{ $jam->kota_kabupaten == $kota['kota'] ? 'selected' : '' }}>
+                                                        {{ $item->kota_kabupaten == $kota['kota'] ? 'selected' : '' }}>
                                                         {{ $kota['kota'] }}</option>
                                                 @endforeach
                                             </select>
@@ -1026,7 +1054,7 @@
                                                 <option selected disabled>-- Pilih Provinsi --</option>
                                                 @foreach ($json_provinsi as $prov)
                                                     <option value="{{ $prov['provinsi'] }}"
-                                                        {{ $jam->provinsi == $prov['provinsi'] ? 'selected' : '' }}>
+                                                        {{ $item->provinsi == $prov['provinsi'] ? 'selected' : '' }}>
                                                         {{ $prov['provinsi'] }}</option>
                                                 @endforeach
                                             </select>
@@ -1037,14 +1065,14 @@
                                             <label class="form-label">Kode Pos</label>
                                             <input type="text" class="form-control border border-dark" name="kode_pos"
                                                 id="kode_pos" placeholder="Masukkan Kode Pos"
-                                                value="{{ $jam->kode_pos }}">
+                                                value="{{ $item->kode_pos }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Alamat Lengkap</label>
                                     <textarea name="alamat_lengkap" id="alamat_lengkap" cols="30" rows="3"
-                                        class="form-control border border-dark" placeholder="Masukkan Alamat Lengkap">{{ $jam->alamat_lengkap }}</textarea>
+                                        class="form-control border border-dark" placeholder="Masukkan Alamat Lengkap">{{ $item->alamat_lengkap }}</textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -1052,7 +1080,7 @@
                                             <label class="form-label">Warga Negara</label>
                                             <input type="text" class="form-control border border-dark"
                                                 name="warga_negara" id="warga_negara" placeholder="Masukkan Warga Negara"
-                                                value="{{ $jam->warga_negara }}">
+                                                value="{{ $item->warga_negara }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -1060,7 +1088,7 @@
                                             <label class="form-label">Golongan Darah</label>
                                             <input type="text" class="form-control border border-dark"
                                                 name="gol_darah" id="gol_darah" placeholder="Masukkan Golongan Darah"
-                                                value="{{ $jam->gol_darah }}">
+                                                value="{{ $item->gol_darah }}">
                                         </div>
                                     </div>
                                 </div>
@@ -1069,12 +1097,12 @@
                                         <div class="mb-3">
                                             <label class="form-label">Foto KTP</label>
                                             <input type="file" class="form-control border border-dark" name="foto_ktp"
-                                                id="foto_ktp" value="{{ $jam->foto_ktp }}">
+                                                id="foto_ktp" value="{{ $item->foto_ktp }}">
                                         </div>
-                                        @if ($jam->foto_ktp)
+                                        @if ($item->foto_ktp)
                                             <div class="mb-3">
                                                 <label class="form-label">Foto KTP Sekarang</label>
-                                                <img src="{{ asset('storage/biodata/foto-ktp/' . $jam->foto_ktp) }}"
+                                                <img src="{{ asset('storage/biodata/foto-ktp/' . $item->foto_ktp) }}"
                                                     alt="Foto KTP" style="max-width: 200px;">
                                             </div>
                                         @endif
@@ -1083,12 +1111,12 @@
                                         <div class="mb-3">
                                             <label class="form-label">Foto KK</label>
                                             <input type="file" class="form-control border border-dark" name="foto_kk"
-                                                id="foto_kk" value="{{ $jam->foto_kk }}">
+                                                id="foto_kk" value="{{ $item->foto_kk }}">
                                         </div>
-                                        @if ($jam->foto_kk)
+                                        @if ($item->foto_kk)
                                             <div class="mb-3">
                                                 <label class="form-label">Foto KK Sekarang</label>
-                                                <img src="{{ asset('storage/biodata/foto-kk/' . $jam->foto_kk) }}"
+                                                <img src="{{ asset('storage/biodata/foto-kk/' . $item->foto_kk) }}"
                                                     alt="Foto KK" style="max-width: 200px;">
                                             </div>
                                         @endif
@@ -1100,12 +1128,12 @@
                                             <label class="form-label">Foto Passport</label>
                                             <input type="file" class="form-control border border-dark"
                                                 name="foto_passport" id="foto_passport"
-                                                value="{{ $jam->foto_passport }}">
+                                                value="{{ $item->foto_passport }}">
                                         </div>
-                                        @if ($jam->foto_passport)
+                                        @if ($item->foto_passport)
                                             <div class="mb-3">
                                                 <label class="form-label">Foto Passport Sekarang</label>
-                                                <img src="{{ asset('storage/biodata/foto-passport/' . $jam->foto_passport) }}"
+                                                <img src="{{ asset('storage/biodata/foto-passport/' . $item->foto_passport) }}"
                                                     alt="Foto Passport" style="max-width: 200px;">
                                             </div>
                                         @endif
@@ -1114,12 +1142,12 @@
                                         <div class="mb-3">
                                             <label class="form-label">Pas Foto</label>
                                             <input type="file" class="form-control border border-dark" name="pas_foto"
-                                                id="pas_foto" value="{{ $jam->pas_foto }}">
+                                                id="pas_foto" value="{{ $item->pas_foto }}">
                                         </div>
-                                        @if ($jam->pas_foto)
+                                        @if ($item->pas_foto)
                                             <div class="mb-3">
                                                 <label class="form-label">Pas Foto Sekarang</label>
-                                                <img src="{{ asset('storage/biodata/pas-foto/' . $jam->pas_foto) }}"
+                                                <img src="{{ asset('storage/biodata/pas-foto/' . $item->pas_foto) }}"
                                                     alt="Pas Foto" style="max-width: 200px;">
                                             </div>
                                         @endif

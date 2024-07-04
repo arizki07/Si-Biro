@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('no_ktp', 30);
             $table->string('no_kk', 30);
             $table->string('no_passport', 30)->nullable(); // jika blm ada, biarkan null
-            $table->string('bank', 15);
+            $table->string('bank', 50);
             $table->string('berat_badan', 20);
             $table->string('tinggi_badan', 20);
             $table->string('warna_kulit', 30);

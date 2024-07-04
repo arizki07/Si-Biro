@@ -133,7 +133,7 @@ Route::middleware('auth')->group(function () {
         // Route::get('/export-pdf/{id_jamaah}', [ArsipController::class, 'exportToPDFId'])->name('export.id.jamaah');
 
         // SEND JADWAL WHATSAPP GRUP
-        Route::post('/send-request/whatsapp/jadwal/{id}', [JadwalController::class, 'send_whatsapp'])->name('send.whatsapp.jadwal');
+        Route::post('/gateway/send-request/whatsapp/jadwal/{id}', [JadwalController::class, 'send_whatsapp'])->name('send.whatsapp.jadwal');
     });
 
     Route::middleware('role:jamaah')->group(function () {
@@ -208,7 +208,7 @@ Route::middleware('auth')->group(function () {
         // JADWAL
         Route::get('/office-jadwal-import', [OfficeJadwalController::class, 'excel']);
         Route::post('/import/office', [OfficeJadwalController::class, 'import'])->name('import.office');
-        Route::get('/data-jadwal-office', [OfficeJadwalController::class, 'index'])->name('data.jadwal');
+        Route::get('/data-jadwal-office', [OfficeJadwalController::class, 'index'])->name('data.jadwal.office');
         Route::get('/data-jadwal-office/delete/{id}', [OfficeJadwalController::class, 'destroy'])->name('delete.data.jadwal.office');
         Route::get('/data-uraian-jadwal-office/delete/{id}', [OfficeJadwalController::class, 'destroyUraian'])->name('delete.data.uraian.jadwal.office');
         Route::post('/send-request/whatsapp/jadwal/{id}', [OfficeJadwalController::class, 'send_whatsapp'])->name('office.whatsapp');
