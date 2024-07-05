@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\JamaahModel;
 use App\Models\LayananModel;
 use App\Models\TransaksiModel;
+use App\Models\Keuangan;
 use App\Models\WhatsappModel;
 use Illuminate\Http\Request;
 
@@ -120,6 +121,7 @@ class VerifikasiController extends Controller
         } elseif ($verif_act == 'transaksi') {
             // echo "Masuk Ke Else"; die;
             $transaksi = TransaksiModel::findOrFail($id);
+            $duit = new Keuangan();
             $jamaah = new JamaahModel();
             $log = new WhatsappModel();
 
@@ -164,6 +166,25 @@ class VerifikasiController extends Controller
 
                 $response = curl_exec($curl);
                 curl_close($curl);
+
+                // KEUANGAN
+                if ($type == 'approved') {
+                    $duit->id_jamaah = $Q_transaksi->id_jamaah;
+                    $duit->id_transaksi = $transaksi->id_transaksi;
+                    $duit->pembayaran = $transaksi->jumlah_pembayaran;
+                    $duit->tipe_keuangan = $transaksi->tipe_pembayaran;
+                    $duit->save();
+                } elseif ($type == 'rejected') {
+                    $keuangan = Keuangan::where('id_jamaah', $Q_transaksi->id_jamaah)
+                                        ->where('id_transaksi', $transaksi->id_transaksi)
+                                        ->first();
+                                        
+                    if ($keuangan) {
+                        $keuangan->delete();
+                    } 
+                }
+
+
                 $log->id_jamaah = $Q_transaksi->id_jamaah;
                 $log->json = json_encode(['target' => $Q_transaksi->no_hp, 'message' => $message, 'response' => $response]);
 

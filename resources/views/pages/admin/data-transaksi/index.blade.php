@@ -65,33 +65,35 @@
                                     @foreach ($data as $item)
                                         <tr class="text-center">
                                             <td>
-                                                <button type="button"
+                                                {{-- <button type="button"
                                                     class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#detailTransall{{ $item->id_transaksi }}">
                                                     <i class="ri-eye-fill"></i>
-                                                </button>
+                                                </button> --}}
                                                 <button type="button"
                                                     class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#editModal{{ $item->id_transaksi }}"><i
                                                         class=" ri-edit-2-fill"></i></button>
-                                                <form method="POST"
-                                                    action="{{ route('destroy.trans', $item->id_transaksi) }}"
-                                                    id="delete-form" class="d-inline">
+                                                <form id="deleteForm{{ $item->id_transaksi }}"
+                                                    action="{{ route('destroy.trans', $item->id_transaksi) }}" method="POST"
+                                                    class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
-                                                        onclick="btnDelete()">
+                                                    <a href="#" type="button"
+                                                        class="btn btn-danger icon waves-effect waves-light btn-sm deletePengguna"
+                                                        data-toggle="tooltip"
+                                                        onclick="confirmDelete(event, {{ $item->id_transaksi }})"
+                                                        data-original-title="Delete">
                                                         <i class="ri-delete-bin-2-fill"></i>
-                                                    </button>
+                                                    </a>
                                                 </form>
                                             </td>
                                             <td>{{ $item->jamaah->nama_lengkap }}</td>
                                             <td>{{ $item->layanan->judul_layanan }}</td>
                                             <td>{{ $item->tipe_pembayaran }}</td>
-                                            <td>{{ $item->jumlah_pembayaran }}</td>
+                                            <td>{{ 'Rp ' . number_format($item->jumlah_pembayaran, 0, ',', '.') }}</td>
                                             <td>{{ $item->status_pembayaran }}</td>
                                             <td>{{ $item->tanggal_pembayaran }}</td>
                                             <td>
@@ -157,7 +159,7 @@
                                 <select name="tipe_pembayaran" id="tipe_pembayaran" class="form-select border border-dark">
                                     <option value="" hidden>-- Pilih Pembayaran --</option>
                                     <option value="cash">Cash</option>
-                                    <option value="tranfer">Tranfer</option>
+                                    <option value="transfer">Transfer</option>
                                     <option value="agen">Agen</option>
                                 </select>
                             </div>

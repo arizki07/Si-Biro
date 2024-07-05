@@ -28,10 +28,10 @@
                         <div class="card-header">
                             <h5 class="card-title mb-0">Table {{ $title }}</h5>
                             <div style="float: right;">
-                                <button type="button" class="btn btn-primary mr-2" data-bs-toggle="modal"
+                                {{-- <button type="button" class="btn btn-primary mr-2" data-bs-toggle="modal"
                                     data-bs-target="#exampleModalgrid">
                                     <i class="ri-book-mark-fill"></i> Tambah Data Keuangan
-                                </button>
+                                </button> --}}
                                 {{-- <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                     data-bs-target="#importExcel">
                                     <i class=" ri-file-excel-fill"></i> Upload Excel
@@ -65,7 +65,7 @@
                                         <th>Nama Jamaah</th>
                                         {{-- <th>Nomor Transaksi</th> --}}
                                         <th>Pembayaran</th>
-                                        <th>Keuangan</th>
+                                        <th>Tipe Pembayaran</th>
                                         <th>Opsi</th>
                                     </tr>
                                 </thead>
@@ -76,7 +76,7 @@
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $keu->jamaah->nama_lengkap }}</td>
                                             {{-- <td>{{ $keu->id_transaksi }}</td> --}}
-                                            <td>{{ $keu->pembayaran }}</td>
+                                            <td>{{ 'Rp ' . number_format($keu->pembayaran, 0, ',', '.') }}</td>
                                             <td>{{ $keu->tipe_keuangan }} </td>
                                             <td>
                                                 <button type="button"
@@ -90,12 +90,19 @@
                                                     data-bs-target="#editModal{{ $keu->id_keuangan }}">
                                                     <i class="ri-edit-2-fill"></i>
                                                 </button>
-                                                <button type="button"
-                                                    class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#confirmDelete{{ $keu->id_keuangan }}">
-                                                    <i class="ri-delete-bin-7-fill"></i>
-                                                </button>
+                                                <form id="deleteForm{{ $keu->id_keuangan }}"
+                                                    action="{{ route('keuangan.destroy', $keu->id_keuangan) }}" method="POST"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <a href="#" type="button"
+                                                        class="btn btn-danger icon waves-effect waves-light btn-sm deletePengguna"
+                                                        data-toggle="tooltip"
+                                                        onclick="confirmDelete(event, {{ $keu->id_keuangan }})"
+                                                        data-original-title="Delete">
+                                                        <i class="ri-delete-bin-2-fill"></i>
+                                                    </a>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -227,17 +234,19 @@
                                 <div class="col-xxl-6">
                                     <label for="pembayaran" class="form-label">Pembayaran</label>
                                     <input type="text" name="pembayaran" class="form-control" id="pembayaran"
-                                        value="{{ $keu->pembayaran }}" required placeholder="Enter your Pembayaran">
+                                        value="{{ 'Rp ' . number_format($keu->pembayaran, 0, ',', '.') }}" required placeholder="Enter your Pembayaran">
                                 </div>
                                 <!--end col-->
                                 <div class="col-xxl-6">
                                     <label for="tipe_keuangan" class="form-label">Tipe Keuangan</label>
                                     <select class="form-control select2" id="tipe_keuangan" name="tipe_keuangan"
                                         required>
-                                        <option value="CICILAN" {{ $keu->tipe_keuangan == 'CICILAN' ? 'selected' : '' }}>
-                                            Cicilan</option>
-                                        <option value="PELUNASAN"
-                                            {{ $keu->tipe_keuangan == 'PELUNASAN' ? 'selected' : '' }}>Pelunasan</option>
+                                        <option value="Cash" {{ $keu->tipe_keuangan == 'Cash' ? 'selected' : '' }}>
+                                            Cash</option>
+                                        <option value="Transfer" {{ $keu->tipe_keuangan == 'Transfer' ? 'selected' : '' }}>
+                                            Transfer</option>
+                                        <option value="Agen" {{ $keu->tipe_keuangan == 'Agen' ? 'selected' : '' }}>
+                                            Agen</option>
                                     </select>
                                 </div>
                                 <!--end col-->
@@ -354,57 +363,4 @@
     @endforeach
     {{-- end modal view --}}
 
-    {{-- Modal Import Excel --}}
-    <div class="modal modal-blur fade" id="importExcel" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <form method="post" action="{{ route('import') }}?proses=upload_jadwal" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Upload Excel</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label">Pilih Type Proses</label>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="type" id="type1"
-                                                value="add">
-                                            <label class="form-check-label" for="type1">
-                                                Add
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="type" id="type2"
-                                                value="update">
-                                            <label class="form-check-label" for="type2">
-                                                Update
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Pilih file excel (xlsx)</label>
-                            <input type="file" name="file" required="required" accept=".xlsx"
-                                class="form-control">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="" class="btn btn-link link-secondary">Download Contoh Excel</a>
-                        <button type="submit" class="btn btn-primary ms-auto"><i class="ri-upload-cloud-line"
-                                style="margin-right:5px"></i> Import</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    {{-- End Modal IMport Excel --}}
 @endsection

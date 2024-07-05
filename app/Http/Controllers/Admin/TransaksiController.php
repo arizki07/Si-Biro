@@ -63,6 +63,7 @@ class TransaksiController extends Controller
             $validatedData = $validator->validated();
             $validatedData['foto_bukti_pembayaran'] = $filename ?? null;
             $validatedData['status_pembayaran'] = 'Berhasil';
+            $validatedData['jumlah_pembayaran'] = preg_replace('/[^\d]/', '', $validatedData['jumlah_pembayaran']);
 
             // dd($validatedData);
             $transId = TransaksiModel::insertGetId($validatedData);

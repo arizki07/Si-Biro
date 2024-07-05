@@ -58,21 +58,15 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <form
-                                                    action="{{ route('verif', $item->id_jamaah) }}?type=approved&verif=biodata"
-                                                    method="POST" style="display:inline;" id="formApprove">
+                                                <form action="{{ route('verif', $item->id_jamaah) }}?type=approved&verif=biodata" method="POST" style="display:inline;" class="formApprove">
                                                     @csrf
-                                                    <button type="button" id="btnApprove"
-                                                        class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm">
+                                                    <button type="button" class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm btnApprove" data-id="{{ $item->id_jamaah }}">
                                                         <i class="ri-lock-unlock-fill"></i>
                                                     </button>
                                                 </form>
-                                                <form
-                                                    action="{{ route('verif', $item->id_jamaah) }}?type=rejected&verif=biodata"
-                                                    method="POST" style="display:inline;" id="formReject">
+                                                <form action="{{ route('verif', $item->id_jamaah) }}?type=rejected&verif=biodata" method="POST" style="display:inline;" class="formReject">
                                                     @csrf
-                                                    <button type="button" id="btnReject"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm">
+                                                    <button type="button" class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm btnReject" data-id="{{ $item->id_jamaah }}">
                                                         <i class="ri-lock-password-fill"></i>
                                                     </button>
                                                 </form>
@@ -129,19 +123,19 @@
                                             <td>
                                                 <form
                                                     action="{{ route('verif', $item->id_transaksi) }}?type=approved&verif=transaksi"
-                                                    method="POST" style="display:inline;" id="formApproveTr">
+                                                    method="POST" style="display:inline;" class="formApproveTr">
                                                     @csrf
-                                                    <button type="button" id="btnApproveTr"
-                                                        class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm">
+                                                    <button type="button"
+                                                        class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm btnApproveTr">
                                                         <i class="ri-lock-unlock-fill"></i>
                                                     </button>
                                                 </form>
                                                 <form
                                                     action="{{ route('verif', $item->id_transaksi) }}?type=rejected&verif=transaksi"
-                                                    method="POST" style="display:inline;" id="formRejecttr">
+                                                    method="POST" style="display:inline;" class="formRejectTr">
                                                     @csrf
-                                                    <button type="button" id="btnRejecttr"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm">
+                                                    <button type="button"
+                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm btnRejectTr">
                                                         <i class="ri-lock-password-fill"></i>
                                                     </button>
                                                 </form>
@@ -555,111 +549,134 @@
     {{-- end detail  --}}
 
     <script>
-        document.getElementById('btnApprove').addEventListener('click', function() {
-            swal.fire({
-                icon: 'info',
-                title: 'Proses Approve',
-                html: `
-                    <center>
-                        <lottie-player src="https://lottie.host/342270a8-7db0-488c-8edb-1a386c5af482/N5LB2hnV0P.json"  
-                            background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
-                        </lottie-player>
-                    </center>
-                    <br>
-                    <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
-                    <h4 class="h4">
-                        <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
-                    </h4>
-                `,
-                showConfirmButton: false,
-                showCancelButton: false,
-                allowOutsideClick: false
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.btnApprove').forEach(button => {
+                button.addEventListener('click', function() {
+                    swal.fire({
+                        icon: 'info',
+                        title: 'Proses Approve',
+                        html: `
+                            <center>
+                                <lottie-player src="https://lottie.host/342270a8-7db0-488c-8edb-1a386c5af482/N5LB2hnV0P.json"  
+                                    background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
+                                </lottie-player>
+                            </center>
+                            <br>
+                            <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
+                            <h4 class="h4">
+                                <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
+                            </h4>
+                        `,
+                        showConfirmButton: false,
+                        showCancelButton: false,
+                        allowOutsideClick: false
+                    });
+
+                    const form = button.closest('.formApprove');
+                    if (form) {
+                        setTimeout(function() {
+                            form.submit();
+                        }, 5000);
+                    }
+                });
             });
 
-            setTimeout(function() {
-                document.getElementById('formApprove').submit();
-            }, 5000);
-        });
+            document.querySelectorAll('.btnReject').forEach(button => {
+                button.addEventListener('click', function() {
+                    swal.fire({
+                        icon: 'info',
+                        title: 'Proses Reject',
+                        html: `
+                            <center>
+                                <lottie-player src="https://lottie.host/342270a8-7db0-488c-8edb-1a386c5af482/N5LB2hnV0P.json"  
+                                    background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
+                                </lottie-player>
+                            </center>
+                            <br>
+                            <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
+                            <h4 class="h4">
+                                <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
+                            </h4>
+                        `,
+                        showConfirmButton: false,
+                        showCancelButton: false,
+                        allowOutsideClick: false
+                    });
 
-        //reject
-        document.getElementById('btnReject').addEventListener('click', function() {
-            swal.fire({
-                icon: 'info',
-                title: 'Proses Reject',
-                html: `
-                    <center>
-                        <lottie-player src="https://lottie.host/04412762-9109-48c0-b6f6-c57c9ff72cdc/rgc7wXYfLY.json"  
-                            background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
-                        </lottie-player>
-                    </center>
-                    <br>
-                    <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
-                    <h4 class="h4">
-                        <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
-                    </h4>
-                `,
-                showConfirmButton: false,
-                showCancelButton: false,
-                allowOutsideClick: false
+                    const form = button.closest('.formReject');
+                    if (form) {
+                        setTimeout(function() {
+                            form.submit();
+                        }, 5000);
+                    }
+                });
             });
-
-            setTimeout(function() {
-                document.getElementById('formReject').submit();
-            }, 5000);
         });
+
 
         //TRANSAKSI
-        document.getElementById('btnApproveTr').addEventListener('click', function() {
-            swal.fire({
-                icon: 'info',
-                title: 'Proses Approve',
-                html: `
-                    <center>
-                        <lottie-player src="https://lottie.host/1ae8263e-7260-48e6-89c7-282ab5ce909a/FhOMekG3Tf.json"  
-                            background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
-                        </lottie-player>
-                    </center>
-                    <br>
-                    <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
-                    <h4 class="h4">
-                        <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
-                    </h4>
-                `,
-                showConfirmButton: false,
-                showCancelButton: false,
-                allowOutsideClick: false
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.btnApproveTr').forEach(button => {
+                button.addEventListener('click', function() {
+                    swal.fire({
+                        icon: 'info',
+                        title: 'Proses Approve',
+                        html: `
+                            <center>
+                                <lottie-player src="https://lottie.host/342270a8-7db0-488c-8edb-1a386c5af482/N5LB2hnV0P.json"  
+                                    background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
+                                </lottie-player>
+                            </center>
+                            <br>
+                            <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
+                            <h4 class="h4">
+                                <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
+                            </h4>
+                        `,
+                        showConfirmButton: false,
+                        showCancelButton: false,
+                        allowOutsideClick: false
+                    });
+
+                    const form = button.closest('.formApproveTr');
+                    if (form) {
+                        setTimeout(function() {
+                            form.submit();
+                        }, 5000);
+                    }
+                });
             });
 
-            setTimeout(function() {
-                document.getElementById('formApproveTr').submit();
-            }, 5000);
-        });
+            document.querySelectorAll('.btnRejectTr').forEach(button => {
+                button.addEventListener('click', function() {
+                    swal.fire({
+                        icon: 'info',
+                        title: 'Proses Reject',
+                        html: `
+                            <center>
+                                <lottie-player src="https://lottie.host/342270a8-7db0-488c-8edb-1a386c5af482/N5LB2hnV0P.json"  
+                                    background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
+                                </lottie-player>
+                            </center>
+                            <br>
+                            <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
+                            <h4 class="h4">
+                                <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
+                            </h4>
+                        `,
+                        showConfirmButton: false,
+                        showCancelButton: false,
+                        allowOutsideClick: false
+                    });
 
-        //reject
-        document.getElementById('btnRejecttr').addEventListener('click', function() {
-            swal.fire({
-                icon: 'info',
-                title: 'Proses Reject',
-                html: `
-                    <center>
-                        <lottie-player src="https://lottie.host/04412762-9109-48c0-b6f6-c57c9ff72cdc/rgc7wXYfLY.json"  
-                            background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay>
-                        </lottie-player>
-                    </center>
-                    <br>
-                    <h4 class="h4">Sedang memproses data. Proses mungkin membutuhkan beberapa detik.</h4>
-                    <h4 class="h4">
-                        <b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b>
-                    </h4>
-                `,
-                showConfirmButton: false,
-                showCancelButton: false,
-                allowOutsideClick: false
+                    const form = button.closest('.formRejectTr');
+                    if (form) {
+                        setTimeout(function() {
+                            form.submit();
+                        }, 5000);
+                    }
+                });
             });
-
-            setTimeout(function() {
-                document.getElementById('formRejecttr').submit();
-            }, 5000);
         });
     </script>
 @endsection
