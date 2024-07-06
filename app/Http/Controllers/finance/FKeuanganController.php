@@ -10,7 +10,6 @@ use App\Models\Transaksi;
 use App\Models\TransaksiModel;
 use Illuminate\Database\QueryException;
 
-
 class FKeuanganController extends Controller
 {
     public function index()
@@ -18,10 +17,17 @@ class FKeuanganController extends Controller
         $keuangan = Keuangan::all();
         $jamaahs = JamaahModel::all();
         $transaksi = TransaksiModel::all();
+
+        $periode = collect($keuangan)
+            ->map(function ($item) {
+                return explode('-', $item->periode)[0];
+            })->unique();
+
         return view('pages.finance.finance-keuangan.index', [
             'keuangan' => $keuangan,
             'jamaahs' => $jamaahs,
             'transaksi' => $transaksi,
+            'periode' => $periode,
             'title' => 'Data Finance Keuangan',
             'act' => 'FKeuangan',
         ]);

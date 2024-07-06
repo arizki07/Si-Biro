@@ -170,7 +170,7 @@ class VerifikasiController extends Controller
                     $duit->id_transaksi = $transaksi->id_transaksi;
                     $duit->pembayaran = $transaksi->jumlah_pembayaran;
                     $duit->tipe_keuangan = $transaksi->tipe_pembayaran;
-                    $duit->periode = date('d-m-y', strtotime($transaksi->tanggal_pembayaran));
+                    $duit->periode = date('Y', strtotime($transaksi->tanggal_pembayaran));
                     $duit->save();
                 } elseif ($type == 'rejected') {
                     $keuangan = Keuangan::where('id_jamaah', $Q_transaksi->id_jamaah)

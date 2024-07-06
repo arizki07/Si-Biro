@@ -28,14 +28,10 @@
                         <div class="card-header">
                             <h5 class="card-title mb-0">Table {{ $title }}</h5>
                             <div style="float: right;">
-                                {{-- <button type="button" class="btn btn-primary mr-2" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModalgrid">
-                                    <i class="ri-book-mark-fill"></i> Tambah Data Keuangan
-                                </button> --}}
-                                {{-- <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#importExcel">
-                                    <i class=" ri-file-excel-fill"></i> Upload Excel
-                                </button> --}}
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                    data-bs-target="#export">
+                                    <i class=" ri-file-excel-fill"></i> Export Keuangan
+                                </button>
                             </div>
                         </div>
 
@@ -91,8 +87,8 @@
                                                     <i class="ri-edit-2-fill"></i>
                                                 </button>
                                                 <form id="deleteForm{{ $keu->id_keuangan }}"
-                                                    action="{{ route('keuangan.destroy', $keu->id_keuangan) }}" method="POST"
-                                                    class="d-inline">
+                                                    action="{{ route('keuangan.destroy', $keu->id_keuangan) }}"
+                                                    method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <a href="#" type="button"
@@ -115,77 +111,39 @@
         </div>
     </div>
 
-    {{-- Modal Tambah --}}
-    <div class="modal fade" id="exampleModalgrid" tabindex="-1" aria-labelledby="exampleModalgridLabel">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalgridLabel"><i class=" ri-book-mark-fill"></i> Add Keuangan
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body bg-marketplace d-flex">
-                    <form method="post" action="{{ route('keuangan.store') }}" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row g-3">
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="firstName" class="form-label">Nama Jamaah</label>
-                                    <select name="id_jamaah" id="id_jamaah" class="form-control select2">
-                                        <option> Pilih Nama Jamaah </option>
-                                        @foreach ($jamaahs as $jam)
-                                            <option value="{{ $jam->id_jamaah }}"
-                                                {{ old('id_jamaah') == $jam->id_jamaah ? 'selected' : '' }}>
-                                                {{ $jam->nama_lengkap }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <!--end col-->
-                            <div class="col-xxl-6">
-                                <div>
-                                    <label for="lastName" class="form-label">Nomor Transaksi</label>
-                                    <select name="id_transaksi" id="id_transaksi" class="form-control select2">
-                                        <option> Pilih Nomor Jamaah </option>
-                                        @foreach ($transaksi as $tran)
-                                            <option value="{{ $tran->id_transaksi }}"
-                                                {{ old('id_transaksi') == $tran->id_transaksi ? 'selected' : '' }}>
-                                                {{ $tran->id_transaksi }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-xxl-6">
-                                <label for="pembayaran" class="form-label">Pembayaran</label>
-                                <input type="pembayaran" name="pembayaran" class="form-control" id="pembayaran" required
-                                    placeholder="Enter your Pembayaran">
-                            </div>
-                            <!--end col-->
-                            <div class="col-xxl-6">
-                                <label for="passwordInput" class="form-label">keuangan</label>
-                                <select class="form-control select2" id="tipe_keuangan" name="tipe_keuangan" required>
-                                    <option> Type Keuangan </option>
-                                    <option value="CICILAN">Cicilan</option>
-                                    <option value="PELUNASAN">Pelunasan</option>
-                                </select>
-                            </div>
-                            <!--end col-->
-                            <div class="col-lg-12">
-                                <div class="hstack gap-2 justify-content-end">
-                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
-                            <!--end col-->
+    {{-- Modal Import Excel --}}
+    <div class="modal modal-blur fade" id="export" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form method="post" action="{{ route('export.keuangan') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Export Data Keuangan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-xxl-12">
+                            <label for="tipe_keuangan" class="form-label">Periode</label>
+                            <select class="form-select" id="tipe_keuangan" name="periode_keuangan" required>
+                                <option selected disabled>--Pilih Periode Keuangan--</option>
+                                <option value="all">Semua Periode</option>
+                                @foreach ($periode as $p)
+                                    <option value="{{ $p }}">{{ $p }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <!--end row-->
-                    </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary ms-auto"><i class="ri-upload-cloud-line"
+                                style="margin-right:5px"></i> Export</button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
-    {{-- End Modal Tambah --}}
+    {{-- End Modal IMport Excel --}}
+
 
     {{-- Modal Edit --}}
     @foreach ($keuangan as $keu)
@@ -234,7 +192,8 @@
                                 <div class="col-xxl-6">
                                     <label for="pembayaran" class="form-label">Pembayaran</label>
                                     <input type="text" name="pembayaran" class="form-control" id="pembayaran"
-                                        value="{{ 'Rp ' . number_format($keu->pembayaran, 0, ',', '.') }}" required placeholder="Enter your Pembayaran">
+                                        value="{{ 'Rp ' . number_format($keu->pembayaran, 0, ',', '.') }}" required
+                                        placeholder="Enter your Pembayaran">
                                 </div>
                                 <!--end col-->
                                 <div class="col-xxl-6">
@@ -243,7 +202,8 @@
                                         required>
                                         <option value="Cash" {{ $keu->tipe_keuangan == 'Cash' ? 'selected' : '' }}>
                                             Cash</option>
-                                        <option value="Transfer" {{ $keu->tipe_keuangan == 'Transfer' ? 'selected' : '' }}>
+                                        <option value="Transfer"
+                                            {{ $keu->tipe_keuangan == 'Transfer' ? 'selected' : '' }}>
                                             Transfer</option>
                                         <option value="Agen" {{ $keu->tipe_keuangan == 'Agen' ? 'selected' : '' }}>
                                             Agen</option>
@@ -362,5 +322,4 @@
         </div>
     @endforeach
     {{-- end modal view --}}
-
 @endsection

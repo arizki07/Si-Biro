@@ -16,10 +16,15 @@ class KBKeuanganController extends Controller
         $jamaahs = JamaahModel::all();
         $transaksi = TransaksiModel::all();
 
+        $periode = collect($keuangan)->map(function ($item) {
+            return explode('-', $item->periode)[0];
+        })->unique();
+
         return view('pages.kbih.kbih-keuangan.index', [
             'keuangan' => $keuangan,
             'jamaahs' => $jamaahs,
             'transaksi' => $transaksi,
+            'periode' => $periode,
             'title' => 'Data Keuangan KBIH',
             'act' => 'KBKeuangan',
         ]);

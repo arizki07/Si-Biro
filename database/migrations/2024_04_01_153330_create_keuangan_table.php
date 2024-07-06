@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_jamaah');
             $table->unsignedBigInteger('id_transaksi');
             $table->string('pembayaran');
-            $table->string('tipe_keuangan', 50); // CICILAN/PELUNASAN
-            $table->date('periode');
+            $table->string('tipe_keuangan', 50);
+            $table->string('periode', 5);
             $table->timestamps();
 
             $table->foreign('id_jamaah')->references('id_jamaah')->on('t_jamaah');

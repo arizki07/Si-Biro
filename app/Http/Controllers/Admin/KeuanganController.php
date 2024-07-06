@@ -9,6 +9,12 @@ use App\Models\Transaksi;
 use App\Models\TransaksiModel;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use App\Exports\ExportKeuangan;
+use App\Exports\ExportKeuanganAll;
 
 class KeuanganController extends Controller
 {
@@ -21,10 +27,15 @@ class KeuanganController extends Controller
         $jamaahs = JamaahModel::all();
         $transaksi = TransaksiModel::all();
 
+        $periode = collect($keuangan)->map(function ($item) {
+            return explode('-', $item->periode)[0];
+        })->unique();
+
         return view('pages.admin.data-keuangan.index', [
             'keuangan' => $keuangan,
             'jamaahs' => $jamaahs,
             'transaksi' => $transaksi,
+            'periode' => $periode,
             'title' => 'Data Keuangan',
             'act' => 'keuangan',
         ]);
@@ -108,6 +119,17 @@ class KeuanganController extends Controller
             return redirect()->back()->with('success', 'Data keuangan berhasil dihapus.');
         } catch (QueryException $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus data keuangan. Silakan coba lagi.');
+        }
+    }
+
+    public function export (Request $request) {
+        $periode_k = $request->input('periode_keuangan');
+        // dd($periode_k);
+
+        if ($periode_k == 'all') {
+            return Excel::download(new ExportKeuanganAll(), 'Lap_Keuangan_All_Periode_Eks_'.date('dmy_h.i.s').'.xlsx');
+        } else {
+            return Excel::download(new ExportKeuangan($periode_k), 'Lap_Keuangan_Periode_' .$periode_k. '_'.date('dmy_h.i.s').'.xlsx');
         }
     }
 }

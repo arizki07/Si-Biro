@@ -61,7 +61,6 @@ Route::post('/otp-verification', [AuthController::class, 'otpVerificationPost'])
 Route::get('/forgot', [ForgotController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
-
     Route::get('/loading', function () {
         return view('pages.auth.loading');
     })->name('loading');
@@ -71,7 +70,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::middleware('role:admin')->group(function () {
-
         //Data-Users
         Route::get('/data-users', [DataUserController::class, 'index'])->name('data.users');
         Route::post('/add/users', [DataUserController::class, 'add'])->name('users.add');
@@ -109,14 +107,17 @@ Route::middleware('auth')->group(function () {
 
         //import
         Route::post('/import', [ImportController::class, 'import'])->name('import');
+
+        // Keuangan
         Route::get('/data-keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
         Route::post('/data-keuangan', [KeuanganController::class, 'store'])->name('keuangan.store');
         Route::put('/keuangan/{id}', [KeuanganController::class, 'update'])->name('keuangan.update');
         Route::delete('/keuangan/{id}', [KeuanganController::class, 'destroy'])->name('keuangan.destroy');
-        Route::get('/data-verifikasi', [VerifikasiController::class, 'index'])->name('data.verifikasi');
-
+        Route::post('/export-keuangan', [KeuanganController::class, 'export'])->name('export.keuangan'); // EXPORT
+        
         // Verif
         Route::post('/verif/{id}', [VerifikasiController::class, 'verif'])->name('verif');
+        Route::get('/data-verifikasi', [VerifikasiController::class, 'index'])->name('data.verifikasi');
 
         // JANGAN DIHAPUS, BUAT TESTING
         Route::get('/whatsapp', [WhatsappController::class, 'index']);
@@ -132,7 +133,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/data-arsip', [ArsipController::class, 'index'])->name('arsip.index');
         Route::get('/export/excel', [ArsipController::class, 'exportToExcel'])->name('export.excel');
         Route::get('/export/pdf', [ArsipController::class, 'exportToPDF'])->name('export.pdf');
-        // Route::get('/export-pdf/{id_jamaah}', [ArsipController::class, 'exportToPDFId'])->name('export.id.jamaah');
 
         // SEND JADWAL WHATSAPP GRUP
         Route::post('/gateway/send-request/whatsapp/jadwal/{id}', [JadwalController::class, 'send_whatsapp'])->name('send.whatsapp.jadwal');
@@ -168,6 +168,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/f-keuangan-update/{id}', 'update')->name('finance.update');
             Route::delete('/f-keuangan-destroy', 'destroy');
         });
+        Route::post('/export-keuangan-finance', [KeuanganController::class, 'export'])->name('export.keuangan.finance');
 
         Route::controller(FTransaksiController::class)->group(function () {
             Route::get('/f-transaksi', 'index');
@@ -184,7 +185,6 @@ Route::middleware('auth')->group(function () {
         });
     });
     Route::middleware('role:front office')->group(function () {
-
         Route::controller(OfficeVerifController::class)->group(function () {
             Route::get('/Office-verif', 'index');
             Route::post('/verif/jamaah/{id}', 'verif')->name('verif.office');
@@ -194,7 +194,6 @@ Route::middleware('auth')->group(function () {
             Route::get('/Office-transaksi', 'index');
             Route::post('/verif/transaksi/{id}', 'verifTransaksi')->name('verif.transaksi');
         });
-
 
         Route::controller(OfficeLayananController::class)->group(function () {
             Route::get('/office-layanan', 'index')->name('office.index');
@@ -221,10 +220,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/send-request/whatsapp/jadwal/{id}', [OfficeJadwalController::class, 'send_whatsapp'])->name('office.whatsapp');
     });
     Route::middleware('role:kbih')->group(function () {
-
         Route::controller(KBUserController::class)->group(function () {
             Route::get('/kb-user', 'index');
         });
+
+        Route::post('/export-keuangan-kbih', [KeuanganController::class, 'export'])->name('export.keuangan.kbih');
 
         Route::controller(KBRoleController::class)->group(function () {
             Route::get('/kb-role', 'index');
