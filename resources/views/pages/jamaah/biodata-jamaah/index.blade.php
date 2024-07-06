@@ -340,8 +340,17 @@
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Status</label>
-                                        <input type="text" class="form-control border border-dark" name="status"
-                                            placeholder="Masukkan Status" value="{{ old('status') }}">
+                                        <select name="status" class="form-select border-dark">
+                                            <option value="" hidden>-- Pilih Status --</option>
+                                            <option value="Sudah Menikah"
+                                                {{ old('status') == 'Sudah Menikah' ? 'selected' : '' }}>
+                                                Sudah Menikah
+                                            </option>
+                                            <option value="Belum Menikah"
+                                                {{ old('status') == 'Belum Menikah' ? 'selected' : '' }}>
+                                                Belum Menikah
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -387,7 +396,6 @@
                                             id="no_rekening" placeholder="Masukkan Nomor Rekening"
                                             value="{{ old('no_rekening') }}">
                                     </div>
-                                    <div class="text-danger">*Nomor Rekening harus terdiri dari 17 karakter.</div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
@@ -405,7 +413,7 @@
                                         <input type="text" class="form-control border border-dark" name="no_kk"
                                             id="no_kk" placeholder="Masukkan Nomor KK" value="{{ old('no_kk') }}">
                                     </div>
-                                    <div class="text-danger">*Nomor Rekening harus terdiri dari 17 karakter.</div>
+                                    <div class="text-danger">*Nomor Rekening harus terdiri dari 16 karakter.</div>
 
                                 </div>
                                 <div class="col-lg-6">

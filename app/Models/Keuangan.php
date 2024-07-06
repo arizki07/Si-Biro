@@ -16,6 +16,7 @@ class Keuangan extends Model
         'id_transaksi',
         'pembayaran',
         'tipe_keuangan',
+        'periode',
     ];
 
     public function jamaah()

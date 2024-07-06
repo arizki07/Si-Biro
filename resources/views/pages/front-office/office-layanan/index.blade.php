@@ -166,8 +166,21 @@
                             <!--end col-->
                             <div class="col-xxl-6">
                                 <label for="passwordInput" class="form-label">Paket</label>
-                                <input type="text" class="form-control" id="passwordInput" value=""
-                                    placeholder="Enter Paket" name="paket">
+                                <select name="paket" class="form-select border-dark">
+                                    <option selected disabled>-- Pilih Paket --</option>
+                                    <option value="Haji Reguler" {{ old('paket') == 'Haji Reguler' ? 'selected' : '' }}>
+                                        Haji Reguler
+                                    </option>
+                                    <option value="Haji Plus" {{ old('paket') == 'Haji Plus' ? 'selected' : '' }}>
+                                        Haji Plus
+                                    </option>
+                                    <option value="Umroh Reguler" {{ old('paket') == 'Umroh Reguler' ? 'selected' : '' }}>
+                                        Umroh Reguler
+                                    </option>
+                                    <option value="Umroh VIP" {{ old('paket') == 'Umroh VIP' ? 'selected' : '' }}>
+                                        Umroh VIP
+                                    </option>
+                                </select>
                             </div>
                             <!--end col-->
                             <!--end col-->

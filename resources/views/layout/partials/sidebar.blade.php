@@ -34,11 +34,7 @@
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span>Master Report</span></li>
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link <?= $act == 'role' ? 'active' : '' ?>" href="/data-role">
-                        <i class="ri-user-settings-line"></i><span>Data Role</span>
-                    </a>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link menu-link <?= $act == 'biodata' ? 'active' : '' ?>" href="/data-biodata">
                         <i class="ri-git-repository-commits-fill"></i> <span>Data Biodata</span>
@@ -287,6 +283,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link menu-link <?= $act == 'Invoice' ? 'active' : '' ?>" href="/f-invoice">
+                        <i class="ri-wallet-2-line"></i> <span>Invoice</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-link <?= $act == 'RepostK' ? 'active' : '' ?>" href="/reportK">
                         <i class="ri-file-chart-line"></i> <span>Report</span>
                     </a>
@@ -405,11 +406,7 @@
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span>Master Report</span></li>
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link <?= $act == 'KBRole' ? 'active' : '' ?>" href="/kb-role">
-                        <i class="ri-user-settings-line"></i> <span>Data Role</span>
-                    </a>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link menu-link <?= $act == 'KBBio' ? 'active' : '' ?>" href="/kb-biodata">
                         <i class="ri-git-repository-commits-fill"></i> <span>Data Biodata</span>
@@ -479,6 +476,11 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link <?= $act == 'KBReport' ? 'active' : '' ?>" href="/kb-report">
                         <i class="ri-file-chart-line"></i> <span>Data Report</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link <?= $act == 'KBInvoice' ? 'active' : '' ?>" href="/kb-invoice">
+                        <i class="ri-file-chart-line"></i> <span>Data Invoice</span>
                     </a>
                 </li>
 

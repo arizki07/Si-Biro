@@ -25,19 +25,6 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card bg-marketplace d-flex">
-                        <div class="card-header">
-                            <h5 class="card-title mb-0">Table {{ $title }}</h5>
-                            <div style="float: right;">
-                                <button type="button" class="btn btn-primary mr-2" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModalgrid">
-                                    <i class="ri-book-mark-fill"></i> Tambah Data Keuangan
-                                </button>
-                                <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#importExcel">
-                                    <i class=" ri-file-excel-fill"></i> Upload Excel
-                                </button>
-                            </div>
-                        </div>
 
                         <div class="card-body">
                             <style>

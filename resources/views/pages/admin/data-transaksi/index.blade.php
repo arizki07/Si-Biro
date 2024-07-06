@@ -65,20 +65,20 @@
                                     @foreach ($data as $item)
                                         <tr class="text-center">
                                             <td>
-                                                {{-- <button type="button"
+                                                <button type="button"
                                                     class="btn btn-outline-secondary btn-icon waves-effect waves-light btn-sm"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#detailTransall{{ $item->id_transaksi }}">
                                                     <i class="ri-eye-fill"></i>
-                                                </button> --}}
+                                                </button>
                                                 <button type="button"
                                                     class="btn btn-outline-success btn-icon waves-effect waves-light btn-sm"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#editModal{{ $item->id_transaksi }}"><i
                                                         class=" ri-edit-2-fill"></i></button>
                                                 <form id="deleteForm{{ $item->id_transaksi }}"
-                                                    action="{{ route('destroy.trans', $item->id_transaksi) }}" method="POST"
-                                                    class="d-inline">
+                                                    action="{{ route('destroy.trans', $item->id_transaksi) }}"
+                                                    method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <a href="#" type="button"

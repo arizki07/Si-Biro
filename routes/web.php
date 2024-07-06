@@ -20,6 +20,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\finance\FinanceUserController;
 use App\Http\Controllers\Finance\FKeuanganController;
 use App\Http\Controllers\Finance\FTransaksiController;
+use App\Http\Controllers\Finance\InvoiceController;
 use App\Http\Controllers\Finance\ReportFinanceController;
 use App\Http\Controllers\FrontOffice\OfficeJadwalController;
 use App\Http\Controllers\FrontOffice\OfficeLayananController;
@@ -35,6 +36,7 @@ use App\Http\Controllers\Jamaah\KeuanganJamaahController;
 use App\Http\Controllers\Jamaah\LayananJamaahController;
 use App\Http\Controllers\KBIH\KBArsipController;
 use App\Http\Controllers\KBIH\KBBioController;
+use App\Http\Controllers\KBIH\KBInvoiceController;
 use App\Http\Controllers\KBIH\KBJadwalController;
 use App\Http\Controllers\KBIH\KBKeuanganController;
 use App\Http\Controllers\KBIH\KBLayananController;
@@ -175,6 +177,11 @@ Route::middleware('auth')->group(function () {
             Route::get('/reportK', 'index');
             Route::get('/report-view', 'view');
         });
+
+        Route::controller(InvoiceController::class)->group(function () {
+            Route::get('/f-invoice', 'index');
+            Route::get('/getPendapatanPeriode', 'getPendapatanPeriode');
+        });
     });
     Route::middleware('role:front office')->group(function () {
 
@@ -254,7 +261,12 @@ Route::middleware('auth')->group(function () {
 
         Route::controller(KBArsipController::class)->group(function () {
             Route::get('/kb-arsip', 'index');
-            Route::get('/export/pdf/kbih', 'exportToPDF')->name('export.pdf.kbih');
+            Route::get('/export/pdf/kbih', 'exportToPDFKbih')->name('export.pdf.kbih');
+        });
+
+        Route::controller(KBInvoiceController::class)->group(function () {
+            Route::get('/kb-invoice', 'index');
+            Route::get('/getPendapatanPeriodeKBIH', 'getPendapatanPeriode');
         });
     });
 });

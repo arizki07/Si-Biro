@@ -581,7 +581,7 @@
             });
 
             setTimeout(function() {
-                window.location.href = "{{ route('export.pdf') }}";
+                window.location.href = "{{ route('export.pdf.kbih') }}";
 
                 Swal.fire({
                     icon: 'success',

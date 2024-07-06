@@ -4,6 +4,7 @@ namespace App\Http\Controllers\FrontOffice;
 
 use App\Http\Controllers\Controller;
 use App\Models\JamaahModel;
+use App\Models\Keuangan;
 use App\Models\LayananModel;
 use App\Models\TransaksiModel;
 use App\Models\WhatsappModel;
@@ -34,7 +35,6 @@ class OfficeVerifTransController extends Controller
         $verif_act = $request->get('verif');
 
         if ($verif_act == 'biodata') {
-
             $jamaah = JamaahModel::findOrFail($id);
             $log = new WhatsappModel();
 
@@ -73,6 +73,8 @@ class OfficeVerifTransController extends Controller
 
                 $response = curl_exec($curl);
                 curl_close($curl);
+                $log->id_jamaah = $jamaah->id_jamaah;
+                $log->json = json_encode(['target' => $jamaah->no_hp, 'message' => $message, 'response' => $response]);
 
                 if (!$response) {
                     return redirect()->back()->with('error', 'Gagal mengirim pesan WhatsApp.');
@@ -80,6 +82,8 @@ class OfficeVerifTransController extends Controller
             }
         } elseif ($verif_act == 'transaksi') {
             $transaksi = TransaksiModel::findOrFail($id);
+            $duit = new Keuangan();
+            $jamaah = new JamaahModel();
             $log = new WhatsappModel();
 
             if ($transaksi->verifikasi == $type) {
@@ -92,7 +96,7 @@ class OfficeVerifTransController extends Controller
                 $tanggalUpdate = date('d-m-Y H:i T', strtotime($transaksi->updated_at));
                 $tanggalApp = $this->tanggalIDN($tanggal);
 
-                // WhatsApp notification
+                // area whatsapp
                 $curl = curl_init();
                 $message = $transaksi->pesanVerifTransaksi($type, $tanggalUpdate, $tanggalApp, $id);
                 $Q_transaksi = DB::table('t_transaksi as a')
@@ -123,21 +127,41 @@ class OfficeVerifTransController extends Controller
                 $response = curl_exec($curl);
                 curl_close($curl);
 
+                // KEUANGAN
+                if ($type == 'approved') {
+                    $duit->id_jamaah = $Q_transaksi->id_jamaah;
+                    $duit->id_transaksi = $transaksi->id_transaksi;
+                    $duit->pembayaran = $transaksi->jumlah_pembayaran;
+                    $duit->tipe_keuangan = $transaksi->tipe_pembayaran;
+                    $duit->periode = date('d-m-y', strtotime($transaksi->tanggal_pembayaran));
+                    $duit->save();
+                } elseif ($type == 'rejected') {
+                    $keuangan = Keuangan::where('id_jamaah', $Q_transaksi->id_jamaah)
+                        ->where('id_transaksi', $transaksi->id_transaksi)
+                        ->first();
+
+                    if ($keuangan) {
+                        $keuangan->delete();
+                    }
+                }
+
+                $log->id_jamaah = $Q_transaksi->id_jamaah;
+                $log->json = json_encode(['target' => $Q_transaksi->no_hp, 'message' => $message, 'response' => $response]);
+
                 if (!$response) {
                     return redirect()->back()->with('error', 'Gagal mengirim pesan WhatsApp.');
                 }
-
-                // Logging
-                $log->ip = $request->ip();
-                $log->json = json_encode(['target' => $Q_transaksi->no_hp, 'message' => $message, 'response' => $response]);
-                $log->status = $response ? 'success' : 'failed';
-                $log->action = 'Whatsapp Verifikasi TRANSAKSI';
-                $log->save();
             }
         }
 
+        $log->ip = $request->ip();
+        $log->status = $response ? 'success' : 'failed';
+        $log->action = 'Whatsapp Verifikasi ' . ucwords(strtolower($verif_act));
+        $log->save();
+
         return redirect()->back()->with('success', 'Data Verifikasi ' . strtoupper($verif_act) . ' Berhasil Di ' . strtoupper($type) . '.');
     }
+
 
     private function tanggalIDN($date)
     {

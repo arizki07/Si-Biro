@@ -24,7 +24,7 @@ class KBArsipController extends Controller
         ]);
     }
 
-    public function exportToPDF()
+    public function exportToPDFKbih()
     {
         $jamaah = JamaahModel::all();
         $transaksi = TransaksiModel::all();

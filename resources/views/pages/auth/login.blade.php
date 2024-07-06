@@ -21,7 +21,7 @@
                                             </div>
                                             <!-- Embedding Lottie Animation -->
                                             <iframe
-                                                src="https://lottie.host/embed/2f60ceca-c799-4293-960b-d10674d84d12/nb2I5XOTeV.json"
+                                                src="https://lottie.host/embed/cc11f15f-3cc0-41d8-8f99-cefafb4bc089/OPKu2TkU8v.json"
                                                 width="350px" height="350px"></iframe>
                                         </div>
                                     </div>

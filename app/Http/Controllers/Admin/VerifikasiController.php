@@ -72,13 +72,12 @@ class VerifikasiController extends Controller
         $verif_act = $request->get('verif');
 
         if ($verif_act == 'biodata') {
-
             $jamaah = JamaahModel::findOrFail($id);
             $log = new WhatsappModel();
 
             if ($jamaah->verifikasi == $type) {
                 return redirect()->back()->with('error', 'Data Ini Sudah Di ' . strtoupper($type));
-            } else { 
+            } else {
                 $jamaah->verifikasi = $type;
                 $jamaah->save();
 
@@ -87,7 +86,7 @@ class VerifikasiController extends Controller
                 $tanggalApp = $this->tanggalIDN($tanggal);
 
                 // area whatsapp
-                $curl = curl_init();  
+                $curl = curl_init();
                 $message = $jamaah->pesanVerifBiodata($type, $tanggalUpdate, $tanggalApp);
                 // dd($message);
                 curl_setopt_array($curl, array(
@@ -119,7 +118,6 @@ class VerifikasiController extends Controller
                 }
             }
         } elseif ($verif_act == 'transaksi') {
-            // echo "Masuk Ke Else"; die;
             $transaksi = TransaksiModel::findOrFail($id);
             $duit = new Keuangan();
             $jamaah = new JamaahModel();
@@ -127,7 +125,7 @@ class VerifikasiController extends Controller
 
             if ($transaksi->verifikasi == $type) {
                 return redirect()->back()->with('error', 'Data Ini Sudah Di ' . strtoupper($type));
-            } else { 
+            } else {
                 $transaksi->verifikasi = $type;
                 $transaksi->save();
 
@@ -136,7 +134,7 @@ class VerifikasiController extends Controller
                 $tanggalApp = $this->tanggalIDN($tanggal);
 
                 // area whatsapp
-                $curl = curl_init();  
+                $curl = curl_init();
                 $message = $transaksi->pesanVerifTransaksi($type, $tanggalUpdate, $tanggalApp, $id);
                 $Q_transaksi = DB::table('t_transaksi as a')
                     ->join('t_jamaah as b', 'a.id_jamaah', '=', 'b.id_jamaah')
@@ -144,7 +142,6 @@ class VerifikasiController extends Controller
                     ->select('a.*', 'c.*', 'b.no_hp')
                     ->where('a.id_transaksi', '=', $id)
                     ->first();
-                // dd($message);
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => 'https://api.fonnte.com/send',
                     CURLOPT_RETURNTRANSFER => true,
@@ -173,17 +170,17 @@ class VerifikasiController extends Controller
                     $duit->id_transaksi = $transaksi->id_transaksi;
                     $duit->pembayaran = $transaksi->jumlah_pembayaran;
                     $duit->tipe_keuangan = $transaksi->tipe_pembayaran;
+                    $duit->periode = date('d-m-y', strtotime($transaksi->tanggal_pembayaran));
                     $duit->save();
                 } elseif ($type == 'rejected') {
                     $keuangan = Keuangan::where('id_jamaah', $Q_transaksi->id_jamaah)
-                                        ->where('id_transaksi', $transaksi->id_transaksi)
-                                        ->first();
-                                        
+                        ->where('id_transaksi', $transaksi->id_transaksi)
+                        ->first();
+
                     if ($keuangan) {
                         $keuangan->delete();
-                    } 
+                    }
                 }
-
 
                 $log->id_jamaah = $Q_transaksi->id_jamaah;
                 $log->json = json_encode(['target' => $Q_transaksi->no_hp, 'message' => $message, 'response' => $response]);
@@ -196,10 +193,10 @@ class VerifikasiController extends Controller
 
         $log->ip = $request->ip();
         $log->status = $response ? 'success' : 'failed';
-        $log->action = 'Whatsapp Verifikasi '. ucwords(strtolower($verif_act));
+        $log->action = 'Whatsapp Verifikasi ' . ucwords(strtolower($verif_act));
         $log->save();
 
-        return redirect()->back()->with('success', 'Data Verifikasi '. strtoupper($verif_act) .' Berhasil Di '. strtoupper($type) .'.');
+        return redirect()->back()->with('success', 'Data Verifikasi ' . strtoupper($verif_act) . ' Berhasil Di ' . strtoupper($type) . '.');
     }
 
     private function tanggalIDN($date)
