@@ -114,7 +114,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/keuangan/{id}', [KeuanganController::class, 'update'])->name('keuangan.update');
         Route::delete('/keuangan/{id}', [KeuanganController::class, 'destroy'])->name('keuangan.destroy');
         Route::post('/export-keuangan', [KeuanganController::class, 'export'])->name('export.keuangan'); // EXPORT
-        
+
         // Verif
         Route::post('/verif/{id}', [VerifikasiController::class, 'verif'])->name('verif');
         Route::get('/data-verifikasi', [VerifikasiController::class, 'index'])->name('data.verifikasi');
@@ -177,11 +177,6 @@ Route::middleware('auth')->group(function () {
         Route::controller(ReportFinanceController::class)->group(function () {
             Route::get('/reportK', 'index');
             Route::get('/report-view', 'view');
-        });
-
-        Route::controller(InvoiceController::class)->group(function () {
-            Route::get('/f-invoice', 'index');
-            Route::get('/getPendapatanPeriode', 'getPendapatanPeriode');
         });
     });
     Route::middleware('role:front office')->group(function () {
@@ -262,11 +257,6 @@ Route::middleware('auth')->group(function () {
         Route::controller(KBArsipController::class)->group(function () {
             Route::get('/kb-arsip', 'index');
             Route::get('/export/pdf/kbih', 'exportToPDFKbih')->name('export.pdf.kbih');
-        });
-
-        Route::controller(KBInvoiceController::class)->group(function () {
-            Route::get('/kb-invoice', 'index');
-            Route::get('/getPendapatanPeriodeKBIH', 'getPendapatanPeriode');
         });
     });
 });
