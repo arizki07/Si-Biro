@@ -408,7 +408,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body bg-marketplace d-flex">
-                        <form action="{{ route('send.whatsapp.jadwal', $jad->id_jadwal) }}" method="POST" >
+                        <form action="{{ route('send.whatsapp.jadwal', $jad->id_jadwal) }}" method="POST">
                             @csrf
                             <input value="{{ $jad->id_layanan }}" type="hidden" name="id_layanan">
                             <input value="{{ $jad->nomor_jadwal }}" type="hidden" name="nomor_jadwal">
