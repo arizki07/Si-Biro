@@ -45,7 +45,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card bg-marketplace d-flex">
+                    <div class="card d-flex">
                         <div class="card-header">
                             <h5 class="card-title mb-0">Table {{ $title }}</h5>
                             {{-- <div style="float: right;">
@@ -213,7 +213,7 @@
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body bg-marketplace d-flex">
+                    <div class="modal-body d-flex">
                         <div class="row g-3">
                             <p class="mt-3">Yakin ingin menghapus data ini?</p>
                             <div class="hstack gap-2 justify-content-end">
@@ -247,117 +247,213 @@
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body bg-marketplace d-flex">
+                    <div class="modal-body d-flex">
                         <div class="col-12">
-                            <table id="scroll-horizontal"
-                                class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap"
-                                style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
-                                <thead>
-                                    <tr class="text-center">
-                                        <th>Tahap</th>
-                                        <th>No Jadwal</th>
-                                        <th>Judul</th>
-                                        <th>Tgl Mulai</th>
-                                        <th>Tgl Selesai</th>
-                                        <th>Jam Mulai</th>
-                                        <th>Jam Selesai</th>
-                                        <th>Tempat</th>
-                                        <th>Keterangan</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                @php($i = 1)
-                                @foreach ($urJadwal as $urj)
-                                    <tbody>
+                            <div style="overflow-x: auto;">
+                                <table
+                                    class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap"
+                                    style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
+                                    <thead>
                                         <tr class="text-center">
-                                            @if ($jad->tipe_jadwal == 'MCU' && $urj->nomor_jadwal == $jad->nomor_jadwal)
-                                                <td>{{ $urj->tahap }}</td>
-                                                <td>MCU-{{ $urj->nomor_jadwal }}</td>
-                                                <td>{{ $urj->judul_mcu }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_mcu)->format('d M Y') }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_mcu)->format('d M Y') }}
-                                                </td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_mcu)->format('H:i:s') }} WIB
-                                                </td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_mcu)->format('H:i:s') }} WIB
-                                                </td>
-                                                <td>{{ $urj->tempat_mcu }}</td>
-                                                <td>{{ $urj->keterangan_mcu }}</td>
-                                                <td>
-                                                    <a type="button"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i
-                                                            class="ri-delete-bin-2-fill"></i></a>
-                                                </td>
-                                            @elseif ($jad->tipe_jadwal == 'PASSPORT' && $urj->nomor_jadwal == $jad->nomor_jadwal)
-                                                <td>{{ $urj->tahap }}</td>
-                                                <td>PA-{{ $urj->nomor_jadwal }}</td>
-                                                <td>{{ $urj->judul_passport }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_passport)->format('d M Y') }}
-                                                </td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_passport)->format('d M Y') }}
-                                                </td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_passport)->format('H:i:s') }}
-                                                    WIB</td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_passport)->format('H:i:s') }}
-                                                    WIB</td>
-                                                <td>{{ $urj->tempat_passport }}</td>
-                                                <td>{{ $urj->keterangan_passport }}</td>
-                                                <td>
-                                                    <a type="button"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i
-                                                            class="ri-delete-bin-2-fill"></i></a>
-                                                </td>
-                                            @elseif ($jad->tipe_jadwal == 'BIMBINGAN' && $urj->nomor_jadwal == $jad->nomor_jadwal)
-                                                <td>{{ $urj->tahap }}</td>
-                                                <td>BM-{{ $urj->nomor_jadwal }}</td>
-                                                <td>{{ $urj->judul_bimbingan }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_bimbingan)->format('d M Y') }}
-                                                </td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_bimbingan)->format('d M Y') }}
-                                                </td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_bimbingan)->format('H:i:s') }}
-                                                    WIB</td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_bimbingan)->format('H:i:s') }}
-                                                    WIB</td>
-                                                <td>{{ $urj->tempat_bimbingan }}</td>
-                                                <td>{{ $urj->keterangan_bimbingan }}</td>
-                                                <td>
-                                                    <a type="button"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i
-                                                            class="ri-delete-bin-2-fill"></i></a>
-                                                </td>
-                                            @elseif ($jad->tipe_jadwal == 'MANASIK' && $urj->nomor_jadwal == $jad->nomor_jadwal)
-                                                <td>{{ $urj->tahap }}</td>
-                                                <td>BM-{{ $urj->nomor_jadwal }}</td>
-                                                <td>{{ $urj->judul_manasik }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_manasik)->format('d M Y') }}
-                                                </td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_manasik)->format('d M Y') }}
-                                                </td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_manasik)->format('H:i:s') }}
-                                                    WIB</td>
-                                                <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_manasik)->format('H:i:s') }}
-                                                    WIB</td>
-                                                <td>{{ $urj->tempat_manasik }}</td>
-                                                <td>{{ $urj->keterangan_manasik }}</td>
-                                                <td>
-                                                    <a type="button"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i
-                                                            class="ri-delete-bin-2-fill"></i></a>
-                                                </td>
-                                            @endif
+                                            <th>Tahap</th>
+                                            <th>No Jadwal</th>
+                                            <th>Judul</th>
+                                            <th>Tgl Mulai</th>
+                                            <th>Tgl Selesai</th>
+                                            <th>Jam Mulai</th>
+                                            <th>Jam Selesai</th>
+                                            <th>Tempat</th>
+                                            <th>Keterangan</th>
+                                            <th>Materi</th>
+                                            <th>Aksi</th>
                                         </tr>
-                                    </tbody>
-                                @endforeach
-                            </table>
+                                    </thead>
+                                    @php($i = 1)
+                                    @foreach ($urJadwal as $urj)
+                                        <tbody>
+                                            <tr class="text-center">
+                                                @if ($jad->tipe_jadwal == 'MCU' && $urj->nomor_jadwal == $jad->nomor_jadwal)
+                                                    <td>{{ $urj->tahap }}</td>
+                                                    <td>MCU-{{ $urj->nomor_jadwal }}</td>
+                                                    <td>{{ $urj->judul_mcu }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_mcu)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_mcu)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_mcu)->format('H:i:s') }}
+                                                        WIB
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_mcu)->format('H:i:s') }}
+                                                        WIB
+                                                    </td>
+                                                    <td>{{ $urj->tempat_mcu }}</td>
+                                                    <td>{{ $urj->keterangan_mcu }}</td>
+                                                    <td>
+                                                        @if ($urj->file_mcu == null)
+                                                            <a type="file"
+                                                                class="btn btn-outline-warning waves-effect waves-light btn-sm"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#upload{{ $urj->id_uraian_jadwal }}"><i
+                                                                    class="ri-upload-cloud-line"></i> Upload
+                                                            </a>
+                                                        @else
+                                                            <a type="file"
+                                                                class="btn btn-outline-primary waves-effect waves-light btn-sm"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#upload{{ $urj->id_uraian_jadwal }}"><i
+                                                                    class="ri-edit-circle-line"></i> Update
+                                                            </a>
+                                                            <a href="{{ asset('storage/document/file-mcu/' . $urj->file_mcu) }}"
+                                                                class="btn btn-outline-secondary waves-effect waves-light btn-sm"
+                                                                download>
+                                                                <i class="ri-file-ppt-2-line"></i> Download
+                                                            </a>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <a type="button"
+                                                            class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i
+                                                                class="ri-delete-bin-2-fill"></i>
+                                                        </a>
+                                                    </td>
+                                                @elseif ($jad->tipe_jadwal == 'PASSPORT' && $urj->nomor_jadwal == $jad->nomor_jadwal)
+                                                    <td>{{ $urj->tahap }}</td>
+                                                    <td>PA-{{ $urj->nomor_jadwal }}</td>
+                                                    <td>{{ $urj->judul_passport }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_passport)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_passport)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_passport)->format('H:i:s') }}
+                                                        WIB</td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_passport)->format('H:i:s') }}
+                                                        WIB</td>
+                                                    <td>{{ $urj->tempat_passport }}</td>
+                                                    <td>{{ $urj->keterangan_passport }}</td>
+                                                    <td>
+                                                        @if ($urj->file_passport == null)
+                                                            <a type="file"
+                                                                class="btn btn-outline-warning waves-effect waves-light btn-sm"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#upload{{ $urj->id_uraian_jadwal }}"><i
+                                                                    class="ri-upload-cloud-line"></i> Upload
+                                                            </a>
+                                                        @else
+                                                            <a type="file"
+                                                                class="btn btn-outline-primary waves-effect waves-light btn-sm"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#upload{{ $urj->id_uraian_jadwal }}"><i
+                                                                    class="ri-edit-circle-line"></i> Update
+                                                            </a>
+                                                            <a href="{{ asset('storage/document/file-passport/' . $urj->file_passport) }}"
+                                                                class="btn btn-outline-secondary waves-effect waves-light btn-sm"
+                                                                download>
+                                                                <i class="ri-file-ppt-2-line"></i> Download
+                                                            </a>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <a type="button"
+                                                            class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i
+                                                                class="ri-delete-bin-2-fill"></i>
+                                                        </a>
+                                                    </td>
+                                                @elseif ($jad->tipe_jadwal == 'BIMBINGAN' && $urj->nomor_jadwal == $jad->nomor_jadwal)
+                                                    <td>{{ $urj->tahap }}</td>
+                                                    <td>BM-{{ $urj->nomor_jadwal }}</td>
+                                                    <td>{{ $urj->judul_bimbingan }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_bimbingan)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_bimbingan)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_bimbingan)->format('H:i:s') }}
+                                                        WIB</td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_bimbingan)->format('H:i:s') }}
+                                                        WIB</td>
+                                                    <td>{{ $urj->tempat_bimbingan }}</td>
+                                                    <td>{{ $urj->keterangan_bimbingan }}</td>
+                                                    <td>
+                                                        @if ($urj->file_bimbingan == null)
+                                                            <a type="file"
+                                                                class="btn btn-outline-warning waves-effect waves-light btn-sm"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#upload{{ $urj->id_uraian_jadwal }}"><i
+                                                                    class="ri-upload-cloud-line"></i> Upload
+                                                            </a>
+                                                        @else
+                                                            <a type="file"
+                                                                class="btn btn-outline-primary waves-effect waves-light btn-sm"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#upload{{ $urj->id_uraian_jadwal }}"><i
+                                                                    class="ri-edit-circle-line"></i> Update
+                                                            </a>
+                                                            <a href="{{ asset('storage/document/file-bimbingan/' . $urj->file_bimbingan) }}"
+                                                                class="btn btn-outline-secondary waves-effect waves-light btn-sm"
+                                                                download>
+                                                                <i class="ri-file-ppt-2-line"></i> Download
+                                                            </a>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <a type="button"
+                                                            class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i
+                                                                class="ri-delete-bin-2-fill"></i></a>
+                                                    </td>
+                                                @elseif ($jad->tipe_jadwal == 'MANASIK' && $urj->nomor_jadwal == $jad->nomor_jadwal)
+                                                    <td>{{ $urj->tahap }}</td>
+                                                    <td>BM-{{ $urj->nomor_jadwal }}</td>
+                                                    <td>{{ $urj->judul_manasik }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_manasik)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_manasik)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_manasik)->format('H:i:s') }}
+                                                        WIB</td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_manasik)->format('H:i:s') }}
+                                                        WIB</td>
+                                                    <td>{{ $urj->tempat_manasik }}</td>
+                                                    <td>{{ $urj->keterangan_manasik }}</td>
+                                                    <td>
+                                                        @if ($urj->file_manasik == null)
+                                                            <a type="file"
+                                                                class="btn btn-outline-warning waves-effect waves-light btn-sm"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#upload{{ $urj->id_uraian_jadwal }}"><i
+                                                                    class="ri-upload-cloud-line"></i> Upload
+                                                            </a>
+                                                        @else
+                                                            <a type="file"
+                                                                class="btn btn-outline-primary waves-effect waves-light btn-sm"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#upload{{ $urj->id_uraian_jadwal }}"><i
+                                                                    class="ri-edit-circle-line"></i> Update
+                                                            </a>
+                                                            <a href="{{ asset('storage/document/file-manasik/' . $urj->file_manasik) }}"
+                                                                class="btn btn-outline-secondary waves-effect waves-light btn-sm"
+                                                                download>
+                                                                <i class="ri-file-ppt-2-line"></i> Download
+                                                            </a>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <a type="button"
+                                                            class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#delete{{ $urj->id_uraian_jadwal }}"><i
+                                                                class="ri-delete-bin-2-fill"></i></a>
+                                                    </td>
+                                                @endif
+                                            </tr>
+                                        </tbody>
+                                    @endforeach
+                                </table>
+                            </div>
                             <div class="row g-3">
                                 <div class="hstack gap-2 justify-content-end">
                                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
@@ -383,7 +479,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
-                        <div class="modal-body bg-marketplace d-flex">
+                        <div class="modal-body d-flex">
                             <div class="row g-3">
                                 <p class="mt-3">Yakin ingin menghapus data uraian jadwal ini?</p>
                                 <div class="hstack gap-2 justify-content-end">
@@ -398,6 +494,42 @@
                 </div>
             </div>
             {{-- END MODAL DELETE URAIAN JADWAL --}}
+
+            <div class="modal fade" id="upload{{ $urj->id_uraian_jadwal }}" tabindex="-1"
+                aria-labelledby="detailModalLabel">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailModalLabel"><i class="ri-phone-fill"></i>Silahkan pilih
+                                file yang ingin di upload</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body d-flex">
+                            <form action="{{ route('upload.file.uraian', $urj->id_uraian_jadwal) }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="row g-3">
+                                    <input type="hidden" class="form-control border border-dark" name="act"
+                                        value="{{ $act }}">
+                                    <div class="col-lg-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Pilih File</label>
+                                            <input type="file" class="form-control border border-dark" name="file"
+                                                accept=".pdf, .docx, .png, .jpg, .jpeg">
+                                        </div>
+                                    </div>
+                                    <div class="hstack gap-2 justify-content-end">
+                                        <button type="button" class="btn btn-light"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" href="#" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endforeach
         <div class="modal fade" id="whatsapp{{ $jad->id_jadwal }}" tabindex="-1"
             aria-labelledby="exampleModalgridLabel">
@@ -407,7 +539,7 @@
                         <h5 class="modal-title" id="exampleModalgridLabel">Proses Kirim Jadwal</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body bg-marketplace d-flex">
+                    <div class="modal-body d-flex">
                         <form action="{{ route('send.whatsapp.jadwal', $jad->id_jadwal) }}" method="POST">
                             @csrf
                             <input value="{{ $jad->id_layanan }}" type="hidden" name="id_layanan">

@@ -44,7 +44,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card bg-marketplace d-flex">
+                    <div class="card d-flex">
                         <div class="card-header">
                             <h5 class="card-title mb-0">Table {{ $title }}</h5>
                             {{-- <div style="float: right;">
@@ -67,7 +67,8 @@
                                     <tr class="text-center">
                                         <th>No</th>
                                         <th>Opsi</th>
-                                        <th>Nomor Jadwal</th>
+                                        <th>No Layanan</th>
+                                        <th>No Jadwal</th>
                                         <th>Judul Jadwal</th>
                                         <th>Tipe Jadwal</th>
                                         {{-- <th>Jangka Waktu</th> --}}
@@ -87,12 +88,8 @@
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#detail{{ $jad->id_jadwal }}">
                                                         <i class="ri-eye-fill"></i></a>
-                                                    <a type="button"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#delete{{ $jad->id_jadwal }}"><i
-                                                            class="ri-delete-bin-2-fill"></i></a>
                                                 </td>
+                                                <td>LA-{{ $jad->id_layanan }}</td>
                                                 <td>MCU-{{ $jad->nomor_jadwal }}</td>
                                                 <td>{{ $jad->judul_jadwal }}</td>
                                                 <td>Jadwal {{ $jad->tipe_jadwal }}</td>
@@ -108,13 +105,8 @@
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#detail{{ $jad->id_jadwal }}">
                                                         <i class="ri-eye-fill"></i></a>
-                                                    </button>
-                                                    <a type="button"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#delete{{ $jad->id_jadwal }}"><i
-                                                            class="ri-delete-bin-2-fill"></i></a>
                                                 </td>
+                                                <td>LA-{{ $jad->id_layanan }}</td>
                                                 <td>PA-{{ $jad->nomor_jadwal }}</td>
                                                 <td>{{ $jad->judul_jadwal }}</td>
                                                 <td>Jadwal {{ $jad->tipe_jadwal }}</td>
@@ -130,13 +122,8 @@
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#detail{{ $jad->id_jadwal }}">
                                                         <i class="ri-eye-fill"></i></a>
-                                                    </button>
-                                                    <a type="button"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#delete{{ $jad->id_jadwal }}"><i
-                                                            class="ri-delete-bin-2-fill"></i></a>
                                                 </td>
+                                                <td>LA-{{ $jad->id_layanan }}</td>
                                                 <td>BM-{{ $jad->nomor_jadwal }}</td>
                                                 <td>{{ $jad->judul_jadwal }}</td>
                                                 <td>Jadwal {{ $jad->tipe_jadwal }}</td>
@@ -152,14 +139,9 @@
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#detail{{ $jad->id_jadwal }}">
                                                         <i class="ri-eye-fill"></i></a>
-                                                    </button>
-                                                    <a type="button"
-                                                        class="btn btn-outline-danger btn-icon waves-effect waves-light btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#delete{{ $jad->id_jadwal }}"><i
-                                                            class="ri-delete-bin-2-fill"></i></a>
                                                 </td>
-                                                <td>BM-{{ $jad->nomor_jadwal }}</td>
+                                                <td>LA-{{ $jad->id_layanan }}</td>
+                                                <td>MA-{{ $jad->nomor_jadwal }}</td>
                                                 <td>{{ $jad->judul_jadwal }}</td>
                                                 <td>Jadwal {{ $jad->tipe_jadwal }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($jad->tgl_mulai)->format('d M Y') }}</td>
@@ -175,4 +157,172 @@
             </div>
         </div>
     </div>
+
+@section('scripting')
+    @foreach ($jadwal as $jad)
+
+        {{-- MODAL DETAIL JADWAL --}}
+        <div class="modal fade" id="detail{{ $jad->id_jadwal }}" tabindex="-1" aria-labelledby="detialUrj">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="detialUrj"><i class="ri-phone-fill"></i>
+                            @if ($jad->tipe_jadwal == 'MCU')
+                                Detail Jadwal No MCU-{{ $jad->nomor_jadwal }}
+                            @elseif ($jad->tipe_jadwal == 'PASSPORT')
+                                Detail Jadwal No PA-{{ $jad->nomor_jadwal }}
+                            @elseif ($jad->tipe_jadwal == 'BIMBINGAN')
+                                Detail Jadwal No BM-{{ $jad->nomor_jadwal }}
+                            @else
+                                Tipe Jadwal Tidak Ditemukan
+                            @endif
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex">
+                        <div class="col-12">
+                            <div style="overflow-x: auto;">
+                                <table
+                                    class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap"
+                                    style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>Tahap</th>
+                                            <th>No Jadwal</th>
+                                            <th>Judul</th>
+                                            <th>Tgl Mulai</th>
+                                            <th>Tgl Selesai</th>
+                                            <th>Jam Mulai</th>
+                                            <th>Jam Selesai</th>
+                                            <th>Tempat</th>
+                                            <th>Keterangan</th>
+                                            <th>Materi</th>
+                                        </tr>
+                                    </thead>
+                                    @php($i = 1)
+                                    @foreach ($urJadwal as $urj)
+                                        <tbody>
+                                            <tr class="text-center">
+                                                @if ($jad->tipe_jadwal == 'MCU' && $urj->nomor_jadwal == $jad->nomor_jadwal)
+                                                    <td>{{ $urj->tahap }}</td>
+                                                    <td>MCU-{{ $urj->nomor_jadwal }}</td>
+                                                    <td>{{ $urj->judul_mcu }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_mcu)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_mcu)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_mcu)->format('H:i:s') }}
+                                                        WIB
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_mcu)->format('H:i:s') }}
+                                                        WIB
+                                                    </td>
+                                                    <td>{{ $urj->tempat_mcu }}</td>
+                                                    <td>{{ $urj->keterangan_mcu }}</td>
+                                                    <td>
+                                                        @if ($urj->file_mcu == null)
+                                                            -
+                                                        @else
+                                                            <a href="{{ asset('storage/document/file-mcu/' . $urj->file_mcu) }}"
+                                                                class="btn btn-outline-secondary waves-effect waves-light btn-sm"
+                                                                download>
+                                                                <i class="ri-file-ppt-2-line"></i> Download
+                                                            </a>
+                                                        @endif
+                                                    </td>
+                                                @elseif ($jad->tipe_jadwal == 'PASSPORT' && $urj->nomor_jadwal == $jad->nomor_jadwal)
+                                                    <td>{{ $urj->tahap }}</td>
+                                                    <td>PA-{{ $urj->nomor_jadwal }}</td>
+                                                    <td>{{ $urj->judul_passport }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_passport)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_passport)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_passport)->format('H:i:s') }}
+                                                        WIB</td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_passport)->format('H:i:s') }}
+                                                        WIB</td>
+                                                    <td>{{ $urj->tempat_passport }}</td>
+                                                    <td>{{ $urj->keterangan_passport }}</td>
+                                                    <td>
+                                                        @if ($urj->file_passport == null)
+                                                            -
+                                                        @else
+                                                            <a href="{{ asset('storage/document/file-passport/' . $urj->file_passport) }}"
+                                                                class="btn btn-outline-secondary waves-effect waves-light btn-sm"
+                                                                download>
+                                                                <i class="ri-file-ppt-2-line"></i> Download
+                                                            </a>
+                                                        @endif
+                                                    </td>
+                                                @elseif ($jad->tipe_jadwal == 'BIMBINGAN' && $urj->nomor_jadwal == $jad->nomor_jadwal)
+                                                    <td>{{ $urj->tahap }}</td>
+                                                    <td>BM-{{ $urj->nomor_jadwal }}</td>
+                                                    <td>{{ $urj->judul_bimbingan }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_bimbingan)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_bimbingan)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_bimbingan)->format('H:i:s') }}
+                                                        WIB</td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_bimbingan)->format('H:i:s') }}
+                                                        WIB</td>
+                                                    <td>{{ $urj->tempat_bimbingan }}</td>
+                                                    <td>{{ $urj->keterangan_bimbingan }}</td>
+                                                    <td>
+                                                        @if ($urj->file_bimbingan == null)
+                                                            -
+                                                        @else
+                                                            <a href="{{ asset('storage/document/file-bimbingan/' . $urj->file_bimbingan) }}"
+                                                                class="btn btn-outline-secondary waves-effect waves-light btn-sm"
+                                                                download>
+                                                                <i class="ri-file-ppt-2-line"></i> Download
+                                                            </a>
+                                                        @endif
+                                                    </td>
+                                                @elseif ($jad->tipe_jadwal == 'MANASIK' && $urj->nomor_jadwal == $jad->nomor_jadwal)
+                                                    <td>{{ $urj->tahap }}</td>
+                                                    <td>BM-{{ $urj->nomor_jadwal }}</td>
+                                                    <td>{{ $urj->judul_manasik }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_mulai_manasik)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->tgl_selesai_manasik)->format('d M Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_mulai_manasik)->format('H:i:s') }}
+                                                        WIB</td>
+                                                    <td>{{ \Carbon\Carbon::parse($urj->jam_selesai_manasik)->format('H:i:s') }}
+                                                        WIB</td>
+                                                    <td>{{ $urj->tempat_manasik }}</td>
+                                                    <td>{{ $urj->keterangan_manasik }}</td>
+                                                    <td>
+                                                        @if ($urj->file_manasik == null)
+                                                            -
+                                                        @else
+                                                            <a href="{{ asset('storage/document/file-manasik/' . $urj->file_manasik) }}"
+                                                                class="btn btn-outline-secondary waves-effect waves-light btn-sm"
+                                                                download>
+                                                                <i class="ri-file-ppt-2-line"></i> Download
+                                                            </a>
+                                                        @endif
+                                                    </td>
+                                                @endif
+                                            </tr>
+                                        </tbody>
+                                    @endforeach
+                                </table>
+                            </div>
+                            <div class="row g-3">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                                <!--end col-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- END MODAL DETAIL JADWAL --}}
+    @endforeach
+@endsection
 @endsection

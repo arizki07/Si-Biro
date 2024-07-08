@@ -98,6 +98,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/data-jadwal', [JadwalController::class, 'index'])->name('data.jadwal');
         Route::get('/data-jadwal/delete/{id}', [JadwalController::class, 'destroy'])->name('delete.data.jadwal');
         Route::get('/data-uraian-jadwal/delete/{id}', [JadwalController::class, 'destroyUraian'])->name('delete.data.uraian.jadwal');
+        Route::post('/data-uraian-jadwal/file/upload/{id}', [JadwalController::class, 'upload_file'])->name('upload.file.uraian');
 
         //layanan
         Route::get('/data-layanan', [LayananController::class, 'index'])->name('data.layanan');
@@ -213,6 +214,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/data-jadwal-office/delete/{id}', [OfficeJadwalController::class, 'destroy'])->name('delete.data.jadwal.office');
         Route::get('/data-uraian-jadwal-office/delete/{id}', [OfficeJadwalController::class, 'destroyUraian'])->name('delete.data.uraian.jadwal.office');
         Route::post('/send-request/whatsapp/jadwal/{id}', [OfficeJadwalController::class, 'send_whatsapp'])->name('office.whatsapp');
+        Route::post('/data-uraian-jadwal/file/upload-office/{id}', [JadwalController::class, 'upload_file'])->name('upload.file.uraian.office');
     });
     Route::middleware('role:kbih')->group(function () {
         Route::controller(KBUserController::class)->group(function () {
